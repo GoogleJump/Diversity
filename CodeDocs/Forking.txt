@@ -1,0 +1,2 @@
+Page with instructions on forking and adding the original repo (upstream)
+https://help.github.com/articles/fork-a-repo
