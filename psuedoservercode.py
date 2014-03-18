@@ -10,7 +10,6 @@ class Level(models.Model):
 class User(models.Model):
     id = models.CharField(max_length = 20)
     points = models.IntegerField(default = 0)
-    categories = models.ManyToManyField(Category)
     levelAt = models.ForeignKey(Level)
     def __unicode__(self):
         return self.id
