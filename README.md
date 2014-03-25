@@ -9,4 +9,4 @@ Team members:
  - Carolyn Chen    clc4@princeton.edu
  - Ashley Thomas   athomas2@wellesley.edu
 
-hello world!
+Hello world!
