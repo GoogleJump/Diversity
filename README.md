@@ -12,8 +12,11 @@ Team members:
  - Ashley Thomas   athomas2@wellesley.edu
 
 Hello world!
+<<<<<<< HEAD
 How are you today?
 Ok then.
 
 Woohoo!
 See you later!
+=======
+>>>>>>> ed008cfeff19079a7e5df4ea96a6d95ddc4b08ca
