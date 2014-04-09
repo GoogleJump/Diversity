@@ -47,7 +47,7 @@ public class User extends ParseObject {
 	}
 
 	public Puzzle getPuzzle() {
-		return getObject("puzzleAt"); 
+		return (Puzzle) getParseObject("puzzleAt"); 
 	}
 
 	public void incrementPoints(int points) {
@@ -55,5 +55,9 @@ public class User extends ParseObject {
 		saveInBackground();
 	}
 
+	public void incrementLevel() {
+		increment("levelAt");
+		saveInBackground();
+	}
 
 }

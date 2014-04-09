@@ -2,6 +2,8 @@ package
 
 import com.parse.ParseObject;
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 /**
 * User is a read and write object. How do we integrate this with ParseUser??? VERY UNFINISHED
@@ -12,40 +14,32 @@ public class User extends ParseObject {
 
 	// For more information about ParseUser:
 	// https://parse.com/docs/android/api/com/parse/ParseUser.html
-	// Should the signing up exist outside of this class?
-	public ParseUser createUser(String username, String password, String email, Puzzle puzzle) {
-		ParseUser user = new ParseUser();
+
+	private ParseUser user; 
+
+	// constructor for our wrapper class for ParseUser
+	public User(String username, String password, String email, 
+		Puzzle puzzle) {
+		user = new ParseUser();
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setEmail(email);
 		user.put("points", 0);
 		user.put("levelAt", 1);
 		user.put("puzzleAt", puzzle);
-		user.signUpInBackground(new SignUpCallback() {
-			public void done(ParseException e) {
-				if (e==null) {
-					// User is signed up and logged in
-				}
-				else {
-					// sign up didn't succeed. ParseException
-				}
-			}
-		});
-		return user; 
 	}
 
 	// wrapper for isAuthenticated() in ParseUser
 	public boolean isAuthenticated() {
-		ParseUser user = ParseUser.getCurrentUser();
 		return user.isAuthenticated();
 	}
 
-	public boolean isRegistered() {
-		// should this exist outside the class? 
+	public ParseGeoPoint getLocation() {
+		return getParseGeoPoint("location");
 	}
 
-	public String getLocation() {
-		return getString("location");
+	public int getPoints() {
+		return getInt("points");
 	}
 
 	public int getLevel() {
@@ -53,48 +47,17 @@ public class User extends ParseObject {
 	}
 
 	public Puzzle getPuzzle() {
-		return getObject("puzzleAt"); // Is getObject correct?
+		return (Puzzle) getParseObject("puzzleAt"); 
 	}
 
-	public void updatePoints() {
-		//ParseUser user = ParseUser.getCurrentUser();
-		int levelPoints = getObject("levelAt").getInt("points"); // Check syntax with level class
-		increment("points", levelPoints);
+	public void incrementPoints(int points) {
+		increment("points", points);
+		saveInBackground();
+	}
+
+	public void incrementLevel() {
+		increment("levelAt");
 		saveInBackground();
 	}
 
 }
-
-
-
-
-// SOME NOTES
-
-// ParseObject user = new ParseObject("User");
-// user.put("id", "Carolyn");
-// user.put("points", 0);
-// user.put("levelAt", 1);
-// user.put("registered", true);
-// user.saveInBackground();
-
-// String objectID = user.getObjectID();
-
-// // Retrieve the user by id
-// query.getInBackground(objectID, new GetCallback<ParseObject>() {
-// 	public void done(ParseObject user, ParseExeption e) {
-// 		if (e == null) {
-// 			// update user with new data
-// 			user.put("points", points);
-// 			user.put("levelAt", levelAt);
-// 			// etc....
-// 			user.saveInBackground();
-// 		}
-// 	}
-// });
-
-// user.increment("levelAt");
-// user.saveInBackground();
-// user.increment("points", 5);
-// user.saveInBackground();
-
-// ParseUser user = ParseUser.getCurrentUser();
