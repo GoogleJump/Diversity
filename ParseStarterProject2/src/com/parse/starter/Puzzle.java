@@ -6,6 +6,9 @@ import com.parse.ParseObject;
 
 @ParseClassName("Puzzle")
 public class Puzzle extends ParseObject{
+    
+    // A default constructor is required
+    public Puzzle() {}
 		
 	public String getRiddle(){
 		return getString("riddle");
@@ -15,8 +18,8 @@ public class Puzzle extends ParseObject{
 		return getString("answer");
 	}
 	
-	public int getPoint(){
-		return getInt("point");
+	public int getPoints(){
+		return getInt("points");
 	}
 	
 	public ParseGeoPoint getLocation() {
