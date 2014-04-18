@@ -10,7 +10,7 @@ import com.parse.ParseUser;
 */
 
 @ParseClassName("User")
-public class User extends ParseObject {
+public class User extends ParseUser {
 
 	// For more information about ParseUser:
 	// https://parse.com/docs/android/api/com/parse/ParseUser.html
