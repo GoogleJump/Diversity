@@ -1,4 +1,4 @@
-package
+package com.parse.starter;
 
 import com.parse.ParseObject;
 import com.parse.ParseClassName;
