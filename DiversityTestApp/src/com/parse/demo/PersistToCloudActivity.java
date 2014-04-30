@@ -5,6 +5,12 @@ import android.os.Bundle;
 
 import com.parse.ParseGeoPoint;
 
+/**
+ * This class tests whether we can persist data to the cloud. 
+ * Until we get querying working, we will have to manually check 
+ * if the data was successfully saved in the cloud. 
+ *
+ */
 public class PersistToCloudActivity extends Activity {
 
 	@Override
