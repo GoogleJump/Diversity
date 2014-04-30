@@ -5,23 +5,29 @@ import android.os.Bundle;
 
 import com.parse.ParseGeoPoint;
 
+/**
+ * This class is an example of how to persist data to cloud
+ * and link a view to an activity.  
+ *
+ */
 public class PersistToCloudActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// temporary view for now
+		// set view to the persist_to_cloud.xml
 		setContentView(R.layout.persist_to_cloud);
 		setTitle(R.string.app_name);
 
-		// Testing Level and Puzzle Object
+		// Persist Level object
 		Level levelObject = new Level();
 		levelObject.put("levelNumber", 1);
 		levelObject.put("points", 5);
 		levelObject.put("puzzleId", 12);
 		levelObject.saveInBackground();
 
+		// Persist Puzzle object
 		Puzzle puzzleObject = new Puzzle();
 		puzzleObject.put("riddle", "What's is Stephanie's favorite animal?");
 		puzzleObject.put("answer", "Pandas");

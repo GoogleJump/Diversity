@@ -3,6 +3,7 @@ package com.parse.starter;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 @ParseClassName("Puzzle")
 public class Puzzle extends ParseObject{
@@ -24,6 +25,10 @@ public class Puzzle extends ParseObject{
 	
 	public ParseGeoPoint getLocation() {
 	    return getParseGeoPoint("location");
+	}
+	
+	public static ParseQuery<Puzzle> getQuery() {
+	    return ParseQuery.getQuery(Puzzle.class);
 	}
 
 }
