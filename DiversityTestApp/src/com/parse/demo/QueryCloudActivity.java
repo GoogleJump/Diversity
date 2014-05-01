@@ -3,6 +3,7 @@ package com.parse.demo;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,10 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+/**
+ * This test queries the cloud and returns a unique object in the cloud. 
+ *
+ */
 public class QueryCloudActivity extends Activity {
 
 	@Override
@@ -21,8 +26,9 @@ public class QueryCloudActivity extends Activity {
 		setContentView(R.layout.query_cloud);
 		setTitle(R.string.app_name);
 
-		final TextView string = (TextView) findViewById(R.id.testing);
+		final TextView string = (TextView) findViewById(R.id.queryText);
 		final Button queryButton = (Button) findViewById(R.id.queryCloudButton);
+		final Button backButton = (Button) findViewById(R.id.backToMainFromQuery);
 
 		queryButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -50,29 +56,17 @@ public class QueryCloudActivity extends Activity {
 				});
 			}
 		});
+		
+		backButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent j = new Intent(QueryCloudActivity.this, ToDoListActivity.class);
+            	startActivity(j);
+			}
+		});
 
-		// ParseQuery<Puzzle> query = new ParseQuery<Puzzle>("Puzzle");
-		// // query.whereEqualTo("levelNumber", "1");
-		// try {
-		// List<Puzzle> results = query.find();
-		// // string.setText(results.size());
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-	}
-
-	private void getQuery() {
-		ParseQuery<Puzzle> query = Puzzle.getQuery();
-		query.whereEqualTo("levelNumber", "1");
-
-		try {
-			List<Puzzle> results = query.find();
-			// string.setText(results.size());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 }
