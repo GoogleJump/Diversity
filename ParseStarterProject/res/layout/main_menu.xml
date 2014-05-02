@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+     <TextView
+        style="@style/BiggerFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/main_menu" />
+     
+     <Button android:id="@+id/start_continue_button_mm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_continue"
+        android:layout_marginTop="50sp"
+        android:layout_gravity="center_horizontal"/>
+ 
+     <Button android:id="@+id/logout_button_mm"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/log_out"
+         android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

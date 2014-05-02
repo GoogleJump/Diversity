@@ -18,7 +18,7 @@ import com.parse.ParseGeoPoint;
 
 
 /**
- * PuzzleView displays the puzzle view:
+ * PuzzleActivity displays the puzzle view:
  * 		currently, the puzzle view is defined by puzzle.xml
  * 		at all times, at most 1 CheckBox in the view can be checked
  * 			if the CheckBox checked is the wrong answer, the rightorwrong TextView displays a wrong message
@@ -95,12 +95,11 @@ public class PuzzleActivity extends Activity {
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
 	public void addListenerOnMainMenuButton(){
-		mainMenu = (Button) findViewById(R.id.main_menu_button);
+		mainMenu = (Button) findViewById(R.id.main_menu_button_puzzle);
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				Intent i = new Intent(v.getContext(), PersistToCloudActivity.class);
+				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
 				
 			}
@@ -197,6 +196,4 @@ public class PuzzleActivity extends Activity {
 			txt.setText("");
 		}
 	}
-	
-	
 }
