@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, ParseStarterProjectActivity!</string>
+    <string name="app_name">ParseStarterProject</string>
+    
+    <!-- Jennifer's Puzzle resources (try1) -->
+    <style name="BiggerFont">
+        <item name="android:textSize">30sp</item>
+   </style>
+    <string name="puzzle_view_name">Puzzle</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Submit</string>
+    <string name="main_menu">Main Menu</string>
+    
+    <!-- Jennifer's GPS resources (try1) -->
+    <string name="gps_view_name">GPS</string>
+</resources>

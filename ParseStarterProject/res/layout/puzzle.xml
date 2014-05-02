@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <Button android:id="@+id/main_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu" />
+        
+    <TextView
+        style="@style/BiggerFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/puzzle_view_name" />
+
+    <TextView android:id="@+id/question"
+      	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+    
+    <CheckBox 
+		    android:id="@+id/chkanswer_1"
+		    android:layout_width = "wrap_content"
+	    	android:layout_height = "wrap_content"/>
+    
+    <CheckBox 
+		    android:id="@+id/chkanswer_2"
+		    android:layout_width = "wrap_content"
+	    	android:layout_height = "wrap_content"/>
+    
+    <CheckBox 
+		    android:id="@+id/chkanswer_3"
+		    android:layout_width = "wrap_content"
+	    	android:layout_height = "wrap_content"/>
+    
+    <CheckBox 
+		    android:id="@+id/chkanswer_4"
+		    android:layout_width = "wrap_content"
+	    	android:layout_height = "wrap_content"/>
+	
+    <TextView android:id="@+id/rightorwrong"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"/>	
+</LinearLayout>
