@@ -25,6 +25,22 @@
         <activity android:name=".PersistToCloudActivity" >
         </activity>
         
+                <activity
+            android:name="com.parse.starter.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.parse.starter.SignUpActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.parse.starter.SignUpOrLogInActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

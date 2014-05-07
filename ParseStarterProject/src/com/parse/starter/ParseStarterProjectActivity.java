@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.parse.ParseUser;
+
 public class ParseStarterProjectActivity extends Activity {
 
-	private static final int ACTIVITY_CREATE = 0;
+//	private static final int ACTIVITY_CREATE = 0;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -14,7 +16,20 @@ public class ParseStarterProjectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		Intent i = new Intent(this, PersistToCloudActivity.class);
+/*		Intent i = new Intent(this, PersistToCloudActivity.class);
 		startActivityForResult(i, ACTIVITY_CREATE);
+		*/
+		
+		ParseUser.logOut();
+		
+		
+	    if (ParseUser.getCurrentUser() == null) {
+	        // Start an intent for the logged in activity
+	        startActivity(new Intent(this, SignUpOrLogInActivity.class));    //FIX THIS LATER
+	      } 
+	    else {
+	        // Start and intent for the logged out activity
+	        startActivity(new Intent(this, PersistToCloudActivity.class));
+	      }
 	}
 }
