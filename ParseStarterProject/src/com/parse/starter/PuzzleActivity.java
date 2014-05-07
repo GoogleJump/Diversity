@@ -24,7 +24,6 @@ import com.parse.ParseGeoPoint;
  * 			if the CheckBox checked is the wrong answer, the rightorwrong TextView displays a wrong message
  * 			if the CheckBox checked is the right answer, the view changes to the GPS view
  * 		if the main_menu_button Button is pressed, the view changes to the Main Menu view
- * @author Jennifer
  *
  */
 // I WOULD LIKE TO ADD 3 WRONG ANSWERS IN THE PUZZLE CLASS
@@ -40,28 +39,23 @@ public class PuzzleActivity extends Activity {
 	private final String wrongMessage = "This is wrong.";
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.puzzle);
 		setTitle(R.string.puzzle_view_name);
 		
-		// Persist Level object
 		// We may want to add a Level number view later as well
 		Level levelObject = new Level();
 		levelObject.put("levelNumber", 100);
 		levelObject.put("points", 100);
-		levelObject.put("puzzleID", 10);
-		levelObject.saveInBackground();
-		
+		levelObject.put("puzzleID", 10);		
 
-		// Persist Puzzle object
 		Puzzle puzzleObject = new Puzzle();
 		puzzleObject.put("riddle", "What is the favorite animal of Jennifer?");
 		puzzleObject.put("answer", "Pusheen");
 		puzzleObject.put("points", 100);
 		puzzleObject.put("location", new ParseGeoPoint(23, 23));
-		puzzleObject.saveInBackground();
 		
 		// setting the question text
 		TextView question = (TextView) findViewById(R.id.question);
@@ -79,7 +73,7 @@ public class PuzzleActivity extends Activity {
 		// randomly assigning CheckBoxes different answer options
 		List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
 		List<Integer> ordering = generateRandomOrder();
-		for (int i = 0; i < totalNumMultChoice; i++){
+		for (int i = 0; i < totalNumMultChoice; i++) {
 			checkBoxes.get(i).setText(answers.get(ordering.get(i)));
 		}
 		
@@ -94,7 +88,7 @@ public class PuzzleActivity extends Activity {
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
-	public void addListenerOnMainMenuButton(){
+	private void addListenerOnMainMenuButton() {
 		mainMenu = (Button) findViewById(R.id.main_menu_button_puzzle);
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
@@ -108,7 +102,7 @@ public class PuzzleActivity extends Activity {
 	
 // THE SAME ACTIVITY OCCURS FOR ALL addListenerOnChkAnswer_[1-4]()
 // SEE checkBoxChecked FOR SPECIFIC ACTIVITY
-	public void addListenerOnChkAnswer_1(){
+	private void addListenerOnChkAnswer_1() {
 		chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
 		chk1.setOnClickListener(new OnClickListener() {
 			@Override
@@ -118,7 +112,7 @@ public class PuzzleActivity extends Activity {
 		});
 	}
 
-	public void addListenerOnChkAnswer_2(){
+	private void addListenerOnChkAnswer_2() {
 		chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
 		chk2.setOnClickListener(new OnClickListener() {
 			@Override
@@ -128,7 +122,7 @@ public class PuzzleActivity extends Activity {
 		});
 	}
 	
-	public void addListenerOnChkAnswer_3(){
+	private void addListenerOnChkAnswer_3() {
 		chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
 		chk3.setOnClickListener(new OnClickListener() {
 			@Override
@@ -138,7 +132,7 @@ public class PuzzleActivity extends Activity {
 		});
 	}
 	
-	public void addListenerOnChkAnswer_4(){
+	private void addListenerOnChkAnswer_4() {
 		chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
 		chk4.setOnClickListener(new OnClickListener() {
 			@Override
@@ -153,9 +147,9 @@ public class PuzzleActivity extends Activity {
 	 * 
 	 * @return List that randomly orders 1:totalNumMultChoice
 	 */
-	private List<Integer> generateRandomOrder(){
+	private List<Integer> generateRandomOrder() {
 		ArrayList<Integer> ordering = new ArrayList<Integer>();
-		for(int i = 0; i < totalNumMultChoice; i++){
+		for (int i = 0; i < totalNumMultChoice; i++) {
 			ordering.add(i);
 		}
 		Collections.shuffle(ordering);
@@ -170,29 +164,31 @@ public class PuzzleActivity extends Activity {
 	 * 		If the text of CB is the correctAnswer, changes view to GPS view
 	 * No message is displayed if all CheckBoxes in the view are unchecked
 	 * 
-	 * @param CB CheckBox that the user clicks on
+	 * @param cb CheckBox that the user clicks on
 	 * @param v the View that CB belongs in, which is altered by this method
 	 */
-	private void checkBoxChecked(CheckBox CB, View v){
+	private void checkBoxChecked(CheckBox cb, View v) {
 		TextView txt = (TextView) findViewById (R.id.rightorwrong);
-		if(((CheckBox) v).isChecked()){
+		if (((CheckBox) v).isChecked()) {
 			List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
 			
 			// unchecking CheckBoxes that are not CB
-			for (CheckBox chk: checkBoxes){
-				if (!CB.equals(chk)){
+			for (CheckBox chk: checkBoxes) {
+				if (!cb.equals(chk)) {
 					chk.setChecked(false);
 				}
 			}
 			
-			if (CB.getText().equals(correctAnswer)){
+			if (cb.getText().equals(correctAnswer)) {
 				txt.setText("");
 				Intent i = new Intent(v.getContext(), GPSActivity.class);
 				startActivity(i);
 			}
-			else{txt.setText(wrongMessage);}			
+			else {
+				txt.setText(wrongMessage);
+				}			
 		}
-		else{
+		else {
 			txt.setText("");
 		}
 	}

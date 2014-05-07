@@ -6,20 +6,20 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 @ParseClassName("Puzzle")
-public class Puzzle extends ParseObject{
+public class Puzzle extends ParseObject {
     
     // A default constructor is required
     public Puzzle() {}
 		
-	public String getRiddle(){
+	public String getRiddle() {
 		return getString("riddle");
 	}
 	
-	public String getAnswer(){
+	public String getAnswer() {
 		return getString("answer");
 	}
 	
-	public int getPoints(){
+	public int getPoints() {
 		return getInt("points");
 	}
 	

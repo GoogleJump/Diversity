@@ -14,9 +14,6 @@ import com.parse.ParseGeoPoint;
  * 		currently, the puzzle view is defined by gps.xml
  * 		responsible for checking if client is in the correct location (to get points)
  * 		if submit is pressed while the client is in the correct location, changes to Main Menu view
- * @author Jennifer
- * @author Jennifer
- *
  */
 public class GPSActivity extends Activity {
 
@@ -25,7 +22,7 @@ public class GPSActivity extends Activity {
 	private ParseGeoPoint location;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.gps);
@@ -59,7 +56,7 @@ public class GPSActivity extends Activity {
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
-	public void addListenerOnMainMenuButton(){
+	private void addListenerOnMainMenuButton() {
 		mainMenu = (Button) findViewById(R.id.main_menu_button_gps);
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
@@ -76,13 +73,13 @@ public class GPSActivity extends Activity {
 	 * 		if the client is in the correct location, view changes to MainMenuView
 	 * 		otherwise, view stays the same
 	 */
-	public void addListenerOnSubmitButton(){
+	private void addListenerOnSubmitButton() {
 		submit = (Button) findViewById(R.id.submit_button_gps);
-		submit.setOnClickListener(new OnClickListener(){
+		submit.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v){
+			public void onClick(View v) {
 				// check somehow if GPS matches location
-				// if (matches){
+				// if (matches) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
 				//}
