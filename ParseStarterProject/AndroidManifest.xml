@@ -25,6 +25,19 @@
         <activity android:name=".PersistToCloudActivity" >
         </activity>
         
+        
+        <activity 
+            android:name=".PuzzleActivity" >
+        </activity>
+        
+        <activity 
+            android:name=".GPSActivity" >
+        </activity>
+        
+        <activity 
+            android:name=".MainMenuActivity" >
+        </activity>
+        
     </application>
-
+  
 </manifest>
