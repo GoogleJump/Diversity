@@ -1,23 +1,28 @@
 package com.parse.starter;
 
 import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-
+/**
+ * The MainMenu view shows the main menu with a Start/Continue button that takes
+ * the user to either the Puzzle View or the GPS View depending on their status
+ * in the game. It also has a Log Out button that takes the User to the homepage
+ */
 public class MainMenuActivity extends Activity {
 	
 	private Button startContinue;
 	private Button logout;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.main_menu);
+		setContentView(R.layout.mainmenu);
 		setTitle(R.string.main_menu);
 		
 		addListenerOnStartContinueButton();
@@ -29,11 +34,11 @@ public class MainMenuActivity extends Activity {
 	 * 		if the client is on the puzzle part, changes to Puzzle View
 	 * 		if the client is on the GPS part, changes to GPS View
 	 */
-	public void addListenerOnStartContinueButton(){
+	private void addListenerOnStartContinueButton() {
 		startContinue = (Button) findViewById(R.id.start_continue_button_mm);
-		startContinue.setOnClickListener(new OnClickListener(){
+		startContinue.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v){
+			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
 
 				// check somehow if client is on GPS or Puzzle section
@@ -48,11 +53,11 @@ public class MainMenuActivity extends Activity {
 	/**
 	 * When the Logout Button is pressed, changes to Intro View
 	 */
-	public void addListenerOnLogOutButton(){
+	private void addListenerOnLogOutButton() {
 		logout = (Button) findViewById(R.id.logout_button_mm);
 		logout.setOnClickListener(new OnClickListener(){
 			@Override
-			public void onClick(View v){
+			public void onClick(View v) {
 				// Intent i = new Intent(v.getContext(), IntroActivity.class);
 				// startActivity(i);
 			}

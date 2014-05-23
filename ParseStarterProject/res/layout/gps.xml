@@ -17,15 +17,15 @@
         android:text="@string/gps_view_name" />
 
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="183dp"
-        android:layout_height="217dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/temporary_map" />
+        android:id="@+id/imageView2"
+        android:layout_width="244dp"
+        android:layout_height="250dp"
+        android:src="@drawable/map" />
 
     <Button
         android:id="@+id/submit_button_gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit" />
+
 </LinearLayout>
