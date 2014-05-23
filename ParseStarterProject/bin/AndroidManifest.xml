@@ -25,6 +25,34 @@
         <activity android:name=".PersistToCloudActivity" >
         </activity>
         
+        
+        <activity 
+            android:name=".PuzzleActivity" >
+            <intent-filter>
+                <action android:name="Android.intent.action.VIEW"/>
+                
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".GPSActivity" >
+            <intent-filter>
+                <action android:name="Android.intent.action.VIEW"/>
+                
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".MainMenuActivity" >
+            <intent-filter>
+                <action android:name="Android.intent.action.VIEW"/>
+                
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        
     </application>
-
+  
 </manifest>
