@@ -16,7 +16,7 @@ public class ParseApplication extends Application {
 		// must register the ParseObjects
 		ParseObject.registerSubclass(Level.class);
 		ParseObject.registerSubclass(Puzzle.class);
-		ParseObject.registerSubclass(User.class);
+		ParseUser.registerSubclass(User.class);
 
 		// Add your initialization code here
 		Parse.initialize(this, "xpqgrjmUYorIPfo8bUJ3pzj5Idz830HPpqiIT33g", "akCZNpnFr9dV21PiUkuTflZw2vYyMS5ZnA9rp1Hb");

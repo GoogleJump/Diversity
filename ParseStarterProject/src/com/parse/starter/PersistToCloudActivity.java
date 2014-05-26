@@ -37,17 +37,15 @@ public class PersistToCloudActivity extends Activity {
 		puzzleObject.saveInBackground();
 		
 		// Persist User object
-		User user = new User("username", "password", "email@example.com", 100);
-		user.saveInBackground();
-//		user.setUsername(username);
-//		user.setPassword(password);
-//		user.setEmail(email);
+		////User user = new User("username", "password", "email@example.com", 100);
+		User user = new User();
 		user.put("points", 0);
 		user.put("levelAt", 1);
 		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
 		user.put("puzzleID", 101);
 		user.put("currentItem", "coffee");
 		user.put("currentIngredient", "water");
+		user.saveInBackground();
 		
 	}
 

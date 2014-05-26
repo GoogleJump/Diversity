@@ -7,7 +7,7 @@ import com.parse.ParseUser;
 * User is a read and write object.
 */
 
-@ParseClassName("User")
+@ParseClassName("_User")
 public class User extends ParseUser {
 
 	// For more information about ParseUser:
@@ -15,6 +15,7 @@ public class User extends ParseUser {
 
 	private ParseUser user; 
 
+	// empty constructor is required
 	public User() {}
 	
 	// constructor for our wrapper class for ParseUser
