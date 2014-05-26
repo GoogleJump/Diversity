@@ -15,6 +15,8 @@ public class User extends ParseUser {
 
 	private ParseUser user; 
 
+	public User() {}
+	
 	// constructor for our wrapper class for ParseUser
 	public User(String username, String password, String email, 
 		int puzzle) {
@@ -26,6 +28,10 @@ public class User extends ParseUser {
 		user.put("levelAt", 1);
 		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
 		user.put("puzzleID", puzzle);
+		user.put("currentItem", "coffee"); // hardcoded for now
+		user.put("currentIngredient", "water"); // hardcoded for now
+//		String[] items = new String[20]; // hardcoded at 20 items for now
+//		user.put("itemsCollected", items);
 	}
 
 	// wrapper for isAuthenticated() in ParseUser
@@ -44,6 +50,22 @@ public class User extends ParseUser {
 	public int getPuzzle() {
 		return getInt("puzzleID"); 
 	}
+	
+	public int getState() {
+		return getInt("stateAt");
+	}
+	
+	public String getItem() {
+		return getString("currentItem");
+	}
+	
+	public String getIngredient() {
+		return getString("currentIngredient");
+	}
+	
+//	public String[] getCollectedItems() {
+//		return getArray("itemsCollected");
+//	}
 
 	public void incrementPoints(int points) {
 		increment("points", points);
@@ -58,6 +80,10 @@ public class User extends ParseUser {
 	public void incrementState() {
 		increment("stateAt");
 		saveInBackground();
+	}
+	
+	public void setPuzzle(int puzzle) {
+		user.put("puzzleID", puzzle);
 	}
 
 

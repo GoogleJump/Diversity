@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 /**
  * This class is an example of how to persist data to cloud
@@ -34,6 +35,20 @@ public class PersistToCloudActivity extends Activity {
 		puzzleObject.put("points", 5);
 		puzzleObject.put("location", new ParseGeoPoint(23, 23));
 		puzzleObject.saveInBackground();
+		
+		// Persist User object
+		User user = new User("username", "password", "email@example.com", 100);
+		user.saveInBackground();
+//		user.setUsername(username);
+//		user.setPassword(password);
+//		user.setEmail(email);
+		user.put("points", 0);
+		user.put("levelAt", 1);
+		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+		user.put("puzzleID", 101);
+		user.put("currentItem", "coffee");
+		user.put("currentIngredient", "water");
+		
 	}
 
 }
