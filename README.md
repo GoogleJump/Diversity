@@ -1,3 +1,5 @@
+
+=======
 Team Diversity
 ============
 
@@ -8,4 +10,3 @@ Team members:
  - Jennifer Wu     jennwu94@gmail.com
  - Carolyn Chen    clc4@princeton.edu
  - Ashley Thomas   athomas2@wellesley.edu
-
