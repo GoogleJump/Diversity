@@ -20,9 +20,13 @@ public class ParseStarterProjectActivity extends Activity {
 		startActivityForResult(i, ACTIVITY_CREATE);
 		*/
 		
-		ParseUser.logOut();
-		
-		
+//		ParseUser currentUser = ParseUser.getCurrentUser();
+//		System.out.println(currentUser.toString());
+//		ParseUser.logOut();
+//		currentUser = ParseUser.getCurrentUser();
+//		System.out.println(currentUser.toString());
+
+
 	    if (ParseUser.getCurrentUser() == null) {
 	        // Start an intent for the logged in activity
 	        startActivity(new Intent(this, SignUpOrLogInActivity.class));    //FIX THIS LATER
