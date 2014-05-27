@@ -16,7 +16,8 @@ public class ParseStarterProjectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-/*		Intent i = new Intent(this, PersistToCloudActivity.class);
+/*		
+		Intent i = new Intent(this, MainMenuActivity.class);
 		startActivityForResult(i, ACTIVITY_CREATE);
 		*/
 		

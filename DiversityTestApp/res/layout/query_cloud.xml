@@ -8,11 +8,24 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Persisting to Cloud. Check Cloud."
+        android:text="Query Cloud"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/queryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing if works, should change this text. Lags a bit."
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/backToMainFromPersist"
+        android:id="@+id/queryCloudButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Query Cloud" />
+
+    <Button
+        android:id="@+id/backToMainFromQuery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm" />

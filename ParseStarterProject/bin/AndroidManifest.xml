@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".PersistToCloudActivity" >
         </activity>
-        
+
                 <activity
             android:name="com.parse.starter.LoginActivity"
             android:label="@string/app_name"
@@ -41,6 +41,18 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity 
+            android:name=".PuzzleActivity" >
+        </activity>
+        
+        <activity 
+            android:name=".GPSActivity" >
+        </activity>
+        
+        <activity 
+            android:name=".MainMenuActivity" >
+        </activity>
+        
     </application>
-
+  
 </manifest>
