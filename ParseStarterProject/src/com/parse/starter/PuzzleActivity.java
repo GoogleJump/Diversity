@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 
 
 /**
@@ -57,20 +58,44 @@ public class PuzzleActivity extends Activity {
 		Puzzle puzzleObject = new Puzzle();
 		puzzleObject.put("riddle", "What is the favorite animal of Jennifer?");
 		puzzleObject.put("answer", "Pusheen");
+		ArrayList<String> options = new ArrayList<String>(Arrays.asList("Koala", "Pusheen", "Puppy", "Panda"));
+		puzzleObject.put("options", options);
 		puzzleObject.put("points", 100);
 		puzzleObject.put("location", new ParseGeoPoint(23, 23));
+		puzzleObject.put("ingredient", "coffee");
 		puzzleObject.saveInBackground();
+//		
+//		// Persist User object
+//		//User user = new User("username", "password", "email@example.com", 100);
+//		User user = new User();
+//		user.put("points", 0);
+//		user.put("levelAt", 1);
+//		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+//		user.put("puzzleID", 101);
+//		user.put("currentItem", "coffee");
+//		user.put("currentIngredient", "water");
+//		user.saveInBackground();
 		
-		// Persist User object
-		//User user = new User("username", "password", "email@example.com", 100);
-		User user = new User();
-		user.put("points", 0);
-		user.put("levelAt", 1);
-		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-		user.put("puzzleID", 101);
-		user.put("currentItem", "coffee");
-		user.put("currentIngredient", "water");
-		user.saveInBackground();
+		// Persist Item object -- this works
+//		Item itemObject = new Item();
+//		itemObject.put("itemName", "coffee mug");
+//		itemObject.put("itemID", 10);
+//		ArrayList<String> ingredients = new ArrayList<String>();
+//		ingredients.add("water");
+//		ingredients.add("coffee");
+//		ingredients.add("milk");
+//		ingredients.add("sugar");
+//		ingredients.add("filter");
+//		itemObject.put("itemIngredients", ingredients);
+//		itemObject.saveInBackground();
+		
+//		// Persist Character object -- this works
+//		Character characterObject = new Character();
+//		characterObject.put("characterName", "Miss Mary Mack");
+//		characterObject.put("characterID", 1);
+//		ArrayList<String> items = new ArrayList<String>(Arrays.asList("ZWstfliaHe", "tuzDB22OX1", "XAC0EyJPBX", "zoI3e8R8cB"));
+//		characterObject.put("characterItems", items);
+//		characterObject.saveInBackground();
 		
 		// setting the question text
 		TextView question = (TextView) findViewById(R.id.question);
@@ -83,8 +108,9 @@ public class PuzzleActivity extends Activity {
 		chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
 		chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
 
-		List<String> answers = new ArrayList<String>(Arrays.asList("Puppy","Koala","Panda",correctAnswer));
-
+		//List<String> answers = new ArrayList<String>(Arrays.asList("Puppy","Koala","Panda",correctAnswer));
+		ArrayList<String> answers = puzzleObject.getOptions();
+		
 		// randomly assigning CheckBoxes different answer options
 		List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
 		List<Integer> ordering = generateRandomOrder();

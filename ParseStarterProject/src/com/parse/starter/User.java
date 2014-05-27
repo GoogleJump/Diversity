@@ -1,5 +1,7 @@
 package com.parse.starter;
 
+import java.util.ArrayList;
+
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
@@ -64,9 +66,12 @@ public class User extends ParseUser {
 		return getString("currentIngredient");
 	}
 	
-//	public String[] getCollectedItems() {
-//		return getArray("itemsCollected");
-//	}
+	
+    // store the objectIDs of the items
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCollectedItems() {
+		return (ArrayList<String>) get("itemsCollected");
+	}
 
 	public void incrementPoints(int points) {
 		increment("points", points);
@@ -85,6 +90,7 @@ public class User extends ParseUser {
 	
 	public void setPuzzle(int puzzle) {
 		user.put("puzzleID", puzzle);
+		saveInBackground();
 	}
 
 
