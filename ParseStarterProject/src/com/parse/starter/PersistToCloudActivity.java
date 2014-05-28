@@ -29,8 +29,8 @@ public class PersistToCloudActivity extends Activity {
 
 		// Persist Puzzle object
 		Puzzle puzzleObject = new Puzzle();
-		puzzleObject.put("riddle", "What's is Stephanie's favorite animal?");
-		puzzleObject.put("answer", "Pandas");
+		puzzleObject.put("riddle", "What's is Ashley's favorite animal?");
+		puzzleObject.put("answer", "Yorkiepoos");
 		puzzleObject.put("points", 5);
 		puzzleObject.put("location", new ParseGeoPoint(23, 23));
 		puzzleObject.saveInBackground();
