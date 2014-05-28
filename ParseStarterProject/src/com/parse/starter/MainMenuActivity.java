@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.parse.ParseUser;
 
 /**
  * The MainMenu view shows the main menu with a Start/Continue button that takes
@@ -58,8 +59,10 @@ public class MainMenuActivity extends Activity {
 		logout.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				// Intent i = new Intent(v.getContext(), IntroActivity.class);
-				// startActivity(i);
+				ParseUser.logOut();
+				 Intent i = new Intent(v.getContext(), ParseStarterProjectActivity.class);
+				 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+				 startActivity(i);
 			}
 		});
 	}

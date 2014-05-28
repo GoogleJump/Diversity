@@ -30,11 +30,11 @@ public class ParseStarterProjectActivity extends Activity {
 
 	    if (ParseUser.getCurrentUser() == null) {
 	        // Start an intent for the logged in activity
-	        startActivity(new Intent(this, SignUpOrLogInActivity.class));    //FIX THIS LATER
+	        startActivity(new Intent(this, SignUpOrLogInActivity.class));
 	      } 
 	    else {
 	        // Start and intent for the logged out activity
-	        startActivity(new Intent(this, PersistToCloudActivity.class));
+	        startActivity(new Intent(this, MainMenuActivity.class));
 	      }
 	}
 }
