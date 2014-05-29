@@ -38,6 +38,10 @@
             android:name=".MainMenuActivity" >
         </activity>
         
+        <activity
+            android:name=".TrophiesActivity">
+        </activity>
+        
     </application>
   
 </manifest>

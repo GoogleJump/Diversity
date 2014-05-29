@@ -17,6 +17,7 @@ public class MainMenuActivity extends Activity {
 	
 	private Button startContinue;
 	private Button logout;
+	private Button trophies;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MainMenuActivity extends Activity {
 		
 		addListenerOnStartContinueButton();
 		addListenerOnLogOutButton();
+		addListenerOnTrophiesButton();
 	}
 	
 	/**
@@ -60,6 +62,21 @@ public class MainMenuActivity extends Activity {
 			public void onClick(View v) {
 				// Intent i = new Intent(v.getContext(), IntroActivity.class);
 				// startActivity(i);
+			}
+		});
+	}
+	
+	/**
+	 * When the Trophies Button is pressed,
+	 * 		changes to trophies page, where all items collected by the current user is displayed 
+	 */
+	private void addListenerOnTrophiesButton() {
+		trophies = (Button) findViewById(R.id.trophies_button_mm);
+		trophies.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
+				startActivity(i);
 			}
 		});
 	}

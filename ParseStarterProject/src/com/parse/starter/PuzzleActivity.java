@@ -64,17 +64,17 @@ public class PuzzleActivity extends Activity {
 		puzzleObject.put("location", new ParseGeoPoint(23, 23));
 		puzzleObject.put("ingredient", "coffee");
 		puzzleObject.saveInBackground();
-//		
-//		// Persist User object
-//		//User user = new User("username", "password", "email@example.com", 100);
-//		User user = new User();
-//		user.put("points", 0);
-//		user.put("levelAt", 1);
-//		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-//		user.put("puzzleID", 101);
-//		user.put("currentItem", "coffee");
-//		user.put("currentIngredient", "water");
-//		user.saveInBackground();
+		
+		// Persist Person object
+		//Person user = new Person("username", "password", "email@example.com", 100);
+		Person user = new Person();
+		user.put("points", 0);
+		user.put("levelAt", 1);
+		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+		user.put("puzzleID", 101);
+		user.put("currentItem", "coffee");
+		user.put("currentIngredient", "water");
+		user.saveInBackground();
 		
 		// Persist Item object -- this works
 //		Item itemObject = new Item();
