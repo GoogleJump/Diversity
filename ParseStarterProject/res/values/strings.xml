@@ -20,4 +20,6 @@
     <string name="log_out">Log Out</string>
     <string name="trophies">Trophies Page</string>
     <string name="trophies_view_name">Your Collected Items</string>
+    <string name="photos">Photo Gallery</string>
+    <string name="photos_view_name">Your Collected Characters</string>
 </resources>

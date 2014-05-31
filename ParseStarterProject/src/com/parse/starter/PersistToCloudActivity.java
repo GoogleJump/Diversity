@@ -50,15 +50,15 @@ public class PersistToCloudActivity extends Activity {
 		
 		// Persist Item object
 		Item itemObject = new Item();
-		itemObject.put("itemName", "coffee mug");
-		itemObject.put("itemID", 10);
+		itemObject.put("name", "coffee mug");
+		itemObject.put("ID", 10);
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("water");
 		ingredients.add("coffee");
 		ingredients.add("milk");
 		ingredients.add("sugar");
 		ingredients.add("filter");
-		itemObject.put("itemIngredients", ingredients);
+		itemObject.put("ingredients", ingredients);
 		itemObject.saveInBackground();
 		
 	}

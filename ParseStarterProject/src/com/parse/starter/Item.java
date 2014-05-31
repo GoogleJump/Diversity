@@ -11,17 +11,17 @@ public class Item extends ParseObject {
     // A default constructor is required
     public Item() {}
     
-	public String getItemName() {
-		return getString("itemName");
+	public String getName() {
+		return getString("name");
 	}
     
-    public int getItemID() {
-    	return getInt("itemID");
+    public int geID() {
+    	return getInt("ID");
     }
     
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getIngredients() {
-		return (ArrayList<String>) get("itemIngredients");
+		return (ArrayList<String>) get("ingredients");
 	}
 	
 }

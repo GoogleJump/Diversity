@@ -11,18 +11,18 @@ public class Character extends ParseObject {
     // A default constructor is required
     public Character() {}
     
-	public String getCharacterName() {
-		return getString("characterName");
+	public String getName() {
+		return getString("name");
 	}
     
-    public int getCharacterID() {
-    	return getInt("characterID");
+    public int getID() {
+    	return getInt("ID");
     }
     
-    // store the objectIDs of the items
+    // store the names of the items that relate to the character
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getIngredients() {
-		return (ArrayList<String>) get("characterItems");
+	public ArrayList<String> getItems() {
+		return (ArrayList<String>) get("items");
 	}
 	
 }

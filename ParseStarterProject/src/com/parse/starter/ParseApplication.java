@@ -11,7 +11,7 @@ public class ParseApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		super.onCreate();
+		super.onCreate();		
 		
 		// must register the ParseObjects
 		ParseObject.registerSubclass(Level.class);

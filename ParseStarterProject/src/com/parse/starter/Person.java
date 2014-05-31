@@ -2,6 +2,8 @@ package com.parse.starter;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
@@ -72,6 +74,12 @@ public class Person extends ParseUser {
 	public ArrayList<String> getCollectedItems() {
 		return (ArrayList<String>) get("itemsCollected");
 	}
+	
+	// store the objectIDs of the items
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCollectedCharacters() {
+		return (ArrayList<String>) get("charactersCollected");
+	}
 
 	public void incrementPoints(int points) {
 		increment("points", points);
@@ -91,6 +99,19 @@ public class Person extends ParseUser {
 	public void setPuzzle(int puzzle) {
 		user.put("puzzleID", puzzle);
 		saveInBackground();
+	}
+	
+	// somehow these methods do not work when I wrap them
+	
+	public void addCollectedItem(String item) {
+	//
+		
+	}
+	
+	public void addCollectedCharacter(String character) {
+		user.add("charactersCollected",  character);
+		saveInBackground();
+		
 	}
 
 

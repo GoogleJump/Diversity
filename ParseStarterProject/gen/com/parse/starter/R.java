@@ -15,30 +15,34 @@ public final class R {
         public static final int map=0x7f020001;
     }
     public static final class id {
-        public static final int chkanswer_1=0x7f060009;
-        public static final int chkanswer_2=0x7f06000a;
-        public static final int chkanswer_3=0x7f06000b;
-        public static final int chkanswer_4=0x7f06000c;
+        public static final int chkanswer_1=0x7f06000c;
+        public static final int chkanswer_2=0x7f06000d;
+        public static final int chkanswer_3=0x7f06000e;
+        public static final int chkanswer_4=0x7f06000f;
         public static final int imageView2=0x7f060001;
         public static final int logout_button_mm=0x7f060004;
         public static final int main_menu_button_gps=0x7f060000;
-        public static final int main_menu_button_puzzle=0x7f060007;
-        public static final int main_menu_button_trophies=0x7f06000e;
-        public static final int name=0x7f060006;
-        public static final int question=0x7f060008;
-        public static final int rightorwrong=0x7f06000d;
+        public static final int main_menu_button_photos=0x7f060008;
+        public static final int main_menu_button_puzzle=0x7f06000a;
+        public static final int main_menu_button_trophies=0x7f060011;
+        public static final int name=0x7f060007;
+        public static final int photos_button_mm=0x7f060006;
+        public static final int photos_list=0x7f060009;
+        public static final int question=0x7f06000b;
+        public static final int rightorwrong=0x7f060010;
         public static final int start_continue_button_mm=0x7f060003;
         public static final int submit_button_gps=0x7f060002;
         public static final int trophies_button_mm=0x7f060005;
-        public static final int trophies_list=0x7f06000f;
+        public static final int trophies_list=0x7f060012;
     }
     public static final class layout {
         public static final int gps=0x7f030000;
         public static final int main=0x7f030001;
         public static final int mainmenu=0x7f030002;
         public static final int persist_to_cloud=0x7f030003;
-        public static final int puzzle=0x7f030004;
-        public static final int trophies=0x7f030005;
+        public static final int photos=0x7f030004;
+        public static final int puzzle=0x7f030005;
+        public static final int trophies=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
@@ -48,6 +52,8 @@ public final class R {
         public static final int hello=0x7f040000;
         public static final int log_out=0x7f04000a;
         public static final int main_menu=0x7f040005;
+        public static final int photos=0x7f04000d;
+        public static final int photos_view_name=0x7f04000e;
         public static final int puzzle_view_name=0x7f040002;
         public static final int settings=0x7f040009;
         public static final int start_continue=0x7f040008;

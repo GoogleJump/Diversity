@@ -78,23 +78,23 @@ public class PuzzleActivity extends Activity {
 		
 		// Persist Item object -- this works
 //		Item itemObject = new Item();
-//		itemObject.put("itemName", "coffee mug");
-//		itemObject.put("itemID", 10);
+//		itemObject.put("name", "coffee mug");
+//		itemObject.put("ID", 10);
 //		ArrayList<String> ingredients = new ArrayList<String>();
 //		ingredients.add("water");
 //		ingredients.add("coffee");
 //		ingredients.add("milk");
 //		ingredients.add("sugar");
 //		ingredients.add("filter");
-//		itemObject.put("itemIngredients", ingredients);
+//		itemObject.put("ingredients", ingredients);
 //		itemObject.saveInBackground();
 		
 //		// Persist Character object -- this works
 //		Character characterObject = new Character();
-//		characterObject.put("characterName", "Miss Mary Mack");
-//		characterObject.put("characterID", 1);
+//		characterObject.put("name", "Miss Mary Mack");
+//		characterObject.put("ID", 1);
 //		ArrayList<String> items = new ArrayList<String>(Arrays.asList("ZWstfliaHe", "tuzDB22OX1", "XAC0EyJPBX", "zoI3e8R8cB"));
-//		characterObject.put("characterItems", items);
+//		characterObject.put("items", items);
 //		characterObject.saveInBackground();
 		
 		// setting the question text
