@@ -4,17 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.parse.ParseUser;
+
 public class ParseStarterProjectActivity extends Activity {
 
-	private static final int ACTIVITY_CREATE = 0;
+	public ParseStarterProjectActivity() {
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
 
-		Intent i = new Intent(this, PersistToCloudActivity.class);
-		startActivityForResult(i, ACTIVITY_CREATE);
+		super.onCreate(savedInstanceState);
+
+		if (ParseUser.getCurrentUser() != null) {
+			startActivity(new Intent(ParseStarterProjectActivity.this,
+					MainMenuActivity.class));
+		} else {
+			startActivity(new Intent(ParseStarterProjectActivity.this,
+					SignUpOrLogInActivity.class));
+		}
+
 	}
 }
