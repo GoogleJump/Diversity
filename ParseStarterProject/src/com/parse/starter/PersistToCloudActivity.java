@@ -22,20 +22,6 @@ public class PersistToCloudActivity extends Activity {
 		setContentView(R.layout.persist_to_cloud);
 		setTitle(R.string.app_name);
 
-//		// Persist Level object
-//		Level levelObject = new Level();
-//		levelObject.put("levelNumber", 1);
-//		levelObject.put("points", 5);
-//		levelObject.put("puzzleId", 12);
-//		levelObject.saveInBackground();
-//
-//		// Persist Puzzle object
-//		Puzzle puzzleObject = new Puzzle();
-//		puzzleObject.put("riddle", "What's is Stephanie's favorite animal?");
-//		puzzleObject.put("answer", "Pandas");
-//		puzzleObject.put("points", 5);
-//		puzzleObject.put("location", new ParseGeoPoint(23, 23));
-//		puzzleObject.saveInBackground();
 //		
 //		// Persist User object
 //		////User user = new User("username", "password", "email@example.com", 100);
@@ -61,6 +47,22 @@ public class PersistToCloudActivity extends Activity {
 		itemObject.put("ingredients", ingredients);
 		itemObject.saveInBackground();
 		
+
+		// Persist Level object
+		Level levelObject = new Level();
+		levelObject.put("levelNumber", 1);
+		levelObject.put("points", 5);
+		levelObject.put("puzzleId", 12);
+		levelObject.saveInBackground();
+
+		// Persist Puzzle object
+		Puzzle puzzleObject = new Puzzle();
+		puzzleObject.put("riddle", "What's is Ashley's favorite animal?");
+		puzzleObject.put("answer", "Yorkiepoos");
+		puzzleObject.put("points", 5);
+		puzzleObject.put("location", new ParseGeoPoint(23, 23));
+		puzzleObject.saveInBackground();
+
 	}
 
 }
