@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.parse.ParseACL;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
@@ -65,37 +66,6 @@ public class PuzzleActivity extends Activity {
 		puzzleObject.put("ingredient", "coffee");
 		puzzleObject.saveInBackground();
 		
-		// Persist Person object
-		//Person user = new Person("username", "password", "email@example.com", 100);
-		Person user = new Person();
-		user.put("points", 0);
-		user.put("levelAt", 1);
-		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-		user.put("puzzleID", 101);
-		user.put("currentItem", "coffee");
-		user.put("currentIngredient", "water");
-		user.saveInBackground();
-		
-		// Persist Item object -- this works
-//		Item itemObject = new Item();
-//		itemObject.put("name", "coffee mug");
-//		itemObject.put("ID", 10);
-//		ArrayList<String> ingredients = new ArrayList<String>();
-//		ingredients.add("water");
-//		ingredients.add("coffee");
-//		ingredients.add("milk");
-//		ingredients.add("sugar");
-//		ingredients.add("filter");
-//		itemObject.put("ingredients", ingredients);
-//		itemObject.saveInBackground();
-		
-//		// Persist Character object -- this works
-//		Character characterObject = new Character();
-//		characterObject.put("name", "Miss Mary Mack");
-//		characterObject.put("ID", 1);
-//		ArrayList<String> items = new ArrayList<String>(Arrays.asList("ZWstfliaHe", "tuzDB22OX1", "XAC0EyJPBX", "zoI3e8R8cB"));
-//		characterObject.put("items", items);
-//		characterObject.saveInBackground();
 		
 		// setting the question text
 		TextView question = (TextView) findViewById(R.id.question);

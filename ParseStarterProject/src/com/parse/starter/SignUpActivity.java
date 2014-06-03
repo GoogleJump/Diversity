@@ -1,5 +1,8 @@
 package com.parse.starter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -78,6 +81,17 @@ public class SignUpActivity extends Activity {
         ParseUser user = new ParseUser();
         user.setUsername(usernameView.getText().toString());
         user.setPassword(passwordView.getText().toString());
+        user.put("points", 0);
+		user.put("levelAt", 1);
+		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+		user.put("puzzleID", 0);
+		user.put("currentItem", "coffee"); // hardcoded for now
+		user.put("currentIngredient", "water"); // hardcoded for now
+		ArrayList<String> itemsCollected = new ArrayList<String>();
+		user.put("itemsCollected", itemsCollected);
+		user.put("currentCharacter", "Pusheen"); // hardcoded for now
+		ArrayList<String> charactersCollected = new ArrayList<String>();
+		user.put("charactersCollected", charactersCollected);
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
 

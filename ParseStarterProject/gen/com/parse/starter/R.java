@@ -10,41 +10,49 @@ package com.parse.starter;
 public final class R {
     public static final class attr {
     }
-
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
     }
-
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int map=0x7f020001;
     }
     public static final class id {
-        public static final int chkanswer_1=0x7f06000c;
-        public static final int chkanswer_2=0x7f06000d;
-        public static final int chkanswer_3=0x7f06000e;
-        public static final int chkanswer_4=0x7f06000f;
-        public static final int imageView2=0x7f060001;
-        public static final int logout_button_mm=0x7f060004;
-        public static final int main_menu_button_gps=0x7f060000;
-        public static final int main_menu_button_photos=0x7f060008;
-        public static final int main_menu_button_puzzle=0x7f06000a;
-        public static final int main_menu_button_trophies=0x7f060011;
-        public static final int name=0x7f060007;
-        public static final int photos_button_mm=0x7f060006;
-        public static final int photos_list=0x7f060009;
-        public static final int question=0x7f06000b;
-        public static final int rightorwrong=0x7f060010;
-        public static final int start_continue_button_mm=0x7f060003;
-        public static final int submit_button_gps=0x7f060002;
-        public static final int trophies_button_mm=0x7f060005;
-        public static final int trophies_list=0x7f060012;
+        public static final int action_button=0x7f070004;
+        public static final int chkanswer_1=0x7f070018;
+        public static final int chkanswer_2=0x7f070019;
+        public static final int chkanswer_3=0x7f07001a;
+        public static final int chkanswer_4=0x7f07001b;
+        public static final int imageView2=0x7f07000d;
+        public static final int logInButton=0x7f070005;
+        public static final int login=0x7f070003;
+        public static final int login_form=0x7f070000;
+        public static final int logout_button_mm=0x7f070010;
+        public static final int main_menu_button_gps=0x7f07000c;
+        public static final int main_menu_button_photos=0x7f070014;
+        public static final int main_menu_button_puzzle=0x7f070016;
+        public static final int main_menu_button_trophies=0x7f07001d;
+        public static final int name=0x7f070013;
+        public static final int password=0x7f070002;
+        public static final int passwordAgain=0x7f07000b;
+        public static final int photos_button_mm=0x7f070012;
+        public static final int photos_list=0x7f070015;
+        public static final int question=0x7f070017;
+        public static final int rightorwrong=0x7f07001c;
+        public static final int signUpButton=0x7f070006;
+        public static final int signup_form=0x7f07000a;
+        public static final int start_continue_button_mm=0x7f07000f;
+        public static final int submit_button_gps=0x7f07000e;
+        public static final int textView1=0x7f070007;
+        public static final int textView2=0x7f070008;
+        public static final int textView3=0x7f070009;
+        public static final int trophies_button_mm=0x7f070011;
+        public static final int trophies_list=0x7f07001e;
+        public static final int username=0x7f070001;
     }
-
-
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_sign_up_or_log_in=0x7f030001;
@@ -53,61 +61,58 @@ public final class R {
         public static final int main=0x7f030004;
         public static final int mainmenu=0x7f030005;
         public static final int persist_to_cloud=0x7f030006;
-        public static final int puzzle=0x7f030007;
-        public static final int photos=0x7f030004;
-        public static final int trophies=0x7f030006;
+        public static final int photos=0x7f030007;
+        public static final int puzzle=0x7f030008;
+        public static final int trophies=0x7f030009;
     }
     public static final class string {
-        public static final int photos=0x7f04000d;
-        public static final int photos_view_name=0x7f04000e;
-        public static final int trophies=0x7f04000b;
-        public static final int trophies_view_name=0x7f04000c;
-        public static final int action_forgot_password=0x7f050019;
+        public static final int action_forgot_password=0x7f05001d;
         public static final int action_settings=0x7f050002;
-        public static final int action_sign_in_register=0x7f050017;
-        public static final int action_sign_in_short=0x7f050018;
+        public static final int action_sign_in_register=0x7f05001b;
+        public static final int action_sign_in_short=0x7f05001c;
         public static final int app_name=0x7f050001;
         public static final int button_send=0x7f05000c;
         public static final int diversity=0x7f050007;
         public static final int edit_message=0x7f05000b;
-        public static final int error_blank_password=0x7f050021;
-        public static final int error_blank_username=0x7f050020;
-        public static final int error_end=0x7f050024;
-        public static final int error_field_required=0x7f05001e;
-        public static final int error_incorrect_password=0x7f05001d;
-        public static final int error_intro=0x7f05001f;
-        public static final int error_invalid_email=0x7f05001b;
-        public static final int error_invalid_password=0x7f05001c;
-        public static final int error_join=0x7f050023;
-        public static final int error_mismatched_passwords=0x7f050022;
+        public static final int error_blank_password=0x7f050025;
+        public static final int error_blank_username=0x7f050024;
+        public static final int error_end=0x7f050028;
+        public static final int error_field_required=0x7f050022;
+        public static final int error_incorrect_password=0x7f050021;
+        public static final int error_intro=0x7f050023;
+        public static final int error_invalid_email=0x7f05001f;
+        public static final int error_invalid_password=0x7f050020;
+        public static final int error_join=0x7f050027;
+        public static final int error_mismatched_passwords=0x7f050026;
         public static final int gps_view_name=0x7f05000e;
         public static final int hello=0x7f050000;
         public static final int log_in=0x7f050004;
         public static final int log_out=0x7f050012;
-        public static final int login_progress_signing_in=0x7f05001a;
+        public static final int login_progress_signing_in=0x7f05001e;
         public static final int main_menu=0x7f05000d;
+        public static final int photos=0x7f050015;
+        public static final int photos_view_name=0x7f050016;
         public static final int powered_by=0x7f050006;
-        public static final int prompt_password=0x7f050015;
-        public static final int prompt_password_again=0x7f050016;
+        public static final int prompt_password=0x7f050019;
+        public static final int prompt_password_again=0x7f05001a;
         /**  Strings related to login 
          */
-        public static final int prompt_username=0x7f050014;
+        public static final int prompt_username=0x7f050018;
         public static final int puzzle_view_name=0x7f05000a;
         public static final int settings=0x7f050011;
         public static final int sign_up=0x7f050005;
         public static final int slogan=0x7f050008;
         public static final int start_continue=0x7f050010;
         public static final int submit=0x7f05000f;
-        public static final int title_activity_login=0x7f050013;
+        public static final int title_activity_login=0x7f050017;
         public static final int title_activity_settings=0x7f050009;
         public static final int title_activity_sign_up_or_log_in=0x7f050003;
-
+        public static final int trophies=0x7f050013;
+        public static final int trophies_view_name=0x7f050014;
     }
     public static final class style {
         /**  Jennifer's resources (try1) 
          */
-
         public static final int BiggerFont=0x7f060000;
-
     }
 }

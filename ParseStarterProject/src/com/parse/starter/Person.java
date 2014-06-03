@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
+import com.parse.ParseACL;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
@@ -37,6 +38,9 @@ public class Person extends ParseUser {
 		user.put("currentIngredient", "water"); // hardcoded for now
 //		String[] items = new String[20]; // hardcoded at 20 items for now
 //		user.put("itemsCollected", items);
+		ParseACL acl = new ParseACL();
+		acl.setPublicReadAccess(true);
+		user.setACL(acl);
 	}
 
 	// wrapper for isAuthenticated() in ParseUser

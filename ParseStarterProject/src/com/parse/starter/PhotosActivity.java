@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 /**
@@ -33,6 +34,7 @@ public class PhotosActivity extends Activity {
 	private Button mainMenu;
 	private TextView currentCharacter = null;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,23 +43,18 @@ public class PhotosActivity extends Activity {
 		setTitle(R.string.photos_view_name);
 		LinearLayout lView = (LinearLayout) findViewById(R.id.photos_list);
 		
-		Person user = new Person();
-		user.put("points", 0);
-		user.put("levelAt", 1);
-		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-		user.put("puzzleID", 101);
-		user.put("currentItem", "coffee");
-		user.put("currentIngredient", "water");
-		ArrayList<String> characters = new ArrayList<String>(Arrays.asList("BeachBoy", "Granny"));
-		// tests addCollectedCharacter method (see if persisted)
-		user.put("charactersCollected", characters);
-		user.saveInBackground();
-		//user.addCollectedCharacter("Pusheen");
-		//user.addCollectedCharacter("Baby");
-		user.add("charactersCollected", "Pusheen");
-		user.add("charactersCollected", "Baby");
-		user.saveInBackground();
-		ArrayList<String> charactersCollected = user.getCollectedCharacters();
+		
+		// get current user's list of collected characters to display
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		ArrayList<String> charactersCollected = null;
+		if (currentUser != null) {
+			charactersCollected = (ArrayList<String>) currentUser.get("charactersCollected");
+		}
+		else { // display login page
+			Intent i = new Intent(this, SignUpOrLogInActivity.class);
+			startActivity(i);
+		}
+		
 		
 		// display collected items as strings
 		for (int i = 0; i < charactersCollected.size(); i++){

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 /**
@@ -33,6 +34,7 @@ public class TrophiesActivity extends Activity {
 	private Button mainMenu;
 	private TextView currentItem = null;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,17 +43,29 @@ public class TrophiesActivity extends Activity {
 		setTitle(R.string.trophies_view_name);
 		LinearLayout lView = (LinearLayout) findViewById(R.id.trophies_list);
 		
-		Person user = new Person();
-		user.put("points", 0);
-		user.put("levelAt", 1);
-		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-		user.put("puzzleID", 101);
-		user.put("currentItem", "coffee");
-		user.put("currentIngredient", "water");
-		ArrayList<String> items = new ArrayList<String>(Arrays.asList("one", "two", "three", "four"));
-		user.put("itemsCollected", items);
-		user.saveInBackground();
-		ArrayList<String> itemsCollected = user.getCollectedItems();
+//		Person user = new Person();
+//		user.put("points", 0);
+//		user.put("levelAt", 1);
+//		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+//		user.put("puzzleID", 101);
+//		user.put("currentItem", "coffee");
+//		user.put("currentIngredient", "water");
+//		ArrayList<String> items = new ArrayList<String>(Arrays.asList("one", "two", "three", "four"));
+//		user.put("itemsCollected", items);
+//		user.saveInBackground();
+//		ArrayList<String> itemsCollected = user.getCollectedItems();
+		
+		// get current user's list of collected characters to display
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		ArrayList<String> itemsCollected = null;
+		if (currentUser != null) {
+			itemsCollected = (ArrayList<String>) currentUser.get("itemsCollected");
+		}
+		else { // display login page
+			Intent i = new Intent(this, SignUpOrLogInActivity.class);
+			startActivity(i);
+		}
+				
 		
 		// display collected items as strings
 		for (int i = 0; i < itemsCollected.size(); i++){

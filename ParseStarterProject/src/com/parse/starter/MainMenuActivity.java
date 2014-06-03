@@ -89,7 +89,7 @@ public class MainMenuActivity extends Activity {
 		});
 	}
 
-<<<<<<< HEAD
+
 	/**
 	 * When the Photos Button is pressed,
 	 * 		changes to Photo gallery, where all characters collected by the current user is displayed 
@@ -105,6 +105,4 @@ public class MainMenuActivity extends Activity {
 		});
 	}
 
-=======
->>>>>>> d61f9eaec78b63f5f439bc288f9327047bf2936a
 }
