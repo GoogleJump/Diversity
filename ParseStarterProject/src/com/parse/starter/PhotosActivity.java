@@ -32,6 +32,7 @@ public class PhotosActivity extends Activity {
 	
 	
 	private Button mainMenu;
+	private Button trophyShelf;
 	private TextView currentCharacter = null;
 	
 	@SuppressWarnings("unchecked")
@@ -64,6 +65,7 @@ public class PhotosActivity extends Activity {
 		}
 		
 		addListenerOnMainMenuButton();
+		addListenerOnTrophiesButton();
 	}
 		
 	
@@ -76,6 +78,22 @@ public class PhotosActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				startActivity(i);
+				
+			}
+		});
+	}
+	
+	
+	/**
+	 * When the Trophies Button is pressed, view changes to Trophy Shelf
+	 */
+	private void addListenerOnTrophiesButton() {
+		trophyShelf = (Button) findViewById(R.id.trophies_button_photos);
+		trophyShelf.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
 				startActivity(i);
 				
 			}

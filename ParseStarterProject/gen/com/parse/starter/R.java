@@ -22,10 +22,10 @@ public final class R {
     }
     public static final class id {
         public static final int action_button=0x7f070004;
-        public static final int chkanswer_1=0x7f070018;
-        public static final int chkanswer_2=0x7f070019;
-        public static final int chkanswer_3=0x7f07001a;
-        public static final int chkanswer_4=0x7f07001b;
+        public static final int chkanswer_1=0x7f070019;
+        public static final int chkanswer_2=0x7f07001a;
+        public static final int chkanswer_3=0x7f07001b;
+        public static final int chkanswer_4=0x7f07001c;
         public static final int imageView2=0x7f07000d;
         public static final int logInButton=0x7f070005;
         public static final int login=0x7f070003;
@@ -33,15 +33,16 @@ public final class R {
         public static final int logout_button_mm=0x7f070010;
         public static final int main_menu_button_gps=0x7f07000c;
         public static final int main_menu_button_photos=0x7f070014;
-        public static final int main_menu_button_puzzle=0x7f070016;
-        public static final int main_menu_button_trophies=0x7f07001d;
+        public static final int main_menu_button_puzzle=0x7f070017;
+        public static final int main_menu_button_trophies=0x7f07001e;
         public static final int name=0x7f070013;
         public static final int password=0x7f070002;
         public static final int passwordAgain=0x7f07000b;
         public static final int photos_button_mm=0x7f070012;
-        public static final int photos_list=0x7f070015;
-        public static final int question=0x7f070017;
-        public static final int rightorwrong=0x7f07001c;
+        public static final int photos_button_trophies=0x7f07001f;
+        public static final int photos_list=0x7f070016;
+        public static final int question=0x7f070018;
+        public static final int rightorwrong=0x7f07001d;
         public static final int signUpButton=0x7f070006;
         public static final int signup_form=0x7f07000a;
         public static final int start_continue_button_mm=0x7f07000f;
@@ -50,7 +51,8 @@ public final class R {
         public static final int textView2=0x7f070008;
         public static final int textView3=0x7f070009;
         public static final int trophies_button_mm=0x7f070011;
-        public static final int trophies_list=0x7f07001e;
+        public static final int trophies_button_photos=0x7f070015;
+        public static final int trophies_list=0x7f070020;
         public static final int username=0x7f070001;
     }
     public static final class layout {

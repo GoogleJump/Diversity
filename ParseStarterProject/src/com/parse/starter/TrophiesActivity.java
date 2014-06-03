@@ -32,6 +32,7 @@ public class TrophiesActivity extends Activity {
 	
 	
 	private Button mainMenu;
+	private Button photoAlbum;
 	private TextView currentItem = null;
 	
 	@SuppressWarnings("unchecked")
@@ -76,6 +77,7 @@ public class TrophiesActivity extends Activity {
 		}
 		
 		addListenerOnMainMenuButton();
+		addListenerOnPhotosButton();
 	}
 		
 	
@@ -88,6 +90,21 @@ public class TrophiesActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				startActivity(i);
+				
+			}
+		});
+	}
+	
+	/**
+	 * When the photos Button is pressed, view changes to Photo Album
+	 */
+	private void addListenerOnPhotosButton() {
+		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
+		photoAlbum.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), PhotosActivity.class);
 				startActivity(i);
 				
 			}

@@ -9,6 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_menu" />
+    
+    <Button android:id="@+id/photos_button_trophies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/photos" />
         
     <TextView
         style="@style/BiggerFont"
