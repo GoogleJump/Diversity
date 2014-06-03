@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +15,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.starter.Puzzle;
 
 
 /**
@@ -44,48 +50,146 @@ public class PuzzleActivity extends Activity {
 		setContentView(R.layout.puzzle);
 		setTitle(R.string.puzzle_view_name);
 		
-		// Persist Level object
-		// We may want to add a Level number view later as well
-		Level levelObject = new Level();
-		levelObject.put("levelNumber", 100);
-		levelObject.put("points", 100);
-		levelObject.put("puzzleID", 10);
-		levelObject.saveInBackground();
+//<<<<<<< HEAD
+////		// Persist Level object
+////		// We may want to add a Level number view later as well
+////		Level levelObject = new Level();
+////		levelObject.put("levelNumber", 100);
+////		levelObject.put("points", 100);
+////		levelObject.put("puzzleID", 10);
+////		levelObject.saveInBackground();
+////		
+////
+////		// Persist Puzzle object
+////		Puzzle puzzleObject = new Puzzle();
+////		puzzleObject.put("riddle", "What is the favorite animal of Jennifer?");
+////		puzzleObject.put("answer", "Pusheen");
+////		ArrayList<String> options = new ArrayList<String>(Arrays.asList("Koala", "Pusheen", "Puppy", "Panda"));
+////		puzzleObject.put("options", options);
+////		puzzleObject.put("points", 100);
+////		puzzleObject.put("location", new ParseGeoPoint(23, 23));
+////		puzzleObject.put("ingredient", "coffee");
+////		puzzleObject.saveInBackground();
+//		
+//		// get puzzle from current user
+//		Puzzle puzzleObject = null;
+//		int puzzleID = 0;
+//		
+//		ParseUser currentUser = ParseUser.getCurrentUser();
+//		ArrayList<String> charactersCollected = null;
+//		if (currentUser != null) {
+//			// get puzzleID from current user
+//			puzzleID = currentUser.getInt("puzzleID");
+//			
+//			// get puzzle from puzzleID
+//			ParseQuery<Puzzle> query = ParseQuery.getQuery("Puzzle");
+//			query.whereEqualTo("ID", puzzleID);
+//			query.getFirstInBackground(new GetCallback<Puzzle>() {
+//				public void done(Puzzle puzzleObject, ParseException e) {
+//					if (e == null) {
+//						// setting the question text
+//						TextView question = (TextView) findViewById(R.id.question);
+//						question.setText(puzzleObject.getString("riddle"));
+//						
+//						correctAnswer = puzzleObject.getString("answer");
+//						
+//						chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+//						chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+//						chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+//						chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+//
+//						ArrayList<String> answers = puzzleObject.getOptions();
+//						
+//						// randomly assigning CheckBoxes different answer options
+//						List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
+//						List<Integer> ordering = generateRandomOrder();
+//						for (int i = 0; i < totalNumMultChoice; i++){
+//							checkBoxes.get(i).setText(answers.get(ordering.get(i)));
+//						}
+//					}
+//					else {
+//						// some handling here
+//					}
+//				}
+//
+//			});
+//			
+//		}
+//		else { // display login page
+//			Intent i = new Intent(this, SignUpOrLogInActivity.class);
+//			startActivity(i);
+//		}
+//		
+//		
+////		// setting the question text
+////		TextView question = (TextView) findViewById(R.id.question);
+////		question.setText(puzzleObject.getString("riddle"));
+////		
+////		correctAnswer = puzzleObject.getString("answer");
+////		
+////		chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+////		chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+////		chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+////		chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+////
+////		ArrayList<String> answers = puzzleObject.getOptions();
+////		
+////		// randomly assigning CheckBoxes different answer options
+////		List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
+////		List<Integer> ordering = generateRandomOrder();
+////		for (int i = 0; i < totalNumMultChoice; i++){
+////			checkBoxes.get(i).setText(answers.get(ordering.get(i)));
+////		}
+//=======
+		//String ingredient = ((User) User.getCurrentUser()).getIngredient();
+		String ingredient = ParseUser.getCurrentUser().getString("currentIngredient");
 		
+		ParseQuery<Puzzle> query = Puzzle.getQuery();
 
-		// Persist Puzzle object
-		Puzzle puzzleObject = new Puzzle();
-		puzzleObject.put("riddle", "What is the favorite animal of Jennifer?");
-		puzzleObject.put("answer", "Pusheen");
-		puzzleObject.put("points", 100);
-		puzzleObject.put("location", new ParseGeoPoint(23, 23));
-		puzzleObject.saveInBackground();
+		// NOTE: Have to match value type EXACTLY
+		query.whereEqualTo("ingredient", ingredient);
 		
-		// setting the question text
-		TextView question = (TextView) findViewById(R.id.question);
-		question.setText(puzzleObject.getString("riddle"));
-		
-		correctAnswer = puzzleObject.getString("answer");
-		
-		chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
-		chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
-		chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
-		chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+		// choosing a random puzzle from the query
+		query.findInBackground(new FindCallback<Puzzle>(){
+			@Override
+			public void done(List<Puzzle> potentialPuzzles, ParseException e) {
+				if (e == null && potentialPuzzles.size() > 0) {
+					Random randomizer = new Random();
+					Puzzle puzzle = potentialPuzzles.get(randomizer.nextInt(potentialPuzzles.size()));
 
-		List<String> answers = new ArrayList<String>(Arrays.asList("Puppy","Koala","Panda",correctAnswer));
+					// setting the question text
+					TextView question = (TextView) findViewById(R.id.question);
+					question.setText(puzzle.getString("riddle"));
+					
+					correctAnswer = puzzle.getString("answer");
+					
+					chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+					chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+					chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+					chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
 
-		// randomly assigning CheckBoxes different answer options
-		List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
-		List<Integer> ordering = generateRandomOrder();
-		for (int i = 0; i < totalNumMultChoice; i++){
-			checkBoxes.get(i).setText(answers.get(ordering.get(i)));
-		}
+					ArrayList<String> options = puzzle.getOptions();
+					options.add(correctAnswer);
+
+					// randomly assigning CheckBoxes different answer options
+					List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(chk1, chk2, chk3, chk4));
+					List<Integer> ordering = generateRandomOrder();
+					for (int i = 0; i < totalNumMultChoice; i++){
+						checkBoxes.get(i).setText(options.get(ordering.get(i)));
+					}
+					
+					addListenerOnMainMenuButton();
+					addListenerOnChkAnswer_1();
+					addListenerOnChkAnswer_2();
+					addListenerOnChkAnswer_3();
+					addListenerOnChkAnswer_4();
+					
+				} else {
+					// NOT SURE WHAT TO DO HERE!!!
+				}
+			}
+		});
 		
-		addListenerOnMainMenuButton();
-		addListenerOnChkAnswer_1();
-		addListenerOnChkAnswer_2();
-		addListenerOnChkAnswer_3();
-		addListenerOnChkAnswer_4();
 	}
 		
 	
