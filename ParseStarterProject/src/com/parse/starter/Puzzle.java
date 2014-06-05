@@ -1,4 +1,7 @@
 package com.parse.starter;
+import java.util.ArrayList;
+
+import java.util.ArrayList;
 
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
@@ -19,6 +22,18 @@ public class Puzzle extends ParseObject{
 		return getString("answer");
 	}
 	
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getOptions() {
+		return (ArrayList<String>) get("options");
+	}
+	
+
+	public String getIngredient(){
+		return getString("ingredient");
+	}
+	
+
 	public int getPoints(){
 		return getInt("points");
 	}

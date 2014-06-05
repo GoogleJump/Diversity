@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -33,13 +34,14 @@ public class QueryCloudActivity extends Activity {
 		queryButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				ParseQuery<Puzzle> query = Puzzle.getQuery();
-
+				
 				// NOTE: Have to match value type EXACTLY
-				query.whereEqualTo("points", 5);
-
+				query.whereEqualTo("points", 3);
+				
+				//string.setText(query.toString());
 				query.findInBackground(new FindCallback<Puzzle>() {
 					public void done(List<Puzzle> scoreList, ParseException e) {
-						if (e == null) {
+						if (e == null && scoreList.size() > 0) {
 							Puzzle puzzle = scoreList.get(0);
 							string.setText("Puzzle: \nLevel: "
 									+ Integer.toString(puzzle.getPoints())
@@ -50,7 +52,12 @@ public class QueryCloudActivity extends Activity {
 									+ Double.toString(puzzle.getLocation()
 											.getLongitude()));
 						} else {
-							string.setText((CharSequence) e);
+							if (e == null) {
+								string.setText("We queried nothing.");
+							} else {
+								string.setText((CharSequence) e);
+							}
+							
 						}
 					}
 				});
