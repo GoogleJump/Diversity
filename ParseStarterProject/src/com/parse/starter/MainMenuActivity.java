@@ -45,7 +45,8 @@ public class MainMenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
-				int state = ParseUser.getCurrentUser().getInt("stateAt");
+				int state = ((User) User.getCurrentUser()).getState();
+			
 				// if client is on GPS section
 				if (state == 0) {
 					i = new Intent(v.getContext(), GPSActivity.class);

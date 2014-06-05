@@ -46,10 +46,10 @@ public class PhotosActivity extends Activity {
 		
 		
 		// get current user's list of collected characters to display
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		User currentUser = ((User) User.getCurrentUser());
 		ArrayList<String> charactersCollected = null;
 		if (currentUser != null) {
-			charactersCollected = (ArrayList<String>) currentUser.get("charactersCollected");
+			charactersCollected = currentUser.getCharactersCollected();
 		}
 		else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);

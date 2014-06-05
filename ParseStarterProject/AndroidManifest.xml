@@ -57,6 +57,10 @@
             android:name=".TrophiesActivity">
         </activity>
         
+         <activity
+            android:name=".PhotosActivity">
+        </activity>
+        
     </application>
   
 </manifest>

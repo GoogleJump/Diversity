@@ -44,23 +44,11 @@ public class TrophiesActivity extends Activity {
 		setTitle(R.string.trophies_view_name);
 		LinearLayout lView = (LinearLayout) findViewById(R.id.trophies_list);
 		
-//		Person user = new Person();
-//		user.put("points", 0);
-//		user.put("levelAt", 1);
-//		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-//		user.put("puzzleID", 101);
-//		user.put("currentItem", "coffee");
-//		user.put("currentIngredient", "water");
-//		ArrayList<String> items = new ArrayList<String>(Arrays.asList("one", "two", "three", "four"));
-//		user.put("itemsCollected", items);
-//		user.saveInBackground();
-//		ArrayList<String> itemsCollected = user.getCollectedItems();
-		
 		// get current user's list of collected characters to display
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		User currentUser = ((User) User.getCurrentUser());
 		ArrayList<String> itemsCollected = null;
 		if (currentUser != null) {
-			itemsCollected = (ArrayList<String>) currentUser.get("itemsCollected");
+			itemsCollected = currentUser.getItemsCollected();
 		}
 		else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);

@@ -2,8 +2,19 @@ package com.parse.starter;
 
 import java.util.ArrayList;
 
+//import android.util.Log;
+
+
+
+import android.content.Intent;
+import android.widget.Toast;
+
+import com.parse.ParseACL;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
 * User is a read and write object.
@@ -15,31 +26,34 @@ public class User extends ParseUser {
 	// For more information about ParseUser:
 	// https://parse.com/docs/android/api/com/parse/ParseUser.html
 
-	private ParseUser user; 
-
 	// empty constructor is required
 	public User() {}
 	
 	// constructor for our wrapper class for ParseUser
-	public User(String username, String password, String email, 
-		int puzzle) {
-		user = new ParseUser();
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setEmail(email);
-		user.put("points", 0);
-		user.put("levelAt", 1);
-		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-		user.put("puzzleID", puzzle);
-		user.put("currentItem", "coffee"); // hardcoded for now
-		user.put("currentIngredient", "water"); // hardcoded for now
-//		String[] items = new String[20]; // hardcoded at 20 items for now
-//		user.put("itemsCollected", items);
+	public User(String username, String password, int puzzle) {
+		this.setUsername(username);
+		this.setPassword(password);
+		this.put("points", 0);
+		this.put("levelAt", 1);
+		this.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+		this.put("puzzleID", puzzle);
+		this.put("currentItem", "coffee"); // hardcoded for now
+		this.put("currentIngredient", "water"); // hardcoded for now
+		ArrayList<String> itemsCollected = new ArrayList<String>();
+		this.put("itemsCollected", itemsCollected);
+		this.put("currentCharacter", "Pusheen"); // hardcoded for now
+		ArrayList<String> charactersCollected = new ArrayList<String>();
+		this.put("charactersCollected", charactersCollected);
+		saveInBackground();
 	}
 
 	// wrapper for isAuthenticated() in ParseUser
 	public boolean isAuthenticated() {
-		return user.isAuthenticated();
+		return this.isAuthenticated();
+	}
+	
+	public static ParseUser getCurrentUser() {
+		return ParseUser.getCurrentUser();
 	}
 
 	public int getPoints() {
@@ -69,8 +83,14 @@ public class User extends ParseUser {
 	
     // store the objectIDs of the items
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getCollectedItems() {
+	public ArrayList<String> getItemsCollected() {
 		return (ArrayList<String>) get("itemsCollected");
+	}
+	
+	// store the objectIDs of the items
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCharactersCollected() {
+		return (ArrayList<String>) get("charactersCollected");
 	}
 
 	public void incrementPoints(int points) {
@@ -89,7 +109,18 @@ public class User extends ParseUser {
 	}
 	
 	public void setPuzzle(int puzzle) {
-		user.put("puzzleID", puzzle);
+		this.put("puzzleID", puzzle);
+		saveInBackground();
+	}
+	
+	
+	public void addCollectedItem(String item) {
+		this.add("itemsCollected", item);
+		saveInBackground();
+	}
+	
+	public void addCollectedCharacter(String character) {
+		this.add("charactersCollected",  character);
 		saveInBackground();
 	}
 
