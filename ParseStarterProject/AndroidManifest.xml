@@ -53,6 +53,14 @@
             android:name=".MainMenuActivity" >
         </activity>
         
+        <activity
+            android:name=".TrophiesActivity">
+        </activity>
+        
+         <activity
+            android:name=".PhotosActivity">
+        </activity>
+        
     </application>
   
 </manifest>
