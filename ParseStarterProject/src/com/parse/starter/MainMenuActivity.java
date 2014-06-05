@@ -18,7 +18,9 @@ public class MainMenuActivity extends Activity {
 
 	private Button startContinue;
 	private Button logout;
-
+	private Button trophies;
+	private Button photos;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +30,8 @@ public class MainMenuActivity extends Activity {
 
 		addListenerOnStartContinueButton();
 		addListenerOnLogOutButton();
+		addListenerOnTrophiesButton();
+		addListenerOnPhotosButton();
 	}
 
 	/**
@@ -41,11 +45,13 @@ public class MainMenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
+				int state = ((User) User.getCurrentUser()).getState();
+			
+				// if client is on GPS section
+				if (state == 0) {
+					i = new Intent(v.getContext(), GPSActivity.class);
+				}
 
-				// check somehow if client is on GPS or Puzzle section
-				// if (on GPS section){
-				// i = new Intent(v.getContext(), GPSActivity.class);
-				// }
 				startActivity(i);
 			}
 		});
@@ -66,6 +72,37 @@ public class MainMenuActivity extends Activity {
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 						| Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
+			}
+		});
+	}
+	
+	/**
+	 * When the Trophies Button is pressed,
+	 * 		changes to trophies page, where all items collected by the current user is displayed 
+	 */
+	private void addListenerOnTrophiesButton() {
+		trophies = (Button) findViewById(R.id.trophies_button_mm);
+		trophies.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
+				startActivity(i);
+			}
+		});
+	}
+
+
+	/**
+	 * When the Photos Button is pressed,
+	 * 		changes to Photo gallery, where all characters collected by the current user is displayed 
+	 */
+	private void addListenerOnPhotosButton() {
+		photos = (Button) findViewById(R.id.photos_button_mm);
+		photos.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), PhotosActivity.class);
+				startActivity(i);
 			}
 		});
 	}
