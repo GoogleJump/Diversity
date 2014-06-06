@@ -1,6 +1,8 @@
 package com.parse.starter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,16 +29,7 @@ public class GPSActivity extends Activity {
 		setContentView(R.layout.gps);
 		setTitle(R.string.gps_view_name);
 		
-		// Persist Level object
-		// We may want to add a Level number view later as well
-		Level levelObject = new Level();
-		levelObject.put("levelNumber", 100);
-		levelObject.put("points", 100);
-		levelObject.put("puzzleID", 10);
-		levelObject.saveInBackground();
-		
-
-		// Persist Puzzle object
+	    // Persist Puzzle object
 		Puzzle puzzleObject = new Puzzle();
 		puzzleObject.put("riddle", "What is the favorite animal of Jennifer?");
 		puzzleObject.put("answer", "Pusheen");
@@ -50,6 +43,43 @@ public class GPSActivity extends Activity {
 		addListenerOnSubmitButton();
 
 	}
+	
+	protected void onStart() {
+		super.onStart();
+		
+		// The activity is either being restarted or started for the first time
+	    // so this is where we should make sure that GPS is enabled
+	    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	    
+	    if (!gpsEnabled) {
+	        // Create a dialog here that requests the user to enable GPS, and use an intent
+	        // with the android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS action
+	        // to take the user to the Settings screen to enable GPS when they click "OK"
+	    }
+	    
+	}
+	
+	protected void onRestart() {
+		super.onRestart();
+	}
+		
+	protected void onResume() {
+		super.onResume();
+	}
+	
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
 	
 	
 	/**
