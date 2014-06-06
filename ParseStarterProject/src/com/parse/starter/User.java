@@ -2,19 +2,9 @@ package com.parse.starter;
 
 import java.util.ArrayList;
 
-//import android.util.Log;
-
-
-
-import android.content.Intent;
-import android.widget.Toast;
-
-import com.parse.ParseACL;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+//import android.util.Log;
 
 /**
 * User is a read and write object.
@@ -123,7 +113,6 @@ public class User extends ParseUser {
 		this.add("charactersCollected",  character);
 		saveInBackground();
 	}
-
 
 }
 
