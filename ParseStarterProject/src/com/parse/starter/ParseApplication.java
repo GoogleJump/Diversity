@@ -4,16 +4,21 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class ParseApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		super.onCreate();
+
+		super.onCreate();		
 
 		// must register the ParseObjects
 		ParseObject.registerSubclass(Level.class);
 		ParseObject.registerSubclass(Puzzle.class);
+		ParseObject.registerSubclass(User.class);
+		ParseObject.registerSubclass(Item.class);
+		ParseObject.registerSubclass(Character.class);
 
 		// Add your initialization code here
 		Parse.initialize(this, "xpqgrjmUYorIPfo8bUJ3pzj5Idz830HPpqiIT33g",
