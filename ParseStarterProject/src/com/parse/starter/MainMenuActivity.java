@@ -49,7 +49,7 @@ public class MainMenuActivity extends Activity {
 
 				// if client is on GPS section
 				if (state == 0) {
-					i = new Intent(v.getContext(), GPSActivity.class);
+					i = new Intent(v.getContext(), MapActivity.class);
 				}
 
 				startActivity(i);
