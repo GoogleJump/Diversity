@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-@ParseClassName("Item")
-public class Item extends ParseObject {
+@ParseClassName("Material")
+public class Material extends ParseObject {
     
     // A default constructor is required
-    public Item() {}
+    public Material() {}
     
 	public String getName() {
 		return getString("name");
@@ -18,10 +18,6 @@ public class Item extends ParseObject {
     public int geID() {
     	return getInt("ID");
     }
-    
-	@SuppressWarnings("unchecked")
-	public ArrayList<String> getMaterials() {
-		return (ArrayList<String>) get("materials");
-	}
 	
 }
+

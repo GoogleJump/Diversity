@@ -29,8 +29,8 @@ public class Puzzle extends ParseObject{
 	}
 	
 
-	public String getIngredient(){
-		return getString("ingredient");
+	public String getMaterial(){
+		return getString("material");
 	}
 	
 

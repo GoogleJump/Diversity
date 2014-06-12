@@ -36,5 +36,12 @@
          android:layout_height="wrap_content"
          android:layout_gravity="center_horizontal"
          android:text="@string/photos" />
+     
+     <Button
+         android:id="@+id/inventory_button_mm"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:text="@string/inventory" />
 
 </LinearLayout>

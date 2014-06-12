@@ -22,36 +22,38 @@ import com.parse.ParseUser;
 
 
 /**
- * TrophiesActivity.java displays the trophies page view:
- * 		currently, the trophies view is defined by trophies.xml
- * 		The trophies page displays the current user's items collected thus far
+ * InventoryActivity.java displays the inventory page view:
+ * 		currently, the inventory view is defined by inventory.xml
+ * 		The inventory page displays the current user's materials collected thus far.
  * 		if the main_menu_button Button is pressed, the view changes to the Main Menu view
+ *		if the materials collected create an item, that item is added to the trophy shelf
+ *      and then those materials disappear from the inventory	(TO DO)
  */
 
-public class TrophiesActivity extends Activity {
+public class InventoryActivity extends Activity {
 	
 	
 	private Button mainMenu;
 	private Button photoAlbum;
-	private Button inventory;
-	private TextView currentItem = null;
+	private Button trophyShelf;
+	private TextView currentMaterial = null;
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.trophies);
-		setTitle(R.string.trophies_view_name);
-		LinearLayout lView = (LinearLayout) findViewById(R.id.trophies_list);
+		setContentView(R.layout.inventory);
+		setTitle(R.string.inventory_view_name);
+		LinearLayout lView = (LinearLayout) findViewById(R.id.inventory_list);
 		
 		// get current user's list of collected characters to display
 		User currentUser = null;
 		if (User.getCurrentUser() instanceof User)
 			currentUser = ((User) User.getCurrentUser());
-		ArrayList<String> itemsCollected = null;
+		ArrayList<String> materialsCollected = null;
 		if (currentUser != null) {
-			itemsCollected = currentUser.getItemsCollected();
+			materialsCollected = currentUser.getMaterialsCollected();
 		}
 		else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
@@ -60,16 +62,16 @@ public class TrophiesActivity extends Activity {
 				
 		
 		// display collected items as strings
-		for (int i = 0; i < itemsCollected.size(); i++){
-			currentItem = new TextView(this);
-			currentItem.setText(itemsCollected.get(i));
-			lView.addView(currentItem);
+		for (int i = 0; i < materialsCollected.size(); i++){
+			currentMaterial = new TextView(this);
+			currentMaterial.setText(materialsCollected.get(i));
+			lView.addView(currentMaterial);
 			
 		}
 		
 		addListenerOnMainMenuButton();
 		addListenerOnPhotosButton();
-		addListenerOnInventoryButton();
+		addListenerOnTrophiesButton();
 	}
 		
 	
@@ -77,7 +79,7 @@ public class TrophiesActivity extends Activity {
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
 	private void addListenerOnMainMenuButton() {
-		mainMenu = (Button) findViewById(R.id.main_menu_button_trophies);
+		mainMenu = (Button) findViewById(R.id.main_menu_button_inventory);
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -92,7 +94,7 @@ public class TrophiesActivity extends Activity {
 	 * When the photos Button is pressed, view changes to Photo Album
 	 */
 	private void addListenerOnPhotosButton() {
-		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
+		photoAlbum = (Button) findViewById(R.id.photos_button_inventory);
 		photoAlbum.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -104,16 +106,16 @@ public class TrophiesActivity extends Activity {
 	}
 	
 	/**
-	 * When the Inventory Button is pressed,
-	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
+	 * When the trophies Button is pressed, view changes to Trophy Shelf
 	 */
-	private void addListenerOnInventoryButton() {
-		inventory = (Button) findViewById(R.id.inventory_button_trophies);
-		inventory.setOnClickListener(new OnClickListener() {
+	private void addListenerOnTrophiesButton() {
+		trophyShelf = (Button) findViewById(R.id.trophies_button_inventory);
+		trophyShelf.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), InventoryActivity.class);
+				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
 				startActivity(i);
+				
 			}
 		});
 	}

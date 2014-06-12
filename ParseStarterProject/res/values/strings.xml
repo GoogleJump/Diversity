@@ -16,6 +16,7 @@
         <item name="android:textSize">30sp</item>
    </style>
     <string name="puzzle_view_name">Puzzle</string>
+    <string name="anagram_view_name">Anagram</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Submit</string>
     <string name="main_menu">Main Menu</string>
@@ -30,5 +31,7 @@
     <string name="trophies_view_name">Your Collected Items</string>
     <string name="photos">Photo Album</string>
     <string name="photos_view_name">Your Collected Characters</string>
+    <string name="inventory">Inventory</string>
+    <string name="inventory_view_name">Your Collected Materials</string>
 
 </resources>
