@@ -22,6 +22,7 @@ public class PhotosActivity extends Activity {
 
 	private Button mainMenu;
 	private Button trophyShelf;
+	private Button inventory;
 	private TextView currentCharacter = null;
 
 	@Override
@@ -33,7 +34,9 @@ public class PhotosActivity extends Activity {
 		LinearLayout lView = (LinearLayout) findViewById(R.id.photos_list);
 
 		// get current user's list of collected characters to display
-		User currentUser = ((User) User.getCurrentUser());
+		User currentUser = null;
+		if (User.getCurrentUser() instanceof User)
+			currentUser = ((User) User.getCurrentUser());
 		ArrayList<String> charactersCollected = null;
 		if (currentUser != null) {
 			charactersCollected = currentUser.getCharactersCollected();
@@ -53,6 +56,7 @@ public class PhotosActivity extends Activity {
 
 		addListenerOnMainMenuButton();
 		addListenerOnTrophiesButton();
+		addListenerOnInventoryButton();
 	}
 
 	/**
@@ -81,6 +85,21 @@ public class PhotosActivity extends Activity {
 				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
 				startActivity(i);
 
+			}
+		});
+	}
+	
+	/**
+	 * When the Inventory Button is pressed,
+	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
+	 */
+	private void addListenerOnInventoryButton() {
+		inventory = (Button) findViewById(R.id.inventory_button_photos);
+		inventory.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), InventoryActivity.class);
+				startActivity(i);
 			}
 		});
 	}

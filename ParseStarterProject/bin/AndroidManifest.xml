@@ -61,6 +61,10 @@
             android:name=".PhotosActivity">
         </activity>
         
+         <activity
+             android:name=".InventoryActivity">
+         </activity>
+        
     </application>
   
 </manifest>
