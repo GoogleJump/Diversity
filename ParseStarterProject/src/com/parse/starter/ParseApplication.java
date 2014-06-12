@@ -4,14 +4,13 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 public class ParseApplication extends Application {
 
 	@Override
 	public void onCreate() {
 
-		super.onCreate();		
+		super.onCreate();
 
 		// must register the ParseObjects
 		ParseObject.registerSubclass(Level.class);

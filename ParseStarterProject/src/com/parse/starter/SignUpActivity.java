@@ -1,8 +1,5 @@
 package com.parse.starter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 /**
@@ -113,7 +109,7 @@ public class SignUpActivity extends Activity {
       return true;
     } else {
       return false;
-    }
-  }
+		}
+	}
 
 }

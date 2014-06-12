@@ -21,7 +21,7 @@ public class MainMenuActivity extends Activity {
 	private Button trophies;
 	private Button photos;
 	private Button inventory;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,6 +47,7 @@ public class MainMenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
+
 				int state = 0;
 				if (User.getCurrentUser() instanceof User)
 					state = ((User) User.getCurrentUser()).getState();
@@ -79,26 +80,26 @@ public class MainMenuActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
-	 * When the Trophies Button is pressed,
-	 * 		changes to trophies page, where all items collected by the current user is displayed 
+	 * When the Trophies Button is pressed, changes to trophies page, where all
+	 * items collected by the current user is displayed
 	 */
 	private void addListenerOnTrophiesButton() {
 		trophies = (Button) findViewById(R.id.trophies_button_mm);
 		trophies.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
+				Intent i = new Intent(MainMenuActivity.this,
+						TrophiesActivity.class);
 				startActivity(i);
 			}
 		});
 	}
 
-
 	/**
-	 * When the Photos Button is pressed,
-	 * 		changes to Photo gallery, where all characters collected by the current user is displayed 
+	 * When the Photos Button is pressed, changes to Photo gallery, where all
+	 * characters collected by the current user is displayed
 	 */
 	private void addListenerOnPhotosButton() {
 		photos = (Button) findViewById(R.id.photos_button_mm);
