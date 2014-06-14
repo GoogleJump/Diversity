@@ -2,19 +2,9 @@ package com.parse.starter;
 
 import java.util.ArrayList;
 
-//import android.util.Log;
-
-
-
-import android.content.Intent;
-import android.widget.Toast;
-
-import com.parse.ParseACL;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+//import android.util.Log;
 
 /**
 * User is a read and write object.
@@ -38,7 +28,7 @@ public class User extends ParseUser {
 		this.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
 		this.put("puzzleID", puzzle);
 		this.put("currentItem", "coffee"); // hardcoded for now
-		this.put("currentIngredient", "water"); // hardcoded for now
+		this.put("currentMaterial", "water"); // hardcoded for now
 		ArrayList<String> itemsCollected = new ArrayList<String>();
 		this.put("itemsCollected", itemsCollected);
 		this.put("currentCharacter", "Pusheen"); // hardcoded for now
@@ -76,21 +66,27 @@ public class User extends ParseUser {
 		return getString("currentItem");
 	}
 	
-	public String getIngredient() {
-		return getString("currentIngredient");
+	public String getMaterial() {
+		return getString("currentMaterial");
 	}
 	
 	
-    // store the objectIDs of the items
+    // store the names of the items
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getItemsCollected() {
 		return (ArrayList<String>) get("itemsCollected");
 	}
 	
-	// store the objectIDs of the items
+	// store the names of the characters
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getCharactersCollected() {
 		return (ArrayList<String>) get("charactersCollected");
+	}
+	
+	// store the names of the materials
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getMaterialsCollected() {
+		return (ArrayList<String>) get("materialsCollected");
 	}
 
 	public void incrementPoints(int points) {
@@ -114,16 +110,20 @@ public class User extends ParseUser {
 	}
 	
 	
-	public void addCollectedItem(String item) {
+	public void addItemCollected(String item) {
 		this.add("itemsCollected", item);
 		saveInBackground();
 	}
 	
-	public void addCollectedCharacter(String character) {
+	public void addCharacterCollected(String character) {
 		this.add("charactersCollected",  character);
 		saveInBackground();
 	}
-
+	
+	public void addMaterialCollected(String material) {
+		this.add("materialsCollected",  material);
+		saveInBackground();
+	}
 
 }
 

@@ -1,15 +1,15 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import java.util.ArrayList;
+
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
 
 /**
  * This class is an example of how to persist data to cloud
- * and link a view to an activity.  
+ * and link a view to an activity. For testing purposes only. 
  *
  */
 public class PersistToCloudActivity extends Activity {
@@ -21,18 +21,6 @@ public class PersistToCloudActivity extends Activity {
 		// set view to the persist_to_cloud.xml
 		setContentView(R.layout.persist_to_cloud);
 		setTitle(R.string.app_name);
-
-//		
-//		// Persist User object
-//		////User user = new User("username", "password", "email@example.com", 100);
-//		User user = new User();
-//		user.put("points", 0);
-//		user.put("levelAt", 1);
-//		user.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
-//		user.put("puzzleID", 101);
-//		user.put("currentItem", "coffee");
-//		user.put("currentIngredient", "water");
-//		user.saveInBackground();
 		
 		// Persist Item object
 		Item itemObject = new Item();
