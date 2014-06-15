@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -62,50 +63,57 @@ public class MapActivity extends Activity implements LocationListener {
 		findViewById(R.id.randomize_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				locateItems();
+				locateMaterials();
 			}
 		});
 
-		findViewById(R.id.claim_items_button).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				claimItem();
-			}
-		});
+//		findViewById(R.id.claim_items_button).setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				claimItem();
+//			}
+//		});
 
 		findViewById(R.id.locate_items_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				locateItems();
+				locateMaterials();
 			}
 		});
 	}
 
-	private void locateItems() {
+	private void locateMaterials() {
 		ArrayList<String> itemsCollected = user.getItemsCollected();
 		Collections.shuffle(itemsCollected);
 		// pick the first 5 items in the shuffled list
+		
 
 	}
 
 	private void claimItem() {
-		// check location
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		Log.d("Map Activity", "before locationManager in onClaimItems");
+		// Acquire a reference to the system Location Manager
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		
+		// Define a listener that responds to location updates
+		LocationListener locationListener = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				Log.d("Map Activity", "in claimItem method");
+				// Called when a new location is found by the network location
+				// provider.
+				onLocationChanged(location);
+			}
 
-		Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
-	    Location location = locationManager.getLastKnownLocation(provider);
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+			}
 
+			public void onProviderEnabled(String provider) {
+			}
 
-		// Initialize the location fields
-		if (location != null) {
-			onLocationChanged(location);
-		} else {
-
-			// do something
-			System.out.println("Do something");
-		}
+			public void onProviderDisabled(String provider) {
+			}
+		};
 
 	}
 

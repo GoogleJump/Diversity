@@ -18,6 +18,7 @@ public class ParseApplication extends Application {
 		ParseObject.registerSubclass(User.class);
 		ParseObject.registerSubclass(Item.class);
 		ParseObject.registerSubclass(Character.class);
+		ParseObject.registerSubclass(Material.class);
 
 		// Add your initialization code here
 		Parse.initialize(this, "xpqgrjmUYorIPfo8bUJ3pzj5Idz830HPpqiIT33g",
