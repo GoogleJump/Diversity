@@ -1,16 +1,19 @@
 package com.parse.starter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +22,15 @@ import android.view.View.OnClickListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.internal.ay;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -32,11 +38,15 @@ import com.parse.ParseQuery;
 public class MapActivity extends BaseActivity implements LocationListener, ConnectionCallbacks,
 		OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 	private User user;
-	private LocationManager locationManager;
-	private String provider;
+	private final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+	private Location location;
+	private final int RADIUS = 20000; // in meters
 
 	private GoogleMap map;
 	private LocationClient locationClient;
+	private ArrayList<GooglePlace> places = new ArrayList<GooglePlace>();
+
+	private Gson gson;
 
 	private HashMap<String, ArrayList<String>> materialLocations = new HashMap<String, ArrayList<String>>();
 
@@ -59,6 +69,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 		locationClient = new LocationClient(this, this, this);
 
+		// Default because current location cannot be determined at start time
 		LatLng myLocation = new LatLng(37.4220, -122.0804);
 
 		if (locationClient != null && locationClient.isConnected()) {
@@ -72,6 +83,8 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		addMapActionListeners();
 
 		user = ((User) User.getCurrentUser());
+
+		gson = new Gson();
 	}
 
 	@SuppressLint("NewApi")
@@ -130,6 +143,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 			@Override
 			public void onClick(View v) {
+				claimItem();
 				showMyLocation(v);
 			}
 		});
@@ -141,18 +155,74 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			}
 		});
 	}
+	
+	private void claimItem() {
+		if (locationClient != null && locationClient.isConnected()) {
+			location = locationClient.getLastLocation();
+			// location is close to any markers, do something
+		}
+	}
 
 	private void locateMaterials() {
 		// get current location
 		if (locationClient != null && locationClient.isConnected()) {
-			Location location = locationClient.getLastLocation();
-
+			location = locationClient.getLastLocation();
 		}
 
 		// pick five or less materials and their search terms
 		populateMaterialLocations();
-		
-		// find nearby places
+
+		// find nearby places and place markers
+		callGooglePlacesAPI();
+	}
+
+	private void callGooglePlacesAPI() {
+		for (String key : materialLocations.keySet()) {
+			for (String searchTerm : materialLocations.get(key)) {
+				String request = PLACES_URL + "&location=" + location.getLatitude() + "," + location.getLongitude()
+						+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm;
+				String response = getPlaces(request);
+				if (response != null) {
+					parseResponse(response);
+					placeMarkers();
+				}
+			}
+		}
+	}
+
+	private void parseResponse(String response) {
+		GooglePlacesResponse placesJson = gson.fromJson(response, GooglePlacesResponse.class);
+		places = placesJson.getResults();
+
+	}
+
+	private void placeMarkers() {
+		for (GooglePlace place : places) {
+			map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(), place.getLng())));
+		}
+	}
+
+	private String getPlaces(String url) {
+		try {
+			URL serverUrl = new URL(url);
+
+			// connect to the server
+			BufferedReader in = new BufferedReader(new InputStreamReader(serverUrl.openStream()));
+
+			// read server response
+			String inputLine;
+			StringBuilder serverOutput = new StringBuilder();
+			while ((inputLine = in.readLine()) != null)
+				serverOutput.append(inputLine);
+			in.close();
+			return serverOutput.toString();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	/**
@@ -188,32 +258,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			//
 			// }
 		}
-
-	}
-
-	private void claimItem() {
-		Log.d("Map Activity", "before locationManager in onClaimItems");
-		// Acquire a reference to the system Location Manager
-		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-		// Define a listener that responds to location updates
-		LocationListener locationListener = new LocationListener() {
-			public void onLocationChanged(Location location) {
-				Log.d("Map Activity", "in claimItem method");
-				// Called when a new location is found by the network location
-				// provider.
-				onLocationChanged(location);
-			}
-
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-			}
-
-			public void onProviderEnabled(String provider) {
-			}
-
-			public void onProviderDisabled(String provider) {
-			}
-		};
 
 	}
 

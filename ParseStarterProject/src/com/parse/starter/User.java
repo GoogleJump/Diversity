@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
-//import android.util.Log;
 
 /**
 * User is a read and write object.
