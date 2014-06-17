@@ -70,6 +70,9 @@ public class User extends ParseUser {
 		return getString("currentIngredient");
 	}
 	
+	public ArrayList<String> getMaterialsCollected() {
+		return (ArrayList<String>) get("materialsCollected"); 
+	}
 	
     // store the objectIDs of the items
 	@SuppressWarnings("unchecked")

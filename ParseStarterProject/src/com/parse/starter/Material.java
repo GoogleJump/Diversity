@@ -3,6 +3,7 @@ package com.parse.starter;
 import java.util.ArrayList;
 
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 @ParseClassName("Material")
@@ -16,6 +17,10 @@ public class Material extends ParseObject {
 	
 	public ArrayList<String> getSearchTerms() {
 		return (ArrayList<String>) get("searchTerms");
+	}
+	
+	public ParseGeoPoint getParseGeoPoint() {
+		return getParseGeoPoint("location");
 	}
 
 }
