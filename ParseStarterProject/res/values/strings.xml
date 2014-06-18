@@ -33,5 +33,11 @@
     <string name="photos_view_name">Your Collected Characters</string>
     <string name="inventory">Inventory</string>
     <string name="inventory_view_name">Your Collected Materials</string>
+    
+    <string name="choose_a_character">Choose a Character</string>
+    <string-array name="character_array">
+        <item>Dave the Surfer</item>
+        <item>Velma the Grandma</item>
+    </string-array>
 
 </resources>
