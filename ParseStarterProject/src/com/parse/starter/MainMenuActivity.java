@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 public class MainMenuActivity extends Activity {
 
 	private Button startContinue;
-	private Button logout;
+	private Button settings;
 	private Button trophies;
 	private Button photos;
 	private Button inventory;
@@ -31,7 +31,7 @@ public class MainMenuActivity extends Activity {
 		setTitle(R.string.main_menu);
 
 		addListenerOnStartContinueButton();
-		addListenerOnLogOutButton();
+		addListenerOnSettingsButton();
 		addListenerOnTrophiesButton();
 		addListenerOnPhotosButton();
 		addListenerOnInventoryButton();
@@ -47,35 +47,31 @@ public class MainMenuActivity extends Activity {
 		startContinue.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
-
-				int state = 0;
-				if (User.getCurrentUser() instanceof User)
-					state = ((User) User.getCurrentUser()).getState();
-			
-				// if client is on GPS section
-				if (state == 0) {
-					i = new Intent(v.getContext(), GPSActivity.class);
+				if (User.getCurrentUser() instanceof User) {
+					//temporarily PuzzleActivity, will be changed to CharacterActivity.class
+					Intent i = new Intent(v.getContext(), PuzzleActivity.class);
+					String character = ((User) User.getCurrentUser()).getCurrentCharacter();
+					if (character != null) {
+						i = new Intent(v.getContext(), GPSActivity.class);
+					}
+					startActivity(i);
 				}
-				startActivity(i);
+				else {
+					// not very sure
+				}
 			}
 		});
 	}
 
 	/**
-	 * When the Logout Button is pressed, changes to Intro View
+	 * When the Settings Button is pressed, changes to Settings View
 	 */
-	private void addListenerOnLogOutButton() {
-		logout = (Button) findViewById(R.id.logout_button_mm);
-		logout.setOnClickListener(new OnClickListener() {
+	private void addListenerOnSettingsButton() {
+		settings = (Button) findViewById(R.id.settings_button_mm);
+		settings.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// Call the Parse log out method
-				ParseUser.logOut();
-				// Start and intent for the dispatch activity
 				Intent intent = new Intent(MainMenuActivity.this,
-						ParseStarterProjectActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-						| Intent.FLAG_ACTIVITY_NEW_TASK);
+						SettingsActivity.class);
 				startActivity(intent);
 			}
 		});

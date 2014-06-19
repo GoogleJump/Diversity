@@ -70,6 +70,10 @@ public class User extends ParseUser {
 		return getString("currentMaterial");
 	}
 	
+	public String getCurrentCharacter() {
+		return getString("currentCharacter");
+	}
+	
 	
     // store the names of the items
 	@SuppressWarnings("unchecked")
@@ -123,6 +127,27 @@ public class User extends ParseUser {
 	public void addMaterialCollected(String material) {
 		this.add("materialsCollected",  material);
 		saveInBackground();
+	}
+	
+	
+	/**
+	 * resets the user's credentials when they decide to restart a game
+	 */
+	public void restart() {
+		this.put("points", 0);
+		this.put("levelAt", 1);
+		this.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not gps, 2 = at location
+		this.put("puzzleID", 0);
+		this.put("currentItem", "coffee"); // hardcoded for now
+		this.put("currentMaterial", "water"); // hardcoded for now
+		ArrayList<String> itemsCollected = new ArrayList<String>();
+		this.put("itemsCollected", itemsCollected);
+		this.put("currentCharacter", "Pusheen"); // hardcoded for now
+		ArrayList<String> charactersCollected = new ArrayList<String>();
+		this.put("charactersCollected", charactersCollected);
+		
+		//i get an error when i try to do this...
+		//saveInBackground();
 	}
 
 }
