@@ -10,6 +10,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * SettingsActivity displays the setting view of the app
+ *
+ */
 public class SettingsActivity extends Activity {
 	
 	private Button mainMenu;
@@ -51,6 +55,9 @@ public class SettingsActivity extends Activity {
 		});
 	}
 	
+	/*
+	 * When the MainMenu Button is pressed, changes to MainMenu View
+	 */
 	private void addListenerOnMainMenuButton() {
 		mainMenu = (Button) findViewById(R.id.main_menu_button_set);
 		mainMenu.setOnClickListener(new OnClickListener() {
