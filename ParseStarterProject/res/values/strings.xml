@@ -21,7 +21,7 @@
     <string name="button_send">Submit</string>
     <string name="main_menu">Main Menu</string>
     
-    <string name="gps_view_name">GPS</string>
+    <string name="gps_view_name">Map</string>
     <string name="submit">Submit</string>
     
     <string name="start_continue">Start/Continue</string>
@@ -33,5 +33,6 @@
     <string name="photos_view_name">Your Collected Characters</string>
     <string name="inventory">Inventory</string>
     <string name="inventory_view_name">Your Collected Materials</string>
-
+    <string name="restart">Restart</string>
+    <string name="puz_desc">Puzzle</string>
 </resources>

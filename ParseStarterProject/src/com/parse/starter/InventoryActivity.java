@@ -54,24 +54,24 @@ public class InventoryActivity extends Activity {
 		ArrayList<String> materialsCollected = null;
 		if (currentUser != null) {
 			materialsCollected = currentUser.getMaterialsCollected();
+			
+			// display collected items as strings
+			for (int i = 0; i < materialsCollected.size(); i++){
+				currentMaterial = new TextView(this);
+				currentMaterial.setText(materialsCollected.get(i));
+				lView.addView(currentMaterial);
+				
+			}
+			
+			addListenerOnMainMenuButton();
+			addListenerOnPhotosButton();
+			addListenerOnTrophiesButton();
 		}
 		else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
-		}
-				
+		}		
 		
-		// display collected items as strings
-		for (int i = 0; i < materialsCollected.size(); i++){
-			currentMaterial = new TextView(this);
-			currentMaterial.setText(materialsCollected.get(i));
-			lView.addView(currentMaterial);
-			
-		}
-		
-		addListenerOnMainMenuButton();
-		addListenerOnPhotosButton();
-		addListenerOnTrophiesButton();
 	}
 		
 	

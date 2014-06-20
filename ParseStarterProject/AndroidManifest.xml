@@ -64,6 +64,10 @@
          <activity
              android:name=".InventoryActivity">
          </activity>
+         
+         <activity
+             android:name=".SettingsActivity">
+         </activity>
         
     </application>
   
