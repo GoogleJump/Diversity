@@ -49,10 +49,10 @@ public class MainMenuActivity extends Activity {
 			public void onClick(View v) {
 				if (User.getCurrentUser() instanceof User) {
 					//temporarily PuzzleActivity, will be changed to CharacterActivity.class
-					Intent i = new Intent(v.getContext(), PickCharacterActivity.class);
+					Intent i = new Intent(v.getContext(), PuzzleActivity.class);
 					String character = ((User) User.getCurrentUser()).getCurrentCharacter();
 					if (character != null) {
-						i = new Intent(v.getContext(), GPSActivity.class);
+						//i = new Intent(v.getContext(), GPSActivity.class);
 					}
 					startActivity(i);
 				}

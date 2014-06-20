@@ -5,20 +5,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <Button android:id="@+id/main_menu_button_anagram"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" />
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal" >
+        
+        <Button android:id="@+id/main_menu_button_puzzle"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/main_menu" />
+        
+        <RelativeLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent">
+        	<ImageButton android:background="@null"
+        	    android:contentDescription="@string/puz_desc"
+        	    android:id="@+id/new_puzzle_puz"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="fill_parent"
+        	    android:layout_alignParentRight="true"
+        	    android:layout_alignParentTop="true"
+        	    android:padding="10dip"
+        	    android:scaleType="fitXY"
+        	    android:src="@drawable/puzzle_piece"
+        	    android:adjustViewBounds="true"/>
+        	
+        </RelativeLayout>
+       
+     </LinearLayout>
         
     <TextView
         style="@style/BiggerFont"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
 	    android:text="@string/anagram_view_name" />
 
     <TextView android:id="@+id/question"
       	android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="5sp"/>
     
     <EditText
                 android:id="@+id/anagramInput"
@@ -32,14 +58,28 @@
                 android:id="@+id/anagramSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="@string/submit" />
 
 	
-    <TextView android:id="@+id/rightorwrong"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"/>	
+		    
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/gps_button_puzzle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="@string/gps_view_name" />
+        
+    </RelativeLayout>
 </LinearLayout>
