@@ -1,20 +1,27 @@
 package com.parse.starter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +29,6 @@ import android.view.View.OnClickListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.internal.ay;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,7 +37,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -39,20 +44,19 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 	private User user;
 	private final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+	private final String GOOGLE_PLACES_API_KEY ="AIzaSyDKsYGo4Nk-aGBHl3JaOzorYp85TP9h6j4";
 	private Location location;
 	private final int RADIUS = 20000; // in meters
 
 	private GoogleMap map;
 	private LocationClient locationClient;
-	private ArrayList<GooglePlace> places = new ArrayList<GooglePlace>();
+	private List<GooglePlace> places = new ArrayList<GooglePlace>();
 
 	private Gson gson;
 
-	private HashMap<String, ArrayList<String>> materialLocations = new HashMap<String, ArrayList<String>>();
+	private HashSet<Material> materialSearchTerms = new HashSet<Material>();
 
-	private static final LocationRequest REQUEST = LocationRequest.create().setInterval(5000).setFastestInterval(16) // 16ms
-																														// =
-																														// 60fps
+	private static final LocationRequest REQUEST = LocationRequest.create().setInterval(5000).setFastestInterval(16)
 			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 	@SuppressLint("NewApi")
@@ -60,8 +64,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-
-		// If map wants to be centered
 
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
@@ -85,6 +87,11 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		user = ((User) User.getCurrentUser());
 
 		gson = new Gson();
+
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 	}
 
 	@SuppressLint("NewApi")
@@ -105,13 +112,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		if (locationClient == null) {
 			locationClient = new LocationClient(getApplicationContext(), this, // ConnectionCallbacks
 					this); // OnConnectionFailedListener
-		}
-	}
-
-	public void showMyLocation(View view) {
-		if (locationClient != null && locationClient.isConnected()) {
-			Log.d("Map Activity", locationClient.getLastLocation().toString());
-			System.out.println(locationClient.getLastLocation());
 		}
 	}
 
@@ -144,7 +144,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			@Override
 			public void onClick(View v) {
 				claimItem();
-				showMyLocation(v);
 			}
 		});
 
@@ -155,7 +154,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			}
 		});
 	}
-	
+
 	private void claimItem() {
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
@@ -177,22 +176,27 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 	}
 
 	private void callGooglePlacesAPI() {
-		for (String key : materialLocations.keySet()) {
-			for (String searchTerm : materialLocations.get(key)) {
+		for (Material material : materialSearchTerms) {
+			for (String searchTerm : material.getSearchTerms()) {
 				String request = PLACES_URL + "&location=" + location.getLatitude() + "," + location.getLongitude()
-						+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm;
-				String response = getPlaces(request);
-				if (response != null) {
-					parseResponse(response);
+						+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm + "&key=" + GOOGLE_PLACES_API_KEY;
+				System.out.println(request);
+				InputStream response = getPlaces(request);
+				Reader reader = new InputStreamReader(response);
+
+				if (reader != null) {
+					System.out.println("HEREEEEEEEEE");
+					parseResponse(reader);
 					placeMarkers();
 				}
 			}
 		}
 	}
 
-	private void parseResponse(String response) {
-		GooglePlacesResponse placesJson = gson.fromJson(response, GooglePlacesResponse.class);
+	private void parseResponse(Reader reader) {
+		GooglePlacesResponse placesJson = gson.fromJson(reader, GooglePlacesResponse.class);
 		places = placesJson.getResults();
+		System.out.println(places.get(0).getName());
 
 	}
 
@@ -202,26 +206,52 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		}
 	}
 
-	private String getPlaces(String url) {
+	private InputStream getPlaces(String url) {
+		// try {
+
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet getRequest = new HttpGet(url);
+
 		try {
-			URL serverUrl = new URL(url);
+			HttpResponse getResponse = client.execute(getRequest);
+			final int statusCode = getResponse.getStatusLine().getStatusCode();
 
-			// connect to the server
-			BufferedReader in = new BufferedReader(new InputStreamReader(serverUrl.openStream()));
+			if (statusCode != HttpStatus.SC_OK) {
+				Log.w(getClass().getSimpleName(), "Error " + statusCode + " for URL " + url);
+				return null;
+			}
 
-			// read server response
-			String inputLine;
-			StringBuilder serverOutput = new StringBuilder();
-			while ((inputLine = in.readLine()) != null)
-				serverOutput.append(inputLine);
-			in.close();
-			return serverOutput.toString();
-		} catch (MalformedURLException e) {
+			HttpEntity getResponseEntity = getResponse.getEntity();
+			return getResponseEntity.getContent();
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+
+		// URL serverUrl = new URL(url);
+
+		// connect to the server
+		// BufferedReader in = new BufferedReader(new
+		// InputStreamReader(serverUrl.openStream()));
+		//
+		// // read server response
+		// String inputLine;
+		// StringBuilder serverOutput = new StringBuilder();
+		// while ((inputLine = in.readLine()) != null)
+		// serverOutput.append(inputLine);
+		// in.close();
+		// return serverOutput.toString();
+		// } catch (MalformedURLException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// return null;
 
 	}
 
@@ -236,19 +266,18 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		ParseQuery<Material> query = ParseQuery.getQuery(Material.class);
 		query.whereContainedIn("name", materials);
 
-		materialLocations = new HashMap<String, ArrayList<String>>();
+		materialSearchTerms = new HashSet<Material>();
 
-		query.findInBackground(new FindCallback<Material>() {
-			public void done(List<Material> resultsList, ParseException e) {
-				if (e == null) {
-					for (Material m : resultsList) {
-						materialLocations.put(m.getName(), m.getSearchTerms());
-					}
-				} else {
-					Log.d("Map Activity", e.toString());
-				}
+		try {
+			List<Material> resultsList = query.find();
+			for (Material m : resultsList) {
+				materialSearchTerms.add(m);
 			}
-		});
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private void placeMaterials(List<Material> materials) {
@@ -288,7 +317,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 	public void onLocationChanged(Location location) {
 		int lat = (int) (location.getLatitude());
 		int lng = (int) (location.getLongitude());
-		System.out.printf("lat: %d, long: %d", lat, lng);
 	}
 
 	@Override

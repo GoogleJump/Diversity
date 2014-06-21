@@ -1,12 +1,29 @@
 package com.parse.starter;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
 
 public class GooglePlacesResponse {
-	private ArrayList<String> html_attributions;
-	private ArrayList<GooglePlace> results;
-	
-	public ArrayList<GooglePlace> getResults() {
+
+	@SerializedName("html_attributions")
+	List<String> html_attributions;
+
+	@SerializedName("next_page_token")
+	String next_page_token;
+
+	@SerializedName("results")
+	List<GooglePlace> results;
+
+	@SerializedName("status")
+	String status;
+
+	public List<GooglePlace> getResults() {
 		return results;
 	}
+
+	public List<String> getHtmlResponse() {
+		return html_attributions;
+	}
+
 }
