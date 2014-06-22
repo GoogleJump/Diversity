@@ -84,10 +84,6 @@ public class User extends ParseUser {
 		return (ArrayList<String>) get("materialsSolved"); 
 	}
 	
-	public ArrayList<String> getMaterialsCollected() {
-		return (ArrayList<String>) get("materialsCollected"); 
-	}
-	
     // store the names of the items
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getItemsCollected() {
