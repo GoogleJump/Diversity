@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,15 +18,17 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -36,30 +39,33 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 public class MapActivity extends BaseActivity implements LocationListener, ConnectionCallbacks,
 		OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
-	private User user;
 	private final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 	private final String GOOGLE_PLACES_API_KEY = "AIzaSyDKsYGo4Nk-aGBHl3JaOzorYp85TP9h6j4";
+	private static final LocationRequest REQUEST = LocationRequest.create().setInterval(5000).setFastestInterval(16)
+			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 	private Location location;
 	private final int RADIUS = 20000; // in meters
 
-	private GoogleMap map;
-	private LocationClient locationClient;
-	private List<GooglePlace> places = new ArrayList<GooglePlace>();
-
 	private Gson gson;
 
+	private User user;
+	private GoogleMap map;
+	private LocationClient locationClient;
+	
+	private HashMap<GooglePlace, Material> placeToMaterial = new HashMap<GooglePlace, Material>();
+	private List<GooglePlace> places = new ArrayList<GooglePlace>();
 	private HashSet<Material> materialSearchTerms = new HashSet<Material>();
-
-	private static final LocationRequest REQUEST = LocationRequest.create().setInterval(5000).setFastestInterval(16)
-			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
+	private HashMap<GooglePlace, Marker> markers = new HashMap<GooglePlace, Marker>();
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,30 +82,23 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		LatLng myLocation = new LatLng(37.4220, -122.0804);
 
 		if (locationClient != null && locationClient.isConnected()) {
+			System.out.println("here");
 			Location currentLocation = locationClient.getLastLocation();
 			myLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 		}
 
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
 
-		addTransitionListeners();
-		addMapActionListeners();
-
 		user = ((User) User.getCurrentUser());
-
 		gson = new Gson();
 
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-		}
-		
+		addTransitionListeners();
+		addMapActionListeners();
 	}
 
 	@SuppressLint("NewApi")
 	private void setUpMapIfNeeded() {
-		// Do a null check to confirm that we have not already instantiated the
-		// map.
+		// Do a null check to confirm that we have not already instantiated the map
 		if (map == null) {
 			// Try to obtain the map from the SupportMapFragment.
 			map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -142,7 +141,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		});
 
 		findViewById(R.id.claim_items_button).setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				claimItem();
@@ -160,8 +158,71 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 	private void claimItem() {
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
-			// location is close to any markers, do something
+
+			for (GooglePlace place : places) {
+				double materialLat = place.getLat();
+				double materialLng = place.getLng();
+
+				double locationLat = location.getLatitude();
+				double locationLng = location.getLongitude();
+
+				// Randomly determined what is "close enough" in terms of the threshold
+				if (Math.sqrt(Math.pow((materialLat - locationLat), 2) + Math.pow((materialLng - locationLng), 2)) < .2) {
+					Marker closestMarker = markers.get(place);
+					closestMarker.remove();
+
+					// remove this material from the materialSolved and to the materialsCollected list
+					Material closestMaterial = placeToMaterial.get(place);
+					
+					updateUser(closestMaterial.getName());
+				}
+			}
 		}
+	}
+
+	private void updateUser(String material) {
+		// need popup to reveal item
+		showMaterialFoundDialog(material);
+
+		// need background update
+		ArrayList<String> materialsSolved = user.getMaterialsSolved();
+		materialsSolved.remove(material);
+
+		ArrayList<String> materialsCollected = user.getMaterialsCollected();
+		materialsCollected.add(material);
+
+		user.saveInBackground(new SaveCallback() {
+			public void done(ParseException e) {
+				if (e != null) {
+					Log.d("Map Activity, updateUser", e.toString());
+				}
+			}
+		});
+	}
+
+	private void showMaterialFoundDialog(String material) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Congrats!");
+
+		// set dialog message
+		alertDialogBuilder.setMessage("You found a " + material).setCancelable(false)
+				.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
+		ImageView image = new ImageView(this);
+		image.setImageResource(R.drawable.map);
+		
+		alertDialogBuilder.setView(image);
+
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+
 	}
 
 	private void locateMaterials() {
@@ -169,115 +230,104 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 		}
-
-		// pick five or less materials and their search terms
-		populateMaterialLocations();
-
-		// find nearby places and place markers
-		callGooglePlacesAPI();
-
-		// place markers at the location indicated by the place
 		new PlaceMarkersOnMapTask().execute(places);
 	}
 
-	private void callGooglePlacesAPI() {
-		for (Material material : materialSearchTerms) {
-			for (String searchTerm : material.getSearchTerms()) {
-				String request = PLACES_URL + "&location=" + location.getLatitude() + "," + location.getLongitude()
-						+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm + "&key=" + GOOGLE_PLACES_API_KEY;
-				InputStream response = getPlaces(request);
-				Reader reader = new InputStreamReader(response);
+	/**
+	 * Async task to do three things: 1. Query the database for the materials that the user has collected 2. Get places
+	 * that are related to <=5 materials 3. Render markers on those places
+	 * 
+	 * Remember that only the main thread can access the GUI elements which is why rendering the markers are is the post
+	 * execution of the thread.
+	 */
+	private class PlaceMarkersOnMapTask extends AsyncTask<List<GooglePlace>, Void, Void> {
+		protected Void doInBackground(List<GooglePlace>... params) {
+			populateMaterialLocations();
 
-				if (reader != null) {
-					// go on to the next material that the user has collected
-					if (parseResponse(reader)) {
-						break;
+			for (Material material : materialSearchTerms) {
+				for (String searchTerm : material.getSearchTerms()) {
+					String request = PLACES_URL + "&location=" + location.getLatitude() + "," + location.getLongitude()
+							+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm + "&key=" + GOOGLE_PLACES_API_KEY;
+					InputStream response = getPlaces(request);
+					Reader reader = new InputStreamReader(response);
+
+					if (reader != null) {
+						// go on to the next material that the user has solved
+						if (parseResponse(material, reader)) {
+							break;
+						}
 					}
 				}
 			}
+			return null;
 		}
 
-	}
+		/**
+		 * Put in the five or less materials in the hashmap
+		 */
+		private void populateMaterialLocations() {
+			ArrayList<String> materialsSolved = user.getMaterialsSolved();
+			Collections.shuffle(materialsSolved);
+			int listLength = Math.min(5, materialsSolved.size());
+			ArrayList<String> materials = new ArrayList<String>(materialsSolved.subList(0, listLength));
+			ParseQuery<Material> query = ParseQuery.getQuery(Material.class);
+			query.whereContainedIn("name", materials);
 
-	private boolean parseResponse(Reader reader) {
-		GooglePlacesResponse placesJson = gson.fromJson(reader, GooglePlacesResponse.class);
-		List<GooglePlace> resultsList = placesJson.getResults();
-		if (resultsList.size() > 0) {
-			places.add(resultsList.get(0));
-			return true;
-		}
-		return false;
-	}
+			materialSearchTerms = new HashSet<Material>();
 
-	// private void placeMarkers() {
-	// for (GooglePlace place : places) {
-	// map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(),
-	// place.getLng())));
-	// }
-	// }
-
-	private InputStream getPlaces(String url) {
-		// try {
-
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet getRequest = new HttpGet(url);
-
-		try {
-			HttpResponse getResponse = client.execute(getRequest);
-			final int statusCode = getResponse.getStatusLine().getStatusCode();
-
-			if (statusCode != HttpStatus.SC_OK) {
-				Log.w(getClass().getSimpleName(), "Error " + statusCode + " for URL " + url);
-				return null;
+			try {
+				List<Material> resultsList = query.find();
+				for (Material m : resultsList) {
+					materialSearchTerms.add(m);
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-
-			HttpEntity getResponseEntity = getResponse.getEntity();
-			return getResponseEntity.getContent();
-
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * Put in the five or less materials in the hashmap
-	 */
-	private void populateMaterialLocations() {
-		ArrayList<String> materialsCollected = user.getMaterialsCollected();
-		Collections.shuffle(materialsCollected);
-		int listLength = Math.min(5, materialsCollected.size());
-		ArrayList<String> materials = new ArrayList<String>(materialsCollected.subList(0, listLength));
-		ParseQuery<Material> query = ParseQuery.getQuery(Material.class);
-		query.whereContainedIn("name", materials);
-
-		materialSearchTerms = new HashSet<Material>();
-
-		try {
-			List<Material> resultsList = query.find();
-			for (Material m : resultsList) {
-				materialSearchTerms.add(m);
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-	}
+		private InputStream getPlaces(String url) {
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet getRequest = new HttpGet(url);
 
-	private class PlaceMarkersOnMapTask extends AsyncTask<List<GooglePlace>, Void, Void> {
+			try {
+				HttpResponse getResponse = client.execute(getRequest);
+				final int statusCode = getResponse.getStatusLine().getStatusCode();
 
-		protected Void doInBackground(List<GooglePlace>... params) {
-			List<GooglePlace> places = params[0];
+				if (statusCode != HttpStatus.SC_OK) {
+					Log.w(getClass().getSimpleName(), "Error " + statusCode + " for URL " + url);
+					return null;
+				}
 
-			for (GooglePlace place : places) {
-				map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(), place.getLng())));
+				HttpEntity getResponseEntity = getResponse.getEntity();
+				return getResponseEntity.getContent();
+
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			return null;
+		}
+
+		private boolean parseResponse(Material material, Reader reader) {
+			GooglePlacesResponse placesJson = gson.fromJson(reader, GooglePlacesResponse.class);
+			List<GooglePlace> resultsList = placesJson.getResults();
+			if (resultsList.size() > 0) {
+				GooglePlace materialPlace = resultsList.get(0);
+				places.add(materialPlace);
+				placeToMaterial.put(materialPlace, material);
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			for (GooglePlace place : places) {
+				System.out.println(place.getName());
+				Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(), place.getLng())));
+				markers.put(place, marker);
+			}
 		}
 	}
 
@@ -306,14 +356,10 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 	@Override
 	public void onLocationChanged(Location location) {
-		int lat = (int) (location.getLatitude());
-		int lng = (int) (location.getLongitude());
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -323,26 +369,18 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 	@Override
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
