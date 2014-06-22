@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -44,7 +45,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 	private User user;
 	private final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-	private final String GOOGLE_PLACES_API_KEY ="AIzaSyDKsYGo4Nk-aGBHl3JaOzorYp85TP9h6j4";
+	private final String GOOGLE_PLACES_API_KEY = "AIzaSyDKsYGo4Nk-aGBHl3JaOzorYp85TP9h6j4";
 	private Location location;
 	private final int RADIUS = 20000; // in meters
 
@@ -92,6 +93,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		
 	}
 
 	@SuppressLint("NewApi")
@@ -173,6 +175,9 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 		// find nearby places and place markers
 		callGooglePlacesAPI();
+
+		// place markers at the location indicated by the place
+		new PlaceMarkersOnMapTask().execute(places);
 	}
 
 	private void callGooglePlacesAPI() {
@@ -180,31 +185,36 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			for (String searchTerm : material.getSearchTerms()) {
 				String request = PLACES_URL + "&location=" + location.getLatitude() + "," + location.getLongitude()
 						+ "&" + "radius=" + RADIUS + "&keyword=" + searchTerm + "&key=" + GOOGLE_PLACES_API_KEY;
-				System.out.println(request);
 				InputStream response = getPlaces(request);
 				Reader reader = new InputStreamReader(response);
 
 				if (reader != null) {
-					System.out.println("HEREEEEEEEEE");
-					parseResponse(reader);
-					placeMarkers();
+					// go on to the next material that the user has collected
+					if (parseResponse(reader)) {
+						break;
+					}
 				}
 			}
 		}
+
 	}
 
-	private void parseResponse(Reader reader) {
+	private boolean parseResponse(Reader reader) {
 		GooglePlacesResponse placesJson = gson.fromJson(reader, GooglePlacesResponse.class);
-		places = placesJson.getResults();
-		System.out.println(places.get(0).getName());
-
-	}
-
-	private void placeMarkers() {
-		for (GooglePlace place : places) {
-			map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(), place.getLng())));
+		List<GooglePlace> resultsList = placesJson.getResults();
+		if (resultsList.size() > 0) {
+			places.add(resultsList.get(0));
+			return true;
 		}
+		return false;
 	}
+
+	// private void placeMarkers() {
+	// for (GooglePlace place : places) {
+	// map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(),
+	// place.getLng())));
+	// }
+	// }
 
 	private InputStream getPlaces(String url) {
 		// try {
@@ -232,27 +242,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			e.printStackTrace();
 		}
 		return null;
-
-		// URL serverUrl = new URL(url);
-
-		// connect to the server
-		// BufferedReader in = new BufferedReader(new
-		// InputStreamReader(serverUrl.openStream()));
-		//
-		// // read server response
-		// String inputLine;
-		// StringBuilder serverOutput = new StringBuilder();
-		// while ((inputLine = in.readLine()) != null)
-		// serverOutput.append(inputLine);
-		// in.close();
-		// return serverOutput.toString();
-		// } catch (MalformedURLException e) {
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// return null;
-
 	}
 
 	/**
@@ -280,14 +269,16 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 	}
 
-	private void placeMaterials(List<Material> materials) {
-		for (Material m : materials) {
-			ArrayList<String> searchTerms = m.getSearchTerms();
-			// for (String str : searchTerms) {
-			//
-			// }
-		}
+	private class PlaceMarkersOnMapTask extends AsyncTask<List<GooglePlace>, Void, Void> {
 
+		protected Void doInBackground(List<GooglePlace>... params) {
+			List<GooglePlace> places = params[0];
+
+			for (GooglePlace place : places) {
+				map.addMarker(new MarkerOptions().position(new LatLng(place.getLat(), place.getLng())));
+			}
+			return null;
+		}
 	}
 
 	@Override
