@@ -21,8 +21,8 @@ public class Item extends ParseObject {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getIngredients() {
-		return (ArrayList<String>) get("ingredients");
+	public ArrayList<String> getMaterials() {
+		return (ArrayList<String>) get("materials");
 	}
 
 }

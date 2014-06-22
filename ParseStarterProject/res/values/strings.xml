@@ -16,6 +16,7 @@
         <item name="android:textSize">30sp</item>
    </style>
     <string name="puzzle_view_name">Puzzle</string>
+    <string name="anagram_view_name">Anagram</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Submit</string>
     <string name="main_menu">Main Menu</string>
@@ -34,5 +35,7 @@
     <string name="randomize">Randomize</string>
     <string name="claim_items">Claim Items</string>
     <string name="locate_items">Locate Items</string>
+    <string name="inventory">Inventory</string>
+    <string name="inventory_view_name">Your Collected Materials</string>
 
 </resources>

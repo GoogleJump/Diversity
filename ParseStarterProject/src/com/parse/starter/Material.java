@@ -3,7 +3,6 @@ package com.parse.starter;
 import java.util.ArrayList;
 
 import com.parse.ParseClassName;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 @ParseClassName("Material")

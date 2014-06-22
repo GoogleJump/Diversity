@@ -7,17 +7,25 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+import com.parse.starter.Puzzle;
+
 
 /**
  * PuzzleActivity displays the puzzle view: currently, the puzzle view is
@@ -34,29 +42,36 @@ public class PuzzleActivity extends Activity {
 	private CheckBox chk1, chk2, chk3, chk4;
 	private Button mainMenu;
 	private String correctAnswer;
-
+	private EditText anagramView;
+	private Button anagramSubmit;
+	
 	// message displayed to user when they click the CheckBox with text that
 	// doesn't match correctAnswer
+
 	private final String wrongMessage = "This is wrong.";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.puzzle);
-		setTitle(R.string.puzzle_view_name);
-
-		String ingredient = ((User) User.getCurrentUser()).getIngredient();
-
+		
+		String material = "";
+		if (User.getCurrentUser() instanceof User)
+			material = ((User) User.getCurrentUser()).getMaterial();
+		
 		ParseQuery<Puzzle> query = Puzzle.getQuery();
 
-		query.whereEqualTo("ingredient", ingredient);
+		// NOTE: Have to match value type EXACTLY
+		query.whereEqualTo("material", material);
+		
 
 		// choosing a random puzzle from the query
 		query.findInBackground(new FindCallback<Puzzle>() {
 			@Override
 			public void done(List<Puzzle> potentialPuzzles, ParseException e) {
 				if (e == null && potentialPuzzles.size() > 0) {
+					setContentView(R.layout.puzzle);
+					setTitle(R.string.puzzle_view_name);
+					
 					Random randomizer = new Random();
 					Puzzle puzzle = potentialPuzzles.get(randomizer
 							.nextInt(potentialPuzzles.size()));
@@ -90,8 +105,31 @@ public class PuzzleActivity extends Activity {
 					addListenerOnChkAnswer_4();
 
 				} else {
-					// NOT SURE WHAT TO DO HERE!!!
+					// if no puzzle is available, start anagram activity
+					if (e == null && potentialPuzzles.size() == 0) {
+						setContentView(R.layout.anagram);
+						setTitle(R.string.anagram_view_name);
+						
+						String material = "";
+						if (User.getCurrentUser() instanceof User)
+							material = ((User) User.getCurrentUser()).getMaterial();
+						
+						String scrambled = Scramble.scramble(material);
+										
+						TextView question = (TextView) findViewById(R.id.question);
+						question.setText("Can you unscramble: " + scrambled + "?");
+						
+						// Set up the submit form.
+						anagramView = (EditText) findViewById(R.id.anagramInput);
+						correctAnswer = material;
+						
+						anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
+										
+						addListenerOnMainMenuButtonAnagram();
+						addListenerOnAnagramSubmitButton();
+					
 				}
+			}
 			}
 		});
 
@@ -112,8 +150,25 @@ public class PuzzleActivity extends Activity {
 		});
 	}
 
-	// THE SAME ACTIVITY OCCURS FOR ALL addListenerOnChkAnswer_[1-4]()
-	// SEE checkBoxChecked FOR SPECIFIC ACTIVITY
+	
+	/**
+	 * When the mainMenu Button is pressed, view changes to MainMenuView
+	 */
+	private void addListenerOnMainMenuButtonAnagram() {
+		mainMenu = (Button) findViewById(R.id.main_menu_button_anagram);
+		mainMenu.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				startActivity(i);
+				
+			}
+		});
+	}
+	
+// THE SAME ACTIVITY OCCURS FOR ALL addListenerOnChkAnswer_[1-4]()
+// SEE checkBoxChecked FOR SPECIFIC ACTIVITY
+
 	private void addListenerOnChkAnswer_1() {
 		chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
 		chk1.setOnClickListener(new OnClickListener() {
@@ -204,5 +259,33 @@ public class PuzzleActivity extends Activity {
 		} else {
 			txt.setText("");
 		}
+	}
+	
+	public void addListenerOnAnagramSubmitButton() {
+		anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
+		anagramSubmit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				checkAnagramSubmit(anagramSubmit, v);
+			}
+		});
+	}
+	
+	/**
+	 * Called when a Submit button for anagram is clicked on.
+	 * 
+	 * 
+	 */
+	private void checkAnagramSubmit(Button b, View v) {
+		TextView txt = (TextView) findViewById (R.id.rightorwrong);
+		if (anagramView.getText().toString().equals(correctAnswer)) {
+			txt.setText("");
+			Intent i = new Intent(v.getContext(), GPSActivity.class);
+			startActivity(i);
+		}
+		else{
+			txt.setText(wrongMessage);
+		}			
+
 	}
 }

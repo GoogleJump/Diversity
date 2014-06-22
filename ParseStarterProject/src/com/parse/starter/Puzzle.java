@@ -27,8 +27,9 @@ public class Puzzle extends ParseObject {
 		return (ArrayList<String>) get("options");
 	}
 
-	public String getIngredient() {
-		return getString("ingredient");
+
+	public String getMaterial(){
+		return getString("material");
 	}
 
 	public int getPoints() {
