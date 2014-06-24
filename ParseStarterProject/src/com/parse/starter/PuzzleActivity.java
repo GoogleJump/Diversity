@@ -8,9 +8,14 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,7 +35,6 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.parse.starter.Puzzle;
 
-
 /**
  * PuzzleActivity displays the puzzle view: currently, the puzzle view is
  * defined by puzzle.xml at all times, at most 1 CheckBox in the view can be
@@ -47,136 +51,165 @@ public class PuzzleActivity extends Activity {
 	private Button mainMenu;
 	private String correctAnswer;
 	private EditText anagramView;
-	private Button riddleSubmit;
-	private Button anagramSubmit;
+	// private Button riddleSubmit;
+	// private Button anagramSubmit;
 	private Button mapButton;
 	private ImageButton shuffleButton;
-	
+	private Point p;
+
 	// fields involved in correct answer popup
-	private Button correctAnswerButton;
-	private TextView correctAnswerText;
-	private PopupWindow popupCorrect;
-	private LinearLayout layoutOfPopupCorrect;
-	
+	// private Button correctAnswerButton;
+	// private TextView correctAnswerText;
+	// private PopupWindow popupCorrect;
+	// private LinearLayout layoutOfPopupCorrect;
+
 	// fields involved in wrong answer popup
-	private Button wrongAnswerButton;
-	private TextView wrongAnswerText;
-	private PopupWindow popupWrong;
-	private LinearLayout layoutOfPopupWrong;
-	
+	// private Button wrongAnswerButton;
+	// private TextView wrongAnswerText;
+	// private PopupWindow popupWrong;
+	// private LinearLayout layoutOfPopupWrong;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		if (User.getCurrentUser() instanceof User) {
 			final User currentUser = (User) User.getCurrentUser();
 			final String material = currentUser.getMaterial();
-		
-			ParseQuery<Puzzle> query = Puzzle.getQuery();
 
-			// NOTE: Have to match value type EXACTLY
-			query.whereEqualTo("material", material);
-			
-		
-			// choosing a random puzzle from the query
-			query.findInBackground(new FindCallback<Puzzle>() {
-				@Override
-				public void done(List<Puzzle> potentialPuzzles, ParseException e) {
-					if (e == null && potentialPuzzles.size() > 0) {
-						setContentView(R.layout.puzzle);
-						setTitle(R.string.puzzle_view_name);
-						
-						Random randomizer = new Random();
-						Puzzle puzzle = potentialPuzzles.get(randomizer
-								.nextInt(potentialPuzzles.size()));
-						
-						// resetting current user's puzzle id object
-						currentUser.setPuzzle(puzzle.getObjectId());
-						
-						// setting the question text
-						TextView question = (TextView) findViewById(R.id.question);
-						question.setText(puzzle.getString("riddle"));
-		
-						correctAnswer = puzzle.getString("answer");
-		
-						chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
-						chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
-						chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
-						chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
-		
-						ArrayList<String> options = puzzle.getOptions();
-						options.add(correctAnswer);
-		
-						// randomly assigning CheckBoxes different answer options
-						List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays
-								.asList(chk1, chk2, chk3, chk4));
-						List<Integer> ordering = generateRandomOrder();
-						for (int i = 0; i < totalNumMultChoice; i++) {
-							checkBoxes.get(i).setText(options.get(ordering.get(i)));
-						}
-		
-						addListenerOnChkAnswer_1();
-						addListenerOnChkAnswer_2();
-						addListenerOnChkAnswer_3();
-						addListenerOnChkAnswer_4();
-						addListenerOnRiddleSubmitButton();
-		
-					} else {
-						
-						// resetting current user's puzzle id object
-						currentUser.setPuzzle("");
-						
-						// if no puzzle is available, start anagram activity
-						if (e == null && potentialPuzzles.size() == 0) {
+			// indicates there is nothing to find
+			if (material == "") {
+				setContentView(R.layout.nothing_to_find);
+				addListenerOnMainMenuButton();
+				addListenerOnShuffleButton();
+				addListenerOnGPSButton();
+			}
+
+			else {
+				ParseQuery<Puzzle> query = Puzzle.getQuery();
+
+				// NOTE: Have to match value type EXACTLY
+				query.whereEqualTo("material", material);
+
+				// choosing a random puzzle from the query
+				query.findInBackground(new FindCallback<Puzzle>() {
+					@Override
+					public void done(List<Puzzle> potentialPuzzles,
+							ParseException e) {
+						// indicates riddle view
+						if (e == null && potentialPuzzles.size() > 0) {
+							setContentView(R.layout.puzzle);
+							setTitle(R.string.puzzle_view_name);
+
+							Random randomizer = new Random();
+							Puzzle puzzle = potentialPuzzles.get(randomizer
+									.nextInt(potentialPuzzles.size()));
+
+							// resetting current user's puzzle id object
+							currentUser.setPuzzle(puzzle.getObjectId());
+
+							// setting the question text
+							TextView question = (TextView) findViewById(R.id.question);
+							question.setText(puzzle.getString("riddle"));
+
+							correctAnswer = puzzle.getString("answer");
+
+							chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+							chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+							chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+							chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+
+							ArrayList<String> options = puzzle.getOptions();
+							options.add(correctAnswer);
+
+							// randomly assigning CheckBoxes different answer
+							// options
+							List<CheckBox> checkBoxes = new ArrayList<CheckBox>(
+									Arrays.asList(chk1, chk2, chk3, chk4));
+							List<Integer> ordering = generateRandomOrder();
+							for (int i = 0; i < totalNumMultChoice; i++) {
+								checkBoxes.get(i).setText(
+										options.get(ordering.get(i)));
+							}
+
+							// button to submit the answer to the riddle
+							Button riddleSubmit = (Button) findViewById(R.id.anagramSubmit);
+
+							// location of riddleSubmit
+							int[] location = new int[2];
+							riddleSubmit.getLocationOnScreen(location);
+							p = new Point();
+							p.x = location[0];
+							p.y = location[1];
+
+							// adding listeners specific to riddle view
+							addListenerOnChkAnswer_1();
+							addListenerOnChkAnswer_2();
+							addListenerOnChkAnswer_3();
+							addListenerOnChkAnswer_4();
+							addListenerOnRiddleSubmitButton();
+
+							// indicates anagram view
+						} else {
+
+							// resetting current user's puzzle id object
+							currentUser.setPuzzle("");
+
 							setContentView(R.layout.anagram);
 							setTitle(R.string.anagram_view_name);
-							
+
 							String scrambled = Scramble.scramble(material);
-										
+
 							TextView question = (TextView) findViewById(R.id.question);
-							question.setText("Can you unscramble: " + scrambled + "?");
-						
+							question.setText("Can you unscramble: " + scrambled
+									+ "?");
+
 							// Set up the submit form.
 							anagramView = (EditText) findViewById(R.id.anagramInput);
 							correctAnswer = material;
-						
-							anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
-										
+
+							// button to submit the anagram
+							Button anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
+
+							// location of anagramSubmit
+							int[] location = new int[2];
+							anagramSubmit.getLocationOnScreen(location);
+							p = new Point();
+							p.x = location[0];
+							p.y = location[1];
+
 							addListenerOnAnagramSubmitButton();
 						}
-					}
-				
-					addListenerOnMainMenuButton();
-					addListenerOnNewPuzzleButton();
-					addListenerOnGPSButton();
 
-				};
-			});
+						addListenerOnMainMenuButton();
+						addListenerOnShuffleButton();
+						addListenerOnGPSButton();
+					}
+				});
+			}
 		}
-		//popupCorrectInit();
-		//popupWrongInit();
 	}
-	
+
 	/**
 	 * Gives a random new puzzle to the user when puzzle button is pressed
-	 * 		(sorta messed up at the moment)	
+	 * (sorta messed up at the moment)
 	 */
-	private void addListenerOnNewPuzzleButton() {
+	private void addListenerOnShuffleButton() {
 		shuffleButton = (ImageButton) findViewById(R.id.new_puzzle_puz);
 		shuffleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (User.getCurrentUser() instanceof User) {
 					User currentUser = (User) User.getCurrentUser();
-					currentUser.getNewIngredientShuffleStyle();
-					
+					currentUser.getNewMaterialShuffleStyle();
+
 					Intent i = new Intent(v.getContext(), PuzzleActivity.class);
 					startActivity(i);
 				}
 			}
 		});
 	}
-	
+
 	/**
 	 * Takes the user to GPS/map view when the map button is pressed
 	 */
@@ -190,48 +223,7 @@ public class PuzzleActivity extends Activity {
 			}
 		});
 	}
-	
-/*
-	private void popupCorrectInit() {
-		popupCorrect = new PopupWindow(layoutOfPopupCorrect);
-		popupCorrect.setContentView(layoutOfPopupCorrect);
-		if (* == null) {
-			Log.d("MyApp","restart is null");
-		}
-		
-		// restart user's progress when yes is pressed
-		insidePopupRestartYes.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				User.getCurrentUser();
-				if (User.getCurrentUser() instanceof User) {
-					User currentUser = ((User) User.getCurrentUser());
-					currentUser.restart();
-					// Start and intent for the dispatch activity
-					Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
-					startActivity(intent);
-				}
-				else {
-					// not sure what goes here yet
-				}
-			}
-		});
-		
-		// keep user on same page when this is pressed
-		insidePopupRestartNo.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				popupRestart.dismiss();
-			}
-		});
-		popupRestart = new PopupWindow(layoutOfPopupRestart,LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		popupRestart.setContentView(layoutOfPopupRestart);
-	}
-	
-	private void popupWrongInit() {
-		
-	}*/
-	
+
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
@@ -247,9 +239,8 @@ public class PuzzleActivity extends Activity {
 		});
 	}
 
-	
-// THE SAME ACTIVITY OCCURS FOR ALL addListenerOnChkAnswer_[1-4]()
-// SEE checkBoxChecked FOR SPECIFIC ACTIVITY
+	// THE SAME ACTIVITY OCCURS FOR ALL addListenerOnChkAnswer_[1-4]()
+	// SEE checkBoxChecked FOR SPECIFIC ACTIVITY
 
 	private void addListenerOnChkAnswer_1() {
 		chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
@@ -308,7 +299,7 @@ public class PuzzleActivity extends Activity {
 	 * Called when a CheckBox is clicked on.
 	 * 
 	 * If CheckBox CB is checked, removes checks from all other CheckBoxes in
-	 * View that are not CB 
+	 * View that are not CB
 	 * 
 	 * @param CB
 	 *            CheckBox that the user clicks on
@@ -328,42 +319,139 @@ public class PuzzleActivity extends Activity {
 			}
 		}
 	}
-	
+
+	/**
+	 * Called when submit button is pressed for riddle case checks if the check
+	 * box checked is the correct answer and shows the correct answer popup if
+	 * correct and the wrong answer popup if wrong
+	 */
 	private void addListenerOnRiddleSubmitButton() {
-		riddleSubmit = (Button) findViewById(R.id.submit_button_puzzle);
+		Button riddleSubmit = (Button) findViewById(R.id.submit_button_puzzle);
 		riddleSubmit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(
-						chk1, chk2, chk3, chk4));
+				List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays
+						.asList(chk1, chk2, chk3, chk4));
+
+				// boolean that indicates whether or not to show the correct
+				// popup
+				boolean showCorrect = false;
+
 				for (CheckBox chk : checkBoxes) {
 					if (chk.isChecked()) {
 						if (chk.getText().equals(correctAnswer)) {
-							// show correct answer popup
+							showCorrect = true;
 						}
 					}
-					else {
-						// show wrong answer popup
-					}
 				}
+				showPopup(PuzzleActivity.this, p, showCorrect);
 			}
 		});
 	}
-	
+
+	/**
+	 * Called when submit button is pressed for anagram case checks if the check
+	 * box checked is the correct answer and shows the correct answer popup if
+	 * correct and the wrong answer popup if wrong
+	 */
+
 	private void addListenerOnAnagramSubmitButton() {
-		anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
+		Button anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
 		anagramSubmit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					// show correct answer popup
+					showPopup(PuzzleActivity.this, p, true);
 				}
+				// indicates the answer is wrong
 				else {
-					// show wrong answer popup
+					showPopup(PuzzleActivity.this, p, false);
 				}
 			}
 		});
 	}
-	
-	
+
+	/**
+	 * @param context
+	 *            is an Activity
+	 * @param p
+	 *            Point where popup will be shown
+	 * @param correct
+	 *            boolean that is true if the correct popup is to be shown and
+	 *            false if the wrong popup is to be shown displays the
+	 *            appropriate popup depending on whether correct is true or
+	 *            false
+	 */
+	private void showPopup(final Activity context, Point p,
+			final boolean correct) {
+		int popupWidth = 200;
+		int popupHeight = 150;
+
+		// from correct_ans_layout.xml with id correct_ans_popup
+		// displays correct answer view
+		View layout = new View(context);
+
+		if (correct) {
+			if (User.getCurrentUser() instanceof User) {
+				final User currentUser = (User) User.getCurrentUser();
+				currentUser.addMaterialSolved(currentUser.getMaterial());
+				currentUser.setMaterial("");
+
+				boolean allMaterialsFound = currentUser
+						.getNewMaterialShuffleStyle();
+
+				LinearLayout viewGroup = (LinearLayout) context
+						.findViewById(R.id.popup_correct_answer);
+				LayoutInflater layoutInflater = (LayoutInflater) context
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				layout = layoutInflater.inflate(R.layout.correctpopup,
+						viewGroup);
+
+				if (allMaterialsFound) {
+					currentUser.getNewItemAndMaterial();
+				}
+			}
+		}
+
+		// displays wrong answer view
+		else {
+			LinearLayout viewGroup = (LinearLayout) context
+					.findViewById(R.id.popup_wrong_answer);
+			LayoutInflater layoutInflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			layout = layoutInflater.inflate(R.layout.wrongpopup, viewGroup);
+		}
+
+		// Creating the PopupWindow
+		final PopupWindow popup = new PopupWindow(context);
+		popup.setContentView(layout);
+		popup.setWidth(popupWidth);
+		popup.setHeight(popupHeight);
+		popup.setFocusable(true);
+
+		// Some offset to align popup
+		int OFFSET_X = 30;
+		int OFFSET_Y = 30;
+
+		// Clear the default translucent background
+		popup.setBackgroundDrawable(new BitmapDrawable());
+
+		// Displaying the popup at specified location
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y
+				+ OFFSET_Y);
+
+		Button okay = (Button) layout.findViewById(R.id.okay);
+		okay.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				popup.dismiss();
+				if (correct) {
+					Intent i = new Intent(v.getContext(), GPSActivity.class);
+					startActivity(i);
+				}
+			}
+		});
+	}
+
 }

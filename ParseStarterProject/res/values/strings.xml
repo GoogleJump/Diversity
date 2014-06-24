@@ -35,4 +35,8 @@
     <string name="inventory_view_name">Your Collected Materials</string>
     <string name="restart">Restart</string>
     <string name="puz_desc">Puzzle</string>
+    <string name="okay">Okay</string>
+    <string name="congrats">Congratulations! You are correct!</string>
+    <string name="no_more_puzzles">You have solved all puzzles for your current character, click map to return to map view.</string>
+    <string name="wrong">Sorry, you are incorrect.</string>
 </resources>
