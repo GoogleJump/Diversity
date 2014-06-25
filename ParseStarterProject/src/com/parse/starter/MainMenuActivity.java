@@ -1,3 +1,6 @@
+// MAKE SURE TO UPDATE onClick in the addListenerOnStartContinueButton once
+// everything is merged
+
 package com.parse.starter;
 
 import android.app.Activity;
@@ -48,15 +51,16 @@ public class MainMenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (User.getCurrentUser() instanceof User) {
-					//temporarily PuzzleActivity, will be changed to CharacterActivity.class
+					// temporarily PuzzleActivity, will be changed to
+					// CharacterActivity.class
 					Intent i = new Intent(v.getContext(), PuzzleActivity.class);
-					String character = ((User) User.getCurrentUser()).getCurrentCharacter();
+					String character = ((User) User.getCurrentUser())
+							.getCurrentCharacter();
 					if (character != null) {
-						//i = new Intent(v.getContext(), GPSActivity.class);
+						// i = new Intent(v.getContext(), GPSActivity.class);
 					}
 					startActivity(i);
-				}
-				else {
+				} else {
 					// not very sure
 				}
 			}
@@ -107,10 +111,10 @@ public class MainMenuActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
-	 * When the Inventory Button is pressed,
-	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
+	 * When the Inventory Button is pressed, changes to Inventory view, where
+	 * all materials collected by the current user is displayed
 	 */
 	private void addListenerOnInventoryButton() {
 		inventory = (Button) findViewById(R.id.inventory_button_mm);

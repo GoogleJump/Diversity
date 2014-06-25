@@ -7,32 +7,21 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.RelativeLayout.LayoutParams;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 import com.parse.starter.Puzzle;
 
 /**
@@ -42,6 +31,9 @@ import com.parse.starter.Puzzle;
  * TextView displays a wrong message if the CheckBox checked is the right
  * answer, the view changes to the GPS view if the main_menu_button Button is
  * pressed, the view changes to the Main Menu view
+ * 
+ * when there is no more materials or items to find, displays an appropriate
+ * message to the user saying so
  */
 public class PuzzleActivity extends Activity {
 
@@ -51,23 +43,8 @@ public class PuzzleActivity extends Activity {
 	private Button mainMenu;
 	private String correctAnswer;
 	private EditText anagramView;
-	// private Button riddleSubmit;
-	// private Button anagramSubmit;
 	private Button mapButton;
 	private ImageButton shuffleButton;
-	private Point p;
-
-	// fields involved in correct answer popup
-	// private Button correctAnswerButton;
-	// private TextView correctAnswerText;
-	// private PopupWindow popupCorrect;
-	// private LinearLayout layoutOfPopupCorrect;
-
-	// fields involved in wrong answer popup
-	// private Button wrongAnswerButton;
-	// private TextView wrongAnswerText;
-	// private PopupWindow popupWrong;
-	// private LinearLayout layoutOfPopupWrong;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,16 +109,6 @@ public class PuzzleActivity extends Activity {
 										options.get(ordering.get(i)));
 							}
 
-							// button to submit the answer to the riddle
-							Button riddleSubmit = (Button) findViewById(R.id.anagramSubmit);
-
-							// location of riddleSubmit
-							int[] location = new int[2];
-							riddleSubmit.getLocationOnScreen(location);
-							p = new Point();
-							p.x = location[0];
-							p.y = location[1];
-
 							// adding listeners specific to riddle view
 							addListenerOnChkAnswer_1();
 							addListenerOnChkAnswer_2();
@@ -149,7 +116,7 @@ public class PuzzleActivity extends Activity {
 							addListenerOnChkAnswer_4();
 							addListenerOnRiddleSubmitButton();
 
-							// indicates anagram view
+						// indicates anagram view
 						} else {
 
 							// resetting current user's puzzle id object
@@ -167,16 +134,6 @@ public class PuzzleActivity extends Activity {
 							// Set up the submit form.
 							anagramView = (EditText) findViewById(R.id.anagramInput);
 							correctAnswer = material;
-
-							// button to submit the anagram
-							Button anagramSubmit = (Button) findViewById(R.id.anagramSubmit);
-
-							// location of anagramSubmit
-							int[] location = new int[2];
-							anagramSubmit.getLocationOnScreen(location);
-							p = new Point();
-							p.x = location[0];
-							p.y = location[1];
 
 							addListenerOnAnagramSubmitButton();
 						}
@@ -218,6 +175,7 @@ public class PuzzleActivity extends Activity {
 		mapButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// possibly will be MapActivity later
 				Intent i = new Intent(v.getContext(), GPSActivity.class);
 				startActivity(i);
 			}
@@ -344,7 +302,11 @@ public class PuzzleActivity extends Activity {
 						}
 					}
 				}
-				showPopup(PuzzleActivity.this, p, showCorrect);
+				if (showCorrect) {
+					showCorrectDialog();
+				} else {
+					showIncorrectDialog();
+				}
 			}
 		});
 	}
@@ -362,96 +324,76 @@ public class PuzzleActivity extends Activity {
 			public void onClick(View v) {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					showPopup(PuzzleActivity.this, p, true);
+					showCorrectDialog();
 				}
 				// indicates the answer is wrong
 				else {
-					showPopup(PuzzleActivity.this, p, false);
+					showIncorrectDialog();
 				}
 			}
 		});
 	}
 
 	/**
-	 * @param context
-	 *            is an Activity
-	 * @param p
-	 *            Point where popup will be shown
-	 * @param correct
-	 *            boolean that is true if the correct popup is to be shown and
-	 *            false if the wrong popup is to be shown displays the
-	 *            appropriate popup depending on whether correct is true or
-	 *            false
+	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
-	private void showPopup(final Activity context, Point p,
-			final boolean correct) {
-		int popupWidth = 200;
-		int popupHeight = 150;
+	private void showCorrectDialog() {
+		final User currentUser = (User) User.getCurrentUser();
 
-		// from correct_ans_layout.xml with id correct_ans_popup
-		// displays correct answer view
-		View layout = new View(context);
+		currentUser.addMaterialSolved(currentUser.getMaterial());
+		currentUser.setMaterial("");
 
-		if (correct) {
-			if (User.getCurrentUser() instanceof User) {
-				final User currentUser = (User) User.getCurrentUser();
-				currentUser.addMaterialSolved(currentUser.getMaterial());
-				currentUser.setMaterial("");
+		currentUser.getNewMaterialShuffleStyle();
 
-				boolean allMaterialsFound = currentUser
-						.getNewMaterialShuffleStyle();
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-				LinearLayout viewGroup = (LinearLayout) context
-						.findViewById(R.id.popup_correct_answer);
-				LayoutInflater layoutInflater = (LayoutInflater) context
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				layout = layoutInflater.inflate(R.layout.correctpopup,
-						viewGroup);
+		// set title
+		alertDialogBuilder.setTitle("Congrats!");
 
-				if (allMaterialsFound) {
-					currentUser.getNewItemAndMaterial();
-				}
-			}
-		}
+		// set dialog message
+		alertDialogBuilder
+				.setMessage("You correctly solved the puzzle")
+				.setCancelable(false)
+				.setPositiveButton("Okay",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// will be GPSActivity or MapActivity
+								startActivity(new Intent(PuzzleActivity.this,
+										MainMenuActivity.class));
+							}
+						});
 
-		// displays wrong answer view
-		else {
-			LinearLayout viewGroup = (LinearLayout) context
-					.findViewById(R.id.popup_wrong_answer);
-			LayoutInflater layoutInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			layout = layoutInflater.inflate(R.layout.wrongpopup, viewGroup);
-		}
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
 
-		// Creating the PopupWindow
-		final PopupWindow popup = new PopupWindow(context);
-		popup.setContentView(layout);
-		popup.setWidth(popupWidth);
-		popup.setHeight(popupHeight);
-		popup.setFocusable(true);
-
-		// Some offset to align popup
-		int OFFSET_X = 30;
-		int OFFSET_Y = 30;
-
-		// Clear the default translucent background
-		popup.setBackgroundDrawable(new BitmapDrawable());
-
-		// Displaying the popup at specified location
-		popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y
-				+ OFFSET_Y);
-
-		Button okay = (Button) layout.findViewById(R.id.okay);
-		okay.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				popup.dismiss();
-				if (correct) {
-					Intent i = new Intent(v.getContext(), GPSActivity.class);
-					startActivity(i);
-				}
-			}
-		});
+		// show it
+		alertDialog.show();
 	}
 
+	/**
+	 * Displays the incorrect Dialog, which leaves user on same page
+	 */
+	private void showIncorrectDialog() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Try again");
+
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(
+						"Sorry, you did not solve the puzzle correctly. Try again.")
+				.setCancelable(false)
+				.setPositiveButton("Okay",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+	}
 }

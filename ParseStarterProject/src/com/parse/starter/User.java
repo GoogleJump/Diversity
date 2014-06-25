@@ -1,3 +1,9 @@
+// THINGS TO CONSIDER: saveInBackground() I think should be uncommented, 
+// but for some reason, my computer/simulator/tablet does not like it. 
+// Also, I think we are planning on deleting the fields points, levelAt, stateAt,
+// puzzleID, also possibly adding itemsSolved (for knowing what to put in the
+// trophy room/photo album
+
 package com.parse.starter;
 
 import java.util.ArrayList;
@@ -16,7 +22,6 @@ import com.parse.ParseUser;
 /**
  * User is a read and write object.
  */
-
 @ParseClassName("_User")
 public class User extends ParseUser {
 
@@ -49,7 +54,7 @@ public class User extends ParseUser {
 		this.put("materialsSolved", materialsSolved);
 		ArrayList<String> itemsSolved = new ArrayList<String>();
 		// this.put("itemsSolved", itemsSolved);
-		//saveInBackground();
+		// //saveInBackground();
 	}
 
 	// wrapper for isAuthenticated() in ParseUser
@@ -117,59 +122,59 @@ public class User extends ParseUser {
 		return (ArrayList<String>) get("materialsSolved");
 	}
 
-	public void incrementPoints(int points) {
-		increment("points", points);
-		// saveInBackground();
-	}
+	// public void incrementPoints(int points) {
+	// increment("points", points);
+	// //saveInBackground();
+	// }
 
 	public void incrementLevel() {
 		increment("levelAt");
-		// saveInBackground();
+		// //saveInBackground();
 	}
 
 	public void incrementState() {
 		increment("stateAt");
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void setPuzzle(String puzzle) {
 		this.put("puzzleID", puzzle);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void setMaterial(String material) {
 		this.put("currentMaterial", material);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void setItem(String item) {
 		this.put("currentItem", item);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void addItemCollected(String item) {
 		this.add("itemsCollected", item);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void addCharacterCollected(String character) {
 		this.add("charactersCollected", character);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void addMaterialCollected(String material) {
 		this.add("materialsCollected", material);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void addMaterialSolved(String material) {
 		this.add("materialsSolved", material);
-		saveInBackground();
+		// saveInBackground();
 	}
 
 	public void addItemSolved(String item) {
 		this.add("itemsSolved", item);
-		saveInBackground();
+		// //saveInBackground();
 	}
 
 	/**
@@ -180,7 +185,7 @@ public class User extends ParseUser {
 		this.put("levelAt", 1);
 		this.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not
 								// gps, 2 = at location
-		this.put("puzzleID", 0);
+		this.put("puzzleID", "");
 		this.put("currentItem", "coffee"); // hardcoded for now
 		this.put("currentMaterial", "water"); // hardcoded for now
 		ArrayList<String> itemsCollected = new ArrayList<String>();
@@ -194,9 +199,9 @@ public class User extends ParseUser {
 		this.put("materialsSolved", materialsSolved);
 		ArrayList<String> itemsSolved = new ArrayList<String>();
 		// this.put("itemsSolved", itemsSolved);
-		saveInBackground();
+		// //saveInBackground();
 	}
-	
+
 	/**
 	 * Gives the current user a new material from the same item
 	 * 
@@ -226,7 +231,7 @@ public class User extends ParseUser {
 								.getMaterials();
 						Collections.shuffle(itemMaterials);
 						for (String material : itemMaterials) {
-							if ((material != currentMaterial)
+							if (!(material.equals(currentMaterial))
 									&& !collectedMaterials.contains(material)
 									&& !solvedMaterials.contains(material)) {
 								currentUser.setMaterial(material);
