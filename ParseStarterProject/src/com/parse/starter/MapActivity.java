@@ -140,14 +140,14 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 			}
 		});
 
-		findViewById(R.id.claim_items_button).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.claim_materials_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				claimItem();
+				claimMaterial();
 			}
 		});
 
-		findViewById(R.id.locate_items_button).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.locate_materials_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				locateMaterials();
@@ -155,7 +155,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		});
 	}
 
-	private void claimItem() {
+	private void claimMaterial() {
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 
@@ -181,7 +181,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 	}
 
 	private void updateUser(String material) {
-		// need popup to reveal item
+		// need popup to reveal material
 		showMaterialFoundDialog(material);
 
 		// need background update

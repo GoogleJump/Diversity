@@ -63,7 +63,7 @@
             android:text="@string/randomize" />
 
         <Button
-            android:id="@+id/claim_items_button"
+            android:id="@+id/claim_materials_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -71,7 +71,7 @@
             android:text="@string/claim_items" />
 
         <Button
-            android:id="@+id/locate_items_button"
+            android:id="@+id/locate_materials_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
