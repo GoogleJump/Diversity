@@ -267,6 +267,7 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		 */
 		private void populateMaterialLocations() {
 			ArrayList<String> materialsSolved = user.getMaterialsSolved();
+			System.out.println(materialsSolved);
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
 			ArrayList<String> materials = new ArrayList<String>(materialsSolved.subList(0, listLength));
