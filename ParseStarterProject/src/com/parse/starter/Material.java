@@ -7,17 +7,15 @@ import com.parse.ParseObject;
 
 @ParseClassName("Material")
 public class Material extends ParseObject {
-    
-    // A default constructor is required
-    public Material() {}
-    
+	
+	public Material() {}
+	
 	public String getName() {
 		return getString("name");
 	}
-    
-    public int geID() {
-    	return getInt("ID");
-    }
 	
-}
+	public ArrayList<String> getSearchTerms() {
+		return (ArrayList<String>) get("searchTerms");
+	}
 
+}

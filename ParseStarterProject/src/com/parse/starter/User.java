@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
-//import android.util.Log;
 
 /**
 * User is a read and write object.
@@ -34,6 +33,17 @@ public class User extends ParseUser {
 		this.put("currentCharacter", "Pusheen"); // hardcoded for now
 		ArrayList<String> charactersCollected = new ArrayList<String>();
 		this.put("charactersCollected", charactersCollected);
+		
+		ArrayList<String> materialsSolved = new ArrayList<String>();
+		materialsSolved.add("bucket");
+		materialsSolved.add("sand");
+		materialsSolved.add("water");
+		this.put("materialsSolved", materialsSolved);
+		
+		ArrayList<String> materialsCollected = new ArrayList<String>();
+		this.put("materialsCollected", materialsCollected);
+		
+		
 		saveInBackground();
 	}
 
@@ -69,7 +79,10 @@ public class User extends ParseUser {
 	public String getMaterial() {
 		return getString("currentMaterial");
 	}
-	
+
+	public ArrayList<String> getMaterialsSolved() {
+		return (ArrayList<String>) get("materialsSolved"); 
+	}
 	
     // store the names of the items
 	@SuppressWarnings("unchecked")
