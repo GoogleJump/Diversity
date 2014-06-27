@@ -28,10 +28,10 @@
     <string name="settings">Settings</string>
     <string name="log_out">Log Out</string>
     <string name="trophies">Trophy Shelf</string>
-    <string name="trophies_view_name">Your Collected Items</string>
+    <string name="trophies_view_name">Trophy Room</string>
     <string name="photos">Photo Album</string>
-    <string name="photos_view_name">Your Collected Characters</string>
+    <string name="photos_view_name">Photo Album</string>
     <string name="inventory">Inventory</string>
-    <string name="inventory_view_name">Your Collected Materials</string>
+    <string name="inventory_view_name">Inventory</string>
 
 </resources>
