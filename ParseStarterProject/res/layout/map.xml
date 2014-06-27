@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/map_linear_layout_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:background="#A000"
+        android:gravity="center|top"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <Button
+            android:id="@+id/main_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"
+            android:text="@string/main_menu" />
+
+        <Button
+            android:id="@+id/puzzle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="8dp"
+            android:text="@string/puzzle_view_name" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:orientation="horizontal" >
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.MapFragment" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:background="#A000"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <Button
+            android:id="@+id/randomize_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"
+            android:text="@string/randomize" />
+
+        <Button
+            android:id="@+id/claim_materials_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="8dp"
+            android:text="@string/claim_items" />
+
+        <Button
+            android:id="@+id/locate_materials_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="8dp"
+            android:text="@string/locate_items" />
+    </RelativeLayout>
+
+</LinearLayout>
