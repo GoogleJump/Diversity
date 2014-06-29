@@ -174,45 +174,88 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 					// remove this material from the materialSolved and to the materialsCollected list
 					Material closestMaterial = placeToMaterial.get(place);
 					
-					updateUser(closestMaterial.getName());
+					updateUser(MATERIAL_ITEM.MATERIAL, closestMaterial.getName());
+					
+					checkForCompletedItem();
 				}
 			}
 		}
 	}
-
-	private void updateUser(String material) {
-		// need popup to reveal material
-		showMaterialFoundDialog(material);
-
-		// need background update
-		ArrayList<String> materialsSolved = user.getMaterialsSolved();
-		materialsSolved.remove(material);
-
-		ArrayList<String> materialsCollected = user.getMaterialsCollected();
-		materialsCollected.add(material);
-
-		user.saveInBackground(new SaveCallback() {
-			public void done(ParseException e) {
-				if (e != null) {
-					Log.d("Map Activity, updateUser", e.toString());
+	
+	private void checkForCompletedItem() {
+		ArrayList<String> materialsCollected = user.getMaterialsCollected();		
+		ArrayList<String> itemsSolved = user.getItemsSolved();
+		for ( String item: itemsSolved ) {
+			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+			query.whereEqualTo("name", item);
+			
+			try {
+				List<Item> resultsList = query.find();
+				List<String> queriedItemMaterials = resultsList.get(0).getMaterials();
+				for (String material : queriedItemMaterials) {
+					if (!materialsCollected.contains(material)) {
+						return;
+					}
 				}
+				updateUser(MATERIAL_ITEM.ITEM, item);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-		});
+		}
 	}
 
-	private void showMaterialFoundDialog(String material) {
+	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
+		// need popup to reveal material
+		showFoundDialog(name);
+		
+		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
+			ArrayList<String> materialsSolved = user.getMaterialsSolved();
+			materialsSolved.remove(name);
+
+			ArrayList<String> materialsCollected = user.getMaterialsCollected();
+			materialsCollected.add(name);
+
+			user.saveInBackground(new SaveCallback() {
+				public void done(ParseException e) {
+					if (e != null) {
+						Log.d("Map Activity, updateUser", e.toString());
+					}
+				}
+			});
+		} else {
+			ArrayList<String> itemsSolved = user.getItemsSolved();
+			itemsSolved.remove(name);
+
+			ArrayList<String> itemsCollected = user.getItemsCollected();
+			itemsCollected.add(name);
+
+			user.saveInBackground(new SaveCallback() {
+				public void done(ParseException e) {
+					if (e != null) {
+						Log.d("Map Activity, updateUser", e.toString());
+					}
+				}
+			});
+		}
+
+		// need background update
+		
+	}
+
+	private void showFoundDialog(String materialOrItem) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
 		alertDialogBuilder.setTitle("Congrats!");
 
 		// set dialog message
-		alertDialogBuilder.setMessage("You found a " + material).setCancelable(false)
+		alertDialogBuilder.setMessage("You found a " + materialOrItem).setCancelable(false)
 				.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 					}
 				});
 		ImageView image = new ImageView(this);
+		// set image here
 		image.setImageResource(R.drawable.map);
 		
 		alertDialogBuilder.setView(image);
@@ -267,7 +310,6 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 		 */
 		private void populateMaterialLocations() {
 			ArrayList<String> materialsSolved = user.getMaterialsSolved();
-			System.out.println(materialsSolved);
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
 			ArrayList<String> materials = new ArrayList<String>(materialsSolved.subList(0, listLength));
@@ -382,6 +424,10 @@ public class MapActivity extends BaseActivity implements LocationListener, Conne
 
 	@Override
 	public void onProviderDisabled(String provider) {
+	}
+	
+	public enum MATERIAL_ITEM {
+		MATERIAL, ITEM;
 	}
 
 }
