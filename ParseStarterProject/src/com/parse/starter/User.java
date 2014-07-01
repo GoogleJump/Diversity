@@ -33,6 +33,8 @@ public class User extends ParseUser {
 		this.put("currentCharacter", "Pusheen"); // hardcoded for now
 		ArrayList<String> charactersCollected = new ArrayList<String>();
 		this.put("charactersCollected", charactersCollected);
+		this.put("currentMaterial", "water"); // hardcoded for now
+
 		
 		ArrayList<String> materialsSolved = new ArrayList<String>();
 		materialsSolved.add("bucket");
@@ -44,6 +46,7 @@ public class User extends ParseUser {
 		this.put("materialsCollected", materialsCollected);
 		
 		
+
 		saveInBackground();
 	}
 

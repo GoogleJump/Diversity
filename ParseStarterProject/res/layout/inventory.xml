@@ -1,36 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
+    android:gravity="fill_vertical"
     android:orientation="vertical" >
-    
-    <Button android:id="@+id/main_menu_button_inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" />
-    
-    <Button android:id="@+id/trophies_button_inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/trophies" />
-    
-    <Button android:id="@+id/photos_button_inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/photos" />
-        
-    <TextView
-        style="@style/BiggerFont"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/inventory_view_name" />
 
     <LinearLayout
-        android:id="@+id/inventory_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="63dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/main_menu_button_inventory"
+            android:layout_width="149dp"
+            android:layout_height="fill_parent"
+            android:text="@string/main_menu" />
+
+        <TextView
+            style="@style/BiggerFont"
+            android:layout_width="256dp"
+            android:layout_height="93dp"
+            android:text="@string/inventory_view_name" />
+
     </LinearLayout>
+	
+        
+       
+          
+            <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+             >
+
+          <TableLayout
+              android:id="@+id/inventory_list"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:adjustViewBounds="true"
+              android:background="@drawable/paperrepeat"
+              android:scaleType="fitXY">
+
+          </TableLayout>
+		
+          
+
+        </ScrollView>
+
    
 </LinearLayout>

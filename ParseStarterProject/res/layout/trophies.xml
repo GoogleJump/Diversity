@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <Button android:id="@+id/main_menu_button_trophies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" />
-    
-    <Button android:id="@+id/photos_button_trophies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/photos" />
-    
-    <Button android:id="@+id/inventory_button_trophies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inventory" />
-        
-    <TextView
-        style="@style/BiggerFont"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/trophies_view_name" />
 
     <LinearLayout
-        android:id="@+id/trophies_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
+
+        
+
+        <Button
+            android:id="@+id/main_menu_button_trophies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu" />
+        
+        <TextView
+            style="@style/BiggerFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trophies_view_name" />
+
     </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scaleType="fitXY"
+            >
+
+          <TableLayout
+              android:id="@+id/trophies_list"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/shelfrepeat" 
+              android:scaleType="fitXY"
+              >
+
+          </TableLayout>
+        </ScrollView>
    
 </LinearLayout>
