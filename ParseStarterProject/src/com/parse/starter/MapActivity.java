@@ -49,7 +49,7 @@ import com.parse.SaveCallback;
 public class MapActivity extends BaseActivity implements LocationListener, ConnectionCallbacks,
 		OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 	private final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-	private final String GOOGLE_PLACES_API_KEY = "AIzaSyDKsYGo4Nk-aGBHl3JaOzorYp85TP9h6j4";
+	private final String GOOGLE_PLACES_API_KEY = "AIzaSyCVxBo2VC97qIx_bP_w73L6hc15cLVvBMg";
 	private static final LocationRequest REQUEST = LocationRequest.create().setInterval(5000).setFastestInterval(16)
 			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 	private Location location;
