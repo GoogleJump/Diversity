@@ -34,24 +34,7 @@ public class User extends ParseUser {
 	public User(String username, String password, String puzzle) {
 		this.setUsername(username);
 		this.setPassword(password);
-		this.put("points", 0);
-		this.put("levelAt", 1);
-		this.put("stateAt", 0); // 0 = puzzle unsolved, 1 = puzzle solved, not
-								// gps, 2 = at location
-		this.put("puzzleID", puzzle);
-		this.put("currentItem", "coffee"); // hardcoded for now
-		this.put("currentMaterial", "water"); // hardcoded for now
-		ArrayList<String> itemsCollected = new ArrayList<String>();
-		this.put("itemsCollected", itemsCollected);
-		this.put("currentCharacter", "Pusheen"); // hardcoded for now
-		ArrayList<String> charactersCollected = new ArrayList<String>();
-		this.put("charactersCollected", charactersCollected);
-		ArrayList<String> materialsCollected = new ArrayList<String>();
-		this.put("materialsCollected", materialsCollected);
-		ArrayList<String> materialsSolved = new ArrayList<String>();
-		this.put("materialsSolved", materialsSolved);
-		ArrayList<String> itemsSolved = new ArrayList<String>();
-		// this.put("itemsSolved", itemsSolved);
+		this.restart();
 		// //saveInBackground();
 	}
 
@@ -198,7 +181,7 @@ public class User extends ParseUser {
 		ArrayList<String> materialsSolved = new ArrayList<String>();
 		this.put("materialsSolved", materialsSolved);
 		ArrayList<String> itemsSolved = new ArrayList<String>();
-		// this.put("itemsSolved", itemsSolved);
+		this.put("itemsSolved", itemsSolved);
 		// //saveInBackground();
 	}
 
@@ -286,7 +269,7 @@ public class User extends ParseUser {
 					}
 
 					// give the user a new material if not assigned a new item
-					if (newItem != "") {
+					if (!newItem.equals("")) {
 						ParseQuery<Item> itemQuery = Item.getQuery();
 						itemQuery.whereEqualTo("name", newItem);
 

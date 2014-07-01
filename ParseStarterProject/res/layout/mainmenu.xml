@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_continue"
-        android:layout_marginTop="50sp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"/>
      
      <Button

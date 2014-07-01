@@ -45,105 +45,101 @@ public class PuzzleActivity extends Activity {
 	private EditText anagramView;
 	private Button mapButton;
 	private ImageButton shuffleButton;
+	private User currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (User.getCurrentUser() instanceof User) {
-			final User currentUser = (User) User.getCurrentUser();
-			final String material = currentUser.getMaterial();
+		currentUser = (User) User.getCurrentUser();
+		final String material = currentUser.getMaterial();
 
-			// indicates there is nothing to find
-			if (material == "") {
-				setContentView(R.layout.nothing_to_find);
-				addListenerOnMainMenuButton();
-				addListenerOnShuffleButton();
-				addListenerOnGPSButton();
-			}
+		// indicates there is nothing to find
+		if (material == "") {
+			setContentView(R.layout.nothing_to_find);
+			addListenerOnMainMenuButton();
+			addListenerOnShuffleButton();
+			addListenerOnGPSButton();
+		} else {
+			ParseQuery<Puzzle> query = Puzzle.getQuery();
 
-			else {
-				ParseQuery<Puzzle> query = Puzzle.getQuery();
+			query.whereEqualTo("material", material);
 
-				// NOTE: Have to match value type EXACTLY
-				query.whereEqualTo("material", material);
+			// choosing a random puzzle from the query
+			query.findInBackground(new FindCallback<Puzzle>() {
+				@Override
+				public void done(List<Puzzle> potentialPuzzles, ParseException e) {
+					// indicates riddle view
+					if (e == null && potentialPuzzles.size() > 0) {
+						setContentView(R.layout.puzzle);
+						setTitle(R.string.puzzle_view_name);
 
-				// choosing a random puzzle from the query
-				query.findInBackground(new FindCallback<Puzzle>() {
-					@Override
-					public void done(List<Puzzle> potentialPuzzles,
-							ParseException e) {
-						// indicates riddle view
-						if (e == null && potentialPuzzles.size() > 0) {
-							setContentView(R.layout.puzzle);
-							setTitle(R.string.puzzle_view_name);
+						Random randomizer = new Random();
+						Puzzle puzzle = potentialPuzzles.get(randomizer
+								.nextInt(potentialPuzzles.size()));
 
-							Random randomizer = new Random();
-							Puzzle puzzle = potentialPuzzles.get(randomizer
-									.nextInt(potentialPuzzles.size()));
+						// resetting current user's puzzle id object
+						currentUser.setPuzzle(puzzle.getObjectId());
+						currentUser.saveInBackground();
 
-							// resetting current user's puzzle id object
-							currentUser.setPuzzle(puzzle.getObjectId());
+						// setting the question text
+						TextView question = (TextView) findViewById(R.id.question);
+						question.setText(puzzle.getString("riddle"));
 
-							// setting the question text
-							TextView question = (TextView) findViewById(R.id.question);
-							question.setText(puzzle.getString("riddle"));
+						correctAnswer = puzzle.getString("answer");
 
-							correctAnswer = puzzle.getString("answer");
+						chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+						chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+						chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+						chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
 
-							chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
-							chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
-							chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
-							chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+						ArrayList<String> options = puzzle.getOptions();
+						options.add(correctAnswer);
 
-							ArrayList<String> options = puzzle.getOptions();
-							options.add(correctAnswer);
-
-							// randomly assigning CheckBoxes different answer
-							// options
-							List<CheckBox> checkBoxes = new ArrayList<CheckBox>(
-									Arrays.asList(chk1, chk2, chk3, chk4));
-							List<Integer> ordering = generateRandomOrder();
-							for (int i = 0; i < totalNumMultChoice; i++) {
-								checkBoxes.get(i).setText(
-										options.get(ordering.get(i)));
-							}
-
-							// adding listeners specific to riddle view
-							addListenerOnChkAnswer_1();
-							addListenerOnChkAnswer_2();
-							addListenerOnChkAnswer_3();
-							addListenerOnChkAnswer_4();
-							addListenerOnRiddleSubmitButton();
-
-						// indicates anagram view
-						} else {
-
-							// resetting current user's puzzle id object
-							currentUser.setPuzzle("");
-
-							setContentView(R.layout.anagram);
-							setTitle(R.string.anagram_view_name);
-
-							String scrambled = Scramble.scramble(material);
-
-							TextView question = (TextView) findViewById(R.id.question);
-							question.setText("Can you unscramble: " + scrambled
-									+ "?");
-
-							// Set up the submit form.
-							anagramView = (EditText) findViewById(R.id.anagramInput);
-							correctAnswer = material;
-
-							addListenerOnAnagramSubmitButton();
+						// randomly assigning CheckBoxes different answer
+						// options
+						List<CheckBox> checkBoxes = new ArrayList<CheckBox>(
+								Arrays.asList(chk1, chk2, chk3, chk4));
+						Collections.shuffle(options);
+						for (int i = 0; i < totalNumMultChoice; i++) {
+							checkBoxes.get(i).setText(options.get(i));
 						}
 
-						addListenerOnMainMenuButton();
-						addListenerOnShuffleButton();
-						addListenerOnGPSButton();
+						// adding listeners specific to riddle view
+						addListenerOnChkAnswer_1();
+						addListenerOnChkAnswer_2();
+						addListenerOnChkAnswer_3();
+						addListenerOnChkAnswer_4();
+						addListenerOnRiddleSubmitButton();
+
+						// indicates anagram view
+					} else {
+
+						// resetting current user's puzzle id object
+						currentUser.setPuzzle("");
+						currentUser.saveInBackground();
+
+						setContentView(R.layout.anagram);
+						setTitle(R.string.anagram_view_name);
+
+						String scrambled = Scramble.scramble(material);
+
+						TextView question = (TextView) findViewById(R.id.question);
+						question.setText("Can you unscramble: " + scrambled
+								+ "?");
+
+						// Set up the submit form.
+						anagramView = (EditText) findViewById(R.id.anagramInput);
+						correctAnswer = material;
+
+						addListenerOnAnagramSubmitButton();
 					}
-				});
-			}
+
+					addListenerOnMainMenuButton();
+					addListenerOnShuffleButton();
+					addListenerOnGPSButton();
+				}
+			});
 		}
 	}
 
@@ -156,14 +152,13 @@ public class PuzzleActivity extends Activity {
 		shuffleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (User.getCurrentUser() instanceof User) {
-					User currentUser = (User) User.getCurrentUser();
-					currentUser.getNewMaterialShuffleStyle();
+				currentUser.getNewMaterialShuffleStyle();
+				currentUser.saveInBackground();
 
-					Intent i = new Intent(v.getContext(), PuzzleActivity.class);
-					startActivity(i);
-				}
+				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
+				startActivity(i);
 			}
+
 		});
 	}
 
@@ -241,19 +236,6 @@ public class PuzzleActivity extends Activity {
 	}
 
 	/**
-	 * 
-	 * @return List that randomly orders 1:totalNumMultChoice
-	 */
-	private List<Integer> generateRandomOrder() {
-		ArrayList<Integer> ordering = new ArrayList<Integer>();
-		for (int i = 0; i < totalNumMultChoice; i++) {
-			ordering.add(i);
-		}
-		Collections.shuffle(ordering);
-		return ordering;
-	}
-
-	/**
 	 * Called when a CheckBox is clicked on.
 	 * 
 	 * If CheckBox CB is checked, removes checks from all other CheckBoxes in
@@ -325,9 +307,7 @@ public class PuzzleActivity extends Activity {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
 					showCorrectDialog();
-				}
-				// indicates the answer is wrong
-				else {
+				} else {
 					showIncorrectDialog();
 				}
 			}
@@ -338,13 +318,12 @@ public class PuzzleActivity extends Activity {
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
 	private void showCorrectDialog() {
-		final User currentUser = (User) User.getCurrentUser();
-
 		currentUser.addMaterialSolved(currentUser.getMaterial());
 		currentUser.setMaterial("");
 
 		currentUser.getNewMaterialShuffleStyle();
-
+		currentUser.saveInBackground();
+		
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title

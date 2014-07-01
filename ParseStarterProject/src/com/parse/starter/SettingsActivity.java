@@ -53,6 +53,7 @@ public class SettingsActivity extends Activity {
 			}
 		});
 	}
+
 	/**
 	 * When the Restart Button is pressed, restart dialog comes up
 	 */
@@ -78,8 +79,8 @@ public class SettingsActivity extends Activity {
 	}
 
 	/**
-	 * Displays the restart dialog, which has a yes button to restart the
-	 * game for the user, and a no button that returns to the settings view
+	 * Displays the restart dialog, which has a yes button to restart the game
+	 * for the user, and a no button that returns to the settings view
 	 */
 	private void showRestartDialog() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -94,18 +95,15 @@ public class SettingsActivity extends Activity {
 		alertDialogBuilder.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						User.getCurrentUser();
-						if (User.getCurrentUser() instanceof User) {
-							User currentUser = ((User) User.getCurrentUser());
-							currentUser.restart();
+						User currentUser = ((User) User.getCurrentUser());
+						currentUser.restart();
+						currentUser.saveInBackground();
 
-							// Start and intent for the dispatch activity
-							Intent intent = new Intent(SettingsActivity.this,
-									MainMenuActivity.class);
-							startActivity(intent);
-						} else {
-							// not sure what goes here yet
-						}
+						// Start and intent for the dispatch activity
+						Intent intent = new Intent(SettingsActivity.this,
+								MainMenuActivity.class);
+						startActivity(intent);
+
 					}
 				});
 
@@ -123,8 +121,8 @@ public class SettingsActivity extends Activity {
 	}
 
 	/**
-	 * Displays the logout dialog, which has a yes button to logout the
-	 * game for the user, and a no button that returns to the settings view
+	 * Displays the logout dialog, which has a yes button to logout the game for
+	 * the user, and a no button that returns to the settings view
 	 */
 	private void showLogoutDialog() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
