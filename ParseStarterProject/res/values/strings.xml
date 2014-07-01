@@ -31,6 +31,10 @@
     <string name="trophies_view_name">Your Collected Items</string>
     <string name="photos">Photo Album</string>
     <string name="photos_view_name">Your Collected Characters</string>
+    
+    <string name="randomize">Randomize</string>
+    <string name="claim_items">Claim Items</string>
+    <string name="locate_items">Locate Items</string>
     <string name="inventory">Inventory</string>
     <string name="inventory_view_name">Your Collected Materials</string>
     <string name="restart">Restart</string>

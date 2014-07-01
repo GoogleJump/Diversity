@@ -17,8 +17,6 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-//import android.util.Log;
-
 /**
  * User is a read and write object.
  */
@@ -96,6 +94,12 @@ public class User extends ParseUser {
 
 	// store the names of the items
 	@SuppressWarnings("unchecked")
+	public ArrayList<String> getMaterialsSolved() {
+		return (ArrayList<String>) get("materialsSolved"); 
+	}
+	
+    // store the names of the items
+	@SuppressWarnings("unchecked")
 	public ArrayList<String> getItemsCollected() {
 		return (ArrayList<String>) get("itemsCollected");
 	}
@@ -117,10 +121,6 @@ public class User extends ParseUser {
 		return (ArrayList<String>) get("itemsSolved");
 	}
 
-	@SuppressWarnings("unchecked")
-	public ArrayList<String> getMaterialsSolved() {
-		return (ArrayList<String>) get("materialsSolved");
-	}
 
 	// public void incrementPoints(int points) {
 	// increment("points", points);
