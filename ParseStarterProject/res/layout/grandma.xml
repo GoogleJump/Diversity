@@ -5,7 +5,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-
     <TextView
         android:id="@+id/choose_character"
         android:layout_width="wrap_content"
@@ -14,16 +13,16 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
-        android:id="@+id/character_picture"
+        android:id="@+id/grandma_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/surfer" />
+        android:src="@drawable/grandma" />
 
     <TextView
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medium Text"
+        android:text="Grandma"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

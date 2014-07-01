@@ -4,40 +4,33 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.PopupWindow;
 import android.util.Log;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import com.parse.SaveCallback;
+import com.parse.ParseException;
 
-public class PickCharacterActivity extends Activity implements OnClickListener {
+public class PickCharacterActivity extends Activity {
 	
-	CharacterPagerAdapter pagerAdapter;
-	String[] names;
-	int[] pictures;
+	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
-	PopupWindow popup;
-	ImageButton popupButton;
-	Button insidePopupButton;
-	TextView popupText;
-	LinearLayout layoutOfPopup;
+	private Context context;
+	private User currentUser;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewpager);
-		
+		context = this;
+
 		//handling user
-		User currentUser = null;
+		currentUser = null;
 		if (User.getCurrentUser() instanceof User){
 			currentUser = ((User) User.getCurrentUser());
 		}
@@ -46,18 +39,10 @@ public class PickCharacterActivity extends Activity implements OnClickListener {
 			startActivity(i);
 		}
 		
-		//handling swiping functionality
-		Resources res = getResources();
-		names = res.getStringArray(R.array.character_array);
-		pictures = new int[] {R.drawable.surfer, R.drawable.grandma};
-		
-		pagerAdapter = new CharacterPagerAdapter(PickCharacterActivity.this,names,pictures);
+		pagerAdapter = new CharacterPagerAdapter();
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);
 		pager.setAdapter(pagerAdapter);
-	
-		//handing popup
-		init();
-		popupInit();
+
 		
 		//adding listeners to buttons
 		addListenerOnMainMenuButton();
@@ -78,98 +63,127 @@ public class PickCharacterActivity extends Activity implements OnClickListener {
 			}
 		});
 	}
-	
-    public void popupInit() { 
-    	popup = new PopupWindow(layoutOfPopup); 
-    	popup.setContentView(layoutOfPopup); 
-    	if (popupButton == null){
-    		Log.d("MyApp","it's null");
-    	}
-    	popupButton.setOnClickListener(this); 
-    	insidePopupButton.setOnClickListener(this); 
-//    	popup = new PopupWindow(layoutOfPopup, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT); 
 
-    }
-    
-    public void init() { 
-    	View childView = findViewById(R.id.character_layout);
-//    	int count = findViewById(R.id.pager_view).getChildCount();
-    	if (childView == null){
-    		Log.d("myApp","the childView is null");
-    	}
-    	popupButton = (ImageButton) childView.findViewById(R.id.character_picture);
-    	popupText = new TextView(this); 	
-    	insidePopupButton = new Button(this); 
-    	layoutOfPopup = new LinearLayout(this); 
-    	insidePopupButton.setText("OK"); 
-    	popupText.setText("This is Popup Window.press OK to dismiss it."); 
-    	popupText.setPadding(0, 0, 0, 20); 
-    	layoutOfPopup.setOrientation(1); 
-    	layoutOfPopup.addView(popupText); 
-    	layoutOfPopup.addView(insidePopupButton); 
-    }
-    
-	public void onClick(View v){
-		if (R.id.character_picture == v.getId()) {
-			popup.showAsDropDown(popupButton,0,0);
-		}
-		else{
-			popup.dismiss();
-		}
-	}
-    
 	private class CharacterPagerAdapter extends PagerAdapter {
 		
-		Context context;
-		String[] names;
-		int[] pictures;
-		LayoutInflater inflater;
-		
-		public CharacterPagerAdapter(Context context, String[] names, int[] pictures) {
-			this.names = names;
-			this.pictures = pictures;
+		private View v;
+		private ImageButton characterPic;
+/*		
+		public CharacterPagerAdapter(Context context) {
 		}
+		*/
 		
 		public int getCount() {
-			return names.length;
+			return 2;
 		}
 		
 		public boolean isViewFromObject(View view, Object object){
 			return view == object;
-//			return view == ((RelativeLayout) object);
 		}
 		
-		public Object instantiateItem(ViewGroup container, int position) {		 
-	        // Declare Variables
-	        TextView name;
-	        ImageButton picture;
-	 
-	        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//	        inflater = LayoutInflater.from(context);
-	        View itemView = inflater.inflate(R.layout.pickcharacter, container,
-	                false);
-	 
-	        name = (TextView) itemView.findViewById(R.id.character_name);
-	 
-	        // Capture position and set to the TextViews
-	        name.setText(names[position]);
-	 
-	        // Locate the ImageView in viewpager_item.xml
-	        picture = (ImageButton) itemView.findViewById(R.id.character_picture);
-	        // Capture position and set to the ImageView
-	        picture.setImageResource(pictures[position]);
-	 
-	        // Add viewpager_item.xml to ViewPager
-	        ((ViewPager) container).addView(itemView);
-	 
-	        return itemView;
+		 public Object instantiateItem(final View collection, final int position) {
+	         v = new View(collection.getContext());
+	        LayoutInflater inflater =
+	                (LayoutInflater) collection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+	        int resId = 0;
+	        switch (position) {
+	        case 0:
+	            resId = R.layout.surfer;
+	            v = inflater.inflate(R.layout.surfer, null, false);
+	            characterPic = (ImageButton) v.findViewById(R.id.surfer_picture);
+	            characterPic.setOnClickListener( new OnClickListener() {
+	                public void onClick(View m) {              	
+	                	
+	                	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+	            				context);
+	                	
+	                	alertDialogBuilder
+	    				.setMessage("This is the surfer. He is super cool!")
+	    				.setCancelable(false)
+	    				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+	    					public void onClick(DialogInterface dialog,int id) {		
+    							currentUser.setCurrentCharacter("Surfer");
+    							currentUser.saveInBackground(new SaveCallback() {
+    								public void done(ParseException e) {
+    									if (e != null) {
+    		    							String currentCharacter = currentUser.getCurrentCharacter();
+    		    							Log.d("myApp","currentCharacter is: " + currentCharacter);
+    		    							
+    			    						Intent i = new Intent(PickCharacterActivity.this, GPSActivity.class);
+    			    						PickCharacterActivity.this.finish();
+    		    							startActivity(i);
+    									}
+    								}
+    							});
+
+	    					}
+	    				  })
+	    				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+	    					public void onClick(DialogInterface dialog,int id) {
+	    						// if this button is clicked, just close
+	    						// the dialog box and do nothing
+	    						dialog.cancel();
+	    					}
+	    				});
+	     
+	    				// create alert dialog
+	    				AlertDialog alertDialog = alertDialogBuilder.create();
+	     
+	    				// show it
+	    				alertDialog.show();
+	    				
+	                }
+	            });
+
+
+	            break;
+	        case 1:
+	            resId = R.layout.grandma;
+	            v = inflater.inflate(R.layout.grandma, null, false);
+	            characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
+	            characterPic.setOnClickListener( new OnClickListener() {
+	                public void onClick(View m) {
+	                	
+	                	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+	            				context);
+	                	
+	                	alertDialogBuilder
+	    				.setMessage("This is the grandma. She's a cool lady.")
+	    				.setCancelable(false)
+	    				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+	    					public void onClick(DialogInterface dialog,int id) {
+    				//			currentUser.setCurrentCharacter("Grandma");
+    							String currentCharacter = currentUser.getCurrentCharacter();
+    							Log.d("myApp","currentCharacter is: " + currentCharacter);
+	    						Intent i = new Intent(PickCharacterActivity.this, GPSActivity.class);
+	    						PickCharacterActivity.this.finish();
+    							startActivity(i);
+	    					}
+	    				  })
+	    				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+	    					public void onClick(DialogInterface dialog,int id) {
+	    						// if this button is clicked, just close
+	    						// the dialog box and do nothing
+	    						dialog.cancel();
+	    					}
+	    				});
+	     
+	    				// create alert dialog
+	    				AlertDialog alertDialog = alertDialogBuilder.create();
+	     
+	    				// show it
+	    				alertDialog.show();
+	    				
+	                }
+	            });
+	            break;
+
+	        }
+	        ((ViewPager) collection).addView(v, 0);
+	        return v;
 	    }
-	 
-	    @Override
-	    public void destroyItem(ViewGroup container, int position, Object object) {
-	        // Remove viewpager_item.xml from ViewPager
-	        ((ViewPager) container).removeView((RelativeLayout) object);
-	    }
-	    
+	        
 	}
 }
+
