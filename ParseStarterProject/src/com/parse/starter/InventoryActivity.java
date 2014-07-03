@@ -75,39 +75,24 @@ public class InventoryActivity extends Activity {
 		ArrayList<String> materialsCollected = null;
 		if (currentUser != null) {
 			materialsCollected = currentUser.getMaterialsCollected();
+			
+			// display collected items as strings
+			for (int i = 0; i < materialsCollected.size(); i++){
+				currentMaterial = new TextView(this);
+				currentMaterial.setText(materialsCollected.get(i));
+				lView.addView(currentMaterial);
+				
+			}
+			
+			addListenerOnMainMenuButton();
+			addListenerOnPhotosButton();
+			addListenerOnTrophiesButton();
 		}
 		else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
-		}
-				
+		}		
 		
-		if (materialsCollected != null) {
-			//for (int i = 0; i < itemsCollected.size(); i++) {
-			int numMaterials = materialsCollected.size();
-			int numColumns = numMaterials/numMaterialsInRow + 1;
-			int materialsPlaced = 0; // counter for filling in items
-			
-			for (int i = 0; i < numColumns; i++) { // for each row
-				currentRow = new TableRow(this);
-				for (int j = 0; j < numMaterialsInRow; j++) { // 3 in each row
-					if (materialsPlaced < numMaterials) {
-						currentMaterial = new ImageView(this);
-						int id = this.getResources().getIdentifier(materialsCollected.get(materialsPlaced), "drawable", "com.parse.starter");
-						currentMaterial.setImageResource(id);
-						currentRow.addView(currentMaterial);
-						materialsPlaced++;
-					}
-				}
-				tView.addView(currentRow);
-			}
-		}
-			
-	
-		
-		addListenerOnMainMenuButton();
-//		addListenerOnPhotosButton();
-//		addListenerOnTrophiesButton();
 	}
 		
 	
@@ -125,34 +110,4 @@ public class InventoryActivity extends Activity {
 			}
 		});
 	}
-	
-//	/**
-//	 * When the photos Button is pressed, view changes to Photo Album
-//	 */
-//	private void addListenerOnPhotosButton() {
-//		photoAlbum = (Button) findViewById(R.id.photos_button_inventory);
-//		photoAlbum.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-//				startActivity(i);
-//				
-//			}
-//		});
-//	}
-//	
-//	/**
-//	 * When the trophies Button is pressed, view changes to Trophy Shelf
-//	 */
-//	private void addListenerOnTrophiesButton() {
-//		trophyShelf = (Button) findViewById(R.id.trophies_button_inventory);
-//		trophyShelf.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
-//				startActivity(i);
-//				
-//			}
-//		});
-//	}
 }
