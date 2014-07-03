@@ -15,7 +15,7 @@ import android.widget.Button;
  * the user to either the Puzzle View or the GPS View depending on their status
  * in the game. It also has a Log Out button that takes the User to the homepage
  */
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends BaseActivity {
 
 	private Button startContinue;
 	private Button settings;

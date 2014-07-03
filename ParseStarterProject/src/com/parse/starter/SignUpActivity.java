@@ -15,7 +15,7 @@ import com.parse.SignUpCallback;
 /**
  * Activity which displays a login screen to the user.
  */
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends BaseActivity {
 	// UI references.
 	private EditText usernameView;
 	private EditText passwordView;

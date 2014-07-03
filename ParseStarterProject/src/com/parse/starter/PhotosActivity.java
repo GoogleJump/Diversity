@@ -14,7 +14,7 @@ import android.widget.Button;
  * Used for the graphics
  **/
 
-public class PhotosActivity extends Activity {
+public class PhotosActivity extends BaseActivity {
 
 	private Button mainMenu; // Brings user back from photo album to the main menu
 	

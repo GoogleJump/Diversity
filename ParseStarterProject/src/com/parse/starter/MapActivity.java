@@ -73,6 +73,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+		addTransitionListeners();
 
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.map)).getMap();
@@ -96,7 +97,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		user = ((User) User.getCurrentUser());
 		gson = new Gson();
 
-		addTransitionListeners();
+		
 		addMapActionListeners();
 	}
 

@@ -18,7 +18,7 @@ import android.widget.Button;
  * Restart Button that has a Restart Dialog, which asks the User if they want to
  * restart or not.
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends BaseActivity {
 
 	private Button mainMenu;
 	private Button restart;

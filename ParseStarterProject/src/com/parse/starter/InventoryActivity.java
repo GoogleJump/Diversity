@@ -24,7 +24,7 @@ import android.widget.TableRow;
  * materials disappear from the inventory (TO DO)
  */
 
-public class InventoryActivity extends Activity {
+public class InventoryActivity extends BaseActivity {
 
 	private Button mainMenu;
 	private ImageView currentMaterial = null;

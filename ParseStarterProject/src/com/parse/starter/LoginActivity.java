@@ -15,7 +15,7 @@ import com.parse.ParseUser;
 /**
  * Activity which displays a login screen to the user, offering registration as well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
   // UI references.
   private EditText usernameView;
   private EditText passwordView;

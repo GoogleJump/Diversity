@@ -32,7 +32,7 @@ import com.parse.ParseQuery;
  * when there is no more materials or items to find, displays an appropriate
  * message to the user saying so
  */
-public class PuzzleActivity extends Activity {
+public class PuzzleActivity extends BaseActivity {
 
 	private final int totalNumMultChoice = 4;
 

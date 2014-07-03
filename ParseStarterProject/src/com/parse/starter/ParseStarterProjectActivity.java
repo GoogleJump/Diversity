@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.parse.ParseUser;
 
-public class ParseStarterProjectActivity extends Activity {
+public class ParseStarterProjectActivity extends BaseActivity {
 
 	public ParseStarterProjectActivity() {
 	}

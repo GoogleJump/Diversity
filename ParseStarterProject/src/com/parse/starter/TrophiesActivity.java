@@ -22,7 +22,7 @@ import android.widget.TableRow;
  * pressed, the view changes to the Main Menu view
  */
 
-public class TrophiesActivity extends Activity {
+public class TrophiesActivity extends BaseActivity {
 
 	private Button mainMenu;
 	private ImageView currentItem = null;
