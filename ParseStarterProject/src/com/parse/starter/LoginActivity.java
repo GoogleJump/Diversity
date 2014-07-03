@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
               Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             } else {
               // Start an intent for the dispatch activity
-              Intent intent = new Intent(LoginActivity.this, ParseStarterProjectActivity.class);
+              Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
               startActivity(intent);
             }

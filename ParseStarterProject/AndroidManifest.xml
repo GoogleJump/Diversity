@@ -87,6 +87,9 @@
          
          <activity
              android:name=".StandaloneExample">
+	 </activity>
+	 <activity
+             android:name=".SettingsActivity">
          </activity>
         
     </application>
