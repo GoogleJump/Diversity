@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 import com.parse.starter.Puzzle;
 
 /**
@@ -42,6 +44,7 @@ public class PuzzleActivity extends Activity {
 	private CheckBox chk1, chk2, chk3, chk4;
 	private Button mainMenu;
 	private String correctAnswer;
+	private String material;
 	private EditText anagramView;
 	private Button mapButton;
 	private ImageButton shuffleButton;
@@ -52,95 +55,108 @@ public class PuzzleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		currentUser = (User) User.getCurrentUser();
-		final String material = currentUser.getMaterial();
+
+		material = currentUser.getMaterial();
 
 		// indicates there is nothing to find
-		if (material == "") {
+		if (material.equals("")) {
 			setContentView(R.layout.nothing_to_find);
-			addListenerOnMainMenuButton();
-			addListenerOnShuffleButton();
-			addListenerOnGPSButton();
 		} else {
-			ParseQuery<Puzzle> query = Puzzle.getQuery();
+			final String puzzleID = currentUser.getPuzzle();
+			final String shuffledWord = currentUser.getShuffledWord();
 
-			query.whereEqualTo("material", material);
-
-			// choosing a random puzzle from the query
-			query.findInBackground(new FindCallback<Puzzle>() {
-				@Override
-				public void done(List<Puzzle> potentialPuzzles, ParseException e) {
-					// indicates riddle view
-					if (e == null && potentialPuzzles.size() > 0) {
-						setContentView(R.layout.puzzle);
-						setTitle(R.string.puzzle_view_name);
-
-						Random randomizer = new Random();
-						Puzzle puzzle = potentialPuzzles.get(randomizer
-								.nextInt(potentialPuzzles.size()));
-
-						// resetting current user's puzzle id object
-						currentUser.setPuzzle(puzzle.getObjectId());
-						currentUser.saveInBackground();
-
-						// setting the question text
-						TextView question = (TextView) findViewById(R.id.question);
-						question.setText(puzzle.getString("riddle"));
-
-						correctAnswer = puzzle.getString("answer");
-
-						chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
-						chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
-						chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
-						chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
-
-						ArrayList<String> options = puzzle.getOptions();
-						options.add(correctAnswer);
-
-						// randomly assigning CheckBoxes different answer
-						// options
-						List<CheckBox> checkBoxes = new ArrayList<CheckBox>(
-								Arrays.asList(chk1, chk2, chk3, chk4));
-						Collections.shuffle(options);
-						for (int i = 0; i < totalNumMultChoice; i++) {
-							checkBoxes.get(i).setText(options.get(i));
-						}
-
-						// adding listeners specific to riddle view
-						addListenerOnChkAnswer_1();
-						addListenerOnChkAnswer_2();
-						addListenerOnChkAnswer_3();
-						addListenerOnChkAnswer_4();
-						addListenerOnRiddleSubmitButton();
-
-						// indicates anagram view
-					} else {
-
-						// resetting current user's puzzle id object
-						currentUser.setPuzzle("");
-						currentUser.saveInBackground();
-
-						setContentView(R.layout.anagram);
-						setTitle(R.string.anagram_view_name);
-
-						String scrambled = Scramble.scramble(material);
-
-						TextView question = (TextView) findViewById(R.id.question);
-						question.setText("Can you unscramble: " + scrambled
-								+ "?");
-
-						// Set up the submit form.
-						anagramView = (EditText) findViewById(R.id.anagramInput);
-						correctAnswer = material;
-
-						addListenerOnAnagramSubmitButton();
-					}
-
-					addListenerOnMainMenuButton();
-					addListenerOnShuffleButton();
-					addListenerOnGPSButton();
-				}
-			});
+			if (!puzzleID.equals("")) {
+				this.riddleViewSet(puzzleID);
+			} else if (!shuffledWord.equals("")) {
+				this.anagramViewSet(shuffledWord, material);
+			} else {
+				setContentView(R.layout.nothing_to_find);
+			}
 		}
+
+		addListenerOnMainMenuButton();
+		addListenerOnShuffleButton();
+		addListenerOnGPSButton();
+	}
+
+	/**
+	 * Sets the view for the case of a riddle
+	 * 
+	 * @param puzzleID
+	 *            String that is the id of the current puzzle; puzzleID is not
+	 *            the empty string
+	 */
+	private void riddleViewSet(String puzzleID) {
+		ParseQuery<Puzzle> query = Puzzle.getQuery();
+		query.whereEqualTo("objectId", puzzleID);
+
+		try {
+			List<Puzzle> potentialPuzzles = query.find();
+
+			setContentView(R.layout.puzzle);
+			setTitle(R.string.puzzle_view_name);
+
+			Puzzle puzzle = potentialPuzzles.get(0);
+
+			TextView question = (TextView) findViewById(R.id.question);
+			question.setText(puzzle.getString("riddle"));
+
+			correctAnswer = puzzle.getString("answer");
+
+			chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
+			chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
+			chk3 = (CheckBox) findViewById(R.id.chkanswer_3);
+			chk4 = (CheckBox) findViewById(R.id.chkanswer_4);
+
+			ArrayList<String> options = puzzle.getOptions();
+			options.add(correctAnswer);
+
+			// randomly assigning CheckBoxes different answer
+			// options
+			List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(
+					chk1, chk2, chk3, chk4));
+			Collections.shuffle(options);
+			for (int i = 0; i < totalNumMultChoice; i++) {
+				checkBoxes.get(i).setText(options.get(i));
+			}
+
+			// adding listeners specific to riddle view
+			addListenerOnChkAnswer_1();
+			addListenerOnChkAnswer_2();
+			addListenerOnChkAnswer_3();
+			addListenerOnChkAnswer_4();
+			addListenerOnRiddleSubmitButton();
+
+		} catch (ParseException e) {
+			setContentView(R.layout.nothing_to_find);
+		}
+	}
+
+	/**
+	 * Sets the view for the case of an anagram
+	 * 
+	 * @param shuffledWord
+	 *            String that is shuffled; shuffledWord is not the empty string
+	 * @param material
+	 *            String that is the shuffledWord unshuffled; material is not
+	 *            the empty string
+	 */
+	private void anagramViewSet(String shuffledWord, String material) {
+		setContentView(R.layout.anagram);
+		setTitle(R.string.anagram_view_name);
+
+		String scrambled = shuffledWord;
+
+		TextView question = (TextView) findViewById(R.id.question);
+
+		question.setText("Can you unscramble: " + scrambled + "?");
+
+		// Set up the submit form.
+		anagramView = (EditText) findViewById(R.id.anagramInput);
+		correctAnswer = material;
+
+		addListenerOnAnagramSubmitButton();
+
 	}
 
 	/**
@@ -153,9 +169,9 @@ public class PuzzleActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				currentUser.getNewMaterialShuffleStyle();
-				currentUser.saveInBackground();
+				// currentUser.saveInBackground();
 
-				Intent i = new Intent(v.getContext(), PuzzleActivity.class);
+				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
 				startActivity(i);
 			}
 
@@ -170,8 +186,7 @@ public class PuzzleActivity extends Activity {
 		mapButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// possibly will be MapActivity later
-				Intent i = new Intent(v.getContext(), GPSActivity.class);
+				Intent i = new Intent(PuzzleActivity.this, MapActivity.class);
 				startActivity(i);
 			}
 		});
@@ -185,7 +200,7 @@ public class PuzzleActivity extends Activity {
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				Intent i = new Intent(PuzzleActivity.this, MainMenuActivity.class);
 				startActivity(i);
 
 			}
@@ -318,12 +333,13 @@ public class PuzzleActivity extends Activity {
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
 	private void showCorrectDialog() {
-		currentUser.addMaterialSolved(currentUser.getMaterial());
+		String currentMaterial = currentUser.getMaterial();
+		currentUser.addMaterialSolved(currentMaterial);
 		currentUser.setMaterial("");
 
 		currentUser.getNewMaterialShuffleStyle();
-		currentUser.saveInBackground();
-		
+		// currentUser.saveInBackground();
+
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -331,14 +347,13 @@ public class PuzzleActivity extends Activity {
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage("You correctly solved the puzzle")
+				.setMessage("You correctly solved the puzzle for " + material + "!")
 				.setCancelable(false)
 				.setPositiveButton("Okay",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								// will be GPSActivity or MapActivity
 								startActivity(new Intent(PuzzleActivity.this,
-										MainMenuActivity.class));
+										MapActivity.class));
 							}
 						});
 

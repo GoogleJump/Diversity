@@ -97,7 +97,7 @@ public class SettingsActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						User currentUser = ((User) User.getCurrentUser());
 						currentUser.restart();
-						currentUser.saveInBackground();
+						//currentUser.saveInBackground();
 
 						// Start and intent for the dispatch activity
 						Intent intent = new Intent(SettingsActivity.this,
@@ -141,7 +141,7 @@ public class SettingsActivity extends Activity {
 
 						// Start and intent for the dispatch activity
 						Intent intent = new Intent(SettingsActivity.this,
-								ParseStarterProjectActivity.class);
+								SignUpOrLogInActivity.class);
 						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 								| Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(intent);

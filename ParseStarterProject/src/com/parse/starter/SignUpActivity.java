@@ -72,7 +72,7 @@ public class SignUpActivity extends Activity {
 				dlg.show();
 
 				// Set up a new Parse user
-				User user = new User(usernameView.getText().toString(), passwordView.getText().toString(), "");
+				User user = new User(usernameView.getText().toString(), passwordView.getText().toString());
 				// Call the Parse signup method
 				user.signUpInBackground(new SignUpCallback() {
 
@@ -84,7 +84,7 @@ public class SignUpActivity extends Activity {
 							Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 						} else {
 							// Start an intent for the dispatch activity
-							Intent intent = new Intent(SignUpActivity.this, ParseStarterProjectActivity.class);
+							Intent intent = new Intent(SignUpActivity.this, MainMenuActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 							startActivity(intent);
 						}
