@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,11 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-import com.parse.starter.Puzzle;
 
 /**
  * PuzzleActivity displays the puzzle view: currently, the puzzle view is
@@ -161,7 +156,6 @@ public class PuzzleActivity extends Activity {
 
 	/**
 	 * Gives a random new puzzle to the user when puzzle button is pressed
-	 * (sorta messed up at the moment)
 	 */
 	private void addListenerOnShuffleButton() {
 		shuffleButton = (ImageButton) findViewById(R.id.new_puzzle_puz);
@@ -200,7 +194,8 @@ public class PuzzleActivity extends Activity {
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(PuzzleActivity.this, MainMenuActivity.class);
+				Intent i = new Intent(PuzzleActivity.this,
+						MainMenuActivity.class);
 				startActivity(i);
 
 			}
@@ -347,7 +342,8 @@ public class PuzzleActivity extends Activity {
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage("You correctly solved the puzzle for " + material + "!")
+				.setMessage(
+						"You correctly solved the puzzle for " + material + "!")
 				.setCancelable(false)
 				.setPositiveButton("Okay",
 						new DialogInterface.OnClickListener() {

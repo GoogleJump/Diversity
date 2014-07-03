@@ -15,48 +15,40 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-
 /**
- * InventoryActivity.java displays the inventory page view:
- * 		currently, the inventory view is defined by inventory.xml
- * 		The inventory page displays the current user's materials collected thus far.
- * 		if the main_menu_button Button is pressed, the view changes to the Main Menu view
- *		if the materials collected create an item, that item is added to the trophy shelf
- *      and then those materials disappear from the inventory	(TO DO)
+ * InventoryActivity.java displays the inventory page view: currently, the
+ * inventory view is defined by inventory.xml The inventory page displays the
+ * current user's materials collected thus far. if the main_menu_button Button
+ * is pressed, the view changes to the Main Menu view if the materials collected
+ * create an item, that item is added to the trophy shelf and then those
+ * materials disappear from the inventory (TO DO)
  */
 
 public class InventoryActivity extends Activity {
-	
-	
+
 	private Button mainMenu;
-//	private Button photoAlbum;
-//	private Button trophyShelf;
-	//private TextView currentMaterial = null;
 	private ImageView currentMaterial = null;
 	private TableRow currentRow = null;
 	private int numMaterialsInRow = 3;
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.inventory);
 		setTitle(R.string.inventory_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.inventory_list);
-		
+
 		// trying something here
 		Drawable bg = tView.getBackground();
-		if (bg!=null) {
+		if (bg != null) {
 			if (bg instanceof BitmapDrawable) {
 				BitmapDrawable bmp = (BitmapDrawable) bg;
 				bmp.mutate();
-				bmp.setTileModeXY(null,  TileMode.REPEAT);
+				bmp.setTileModeXY(null, TileMode.REPEAT);
 			}
 		}
-		
-		
-		
+
 		// get current user's list of collected characters to display
 		User currentUser = null;
 		if (User.getCurrentUser() instanceof User)
@@ -64,25 +56,25 @@ public class InventoryActivity extends Activity {
 		ArrayList<String> materialsCollected = null;
 		if (currentUser != null) {
 			materialsCollected = currentUser.getMaterialsCollected();
-		}
-		else { // display login page
+		} else { // display login page
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
 		}
-				
-		
+
 		if (materialsCollected != null) {
-			//for (int i = 0; i < itemsCollected.size(); i++) {
+			// for (int i = 0; i < itemsCollected.size(); i++) {
 			int numMaterials = materialsCollected.size();
-			int numColumns = numMaterials/numMaterialsInRow + 1;
+			int numColumns = numMaterials / numMaterialsInRow + 1;
 			int materialsPlaced = 0; // counter for filling in items
-			
+
 			for (int i = 0; i < numColumns; i++) { // for each row
 				currentRow = new TableRow(this);
 				for (int j = 0; j < numMaterialsInRow; j++) { // 3 in each row
 					if (materialsPlaced < numMaterials) {
 						currentMaterial = new ImageView(this);
-						int id = this.getResources().getIdentifier(materialsCollected.get(materialsPlaced), "drawable", "com.parse.starter");
+						int id = this.getResources().getIdentifier(
+								materialsCollected.get(materialsPlaced),
+								"drawable", "com.parse.starter");
 						currentMaterial.setImageResource(id);
 						currentRow.addView(currentMaterial);
 						materialsPlaced++;
@@ -91,15 +83,12 @@ public class InventoryActivity extends Activity {
 				tView.addView(currentRow);
 			}
 		}
-			
-	
-		
+
 		addListenerOnMainMenuButton();
-//		addListenerOnPhotosButton();
-//		addListenerOnTrophiesButton();
+		// addListenerOnPhotosButton();
+		// addListenerOnTrophiesButton();
 	}
-		
-	
+
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
@@ -110,38 +99,38 @@ public class InventoryActivity extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
-				
+
 			}
 		});
 	}
-	
-//	/**
-//	 * When the photos Button is pressed, view changes to Photo Album
-//	 */
-//	private void addListenerOnPhotosButton() {
-//		photoAlbum = (Button) findViewById(R.id.photos_button_inventory);
-//		photoAlbum.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-//				startActivity(i);
-//				
-//			}
-//		});
-//	}
-//	
-//	/**
-//	 * When the trophies Button is pressed, view changes to Trophy Shelf
-//	 */
-//	private void addListenerOnTrophiesButton() {
-//		trophyShelf = (Button) findViewById(R.id.trophies_button_inventory);
-//		trophyShelf.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), TrophiesActivity.class);
-//				startActivity(i);
-//				
-//			}
-//		});
-//	}
+
+	// /**
+	// * When the photos Button is pressed, view changes to Photo Album
+	// */
+	// private void addListenerOnPhotosButton() {
+	// photoAlbum = (Button) findViewById(R.id.photos_button_inventory);
+	// photoAlbum.setOnClickListener(new OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// Intent i = new Intent(v.getContext(), PhotosActivity.class);
+	// startActivity(i);
+	//
+	// }
+	// });
+	// }
+	//
+	// /**
+	// * When the trophies Button is pressed, view changes to Trophy Shelf
+	// */
+	// private void addListenerOnTrophiesButton() {
+	// trophyShelf = (Button) findViewById(R.id.trophies_button_inventory);
+	// trophyShelf.setOnClickListener(new OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// Intent i = new Intent(v.getContext(), TrophiesActivity.class);
+	// startActivity(i);
+	//
+	// }
+	// });
+	// }
 }

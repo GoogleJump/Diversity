@@ -4,20 +4,16 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 /**
  * TrophiesActivity.java displays the trophies page view: currently, the
@@ -29,9 +25,6 @@ import android.widget.TextView;
 public class TrophiesActivity extends Activity {
 
 	private Button mainMenu;
-//	private Button photoAlbum;
-//	private Button inventory;
-	//private TextView currentItem = null;
 	private ImageView currentItem = null;
 	private TableRow currentRow = null;
 	private int numItemsInRow = 3;
