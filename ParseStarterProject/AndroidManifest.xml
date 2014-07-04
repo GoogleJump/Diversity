@@ -69,6 +69,14 @@
         </activity>
         <activity android:name=".MapActivity" >
         </activity>
+        <activity android:name=".InventoryActivity" >
+        </activity>
+        <activity android:name=".SwipingActivity" >
+        </activity>
+        <activity android:name=".StandaloneExample" >
+        </activity>
+        <activity android:name=".SettingsActivity" >
+        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -76,22 +84,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        
-         <activity
-             android:name=".InventoryActivity">
-         </activity>
-         
-         <activity
-             android:name=".SwipingActivity">
-         </activity>
-         
-         <activity
-             android:name=".StandaloneExample">
-	 </activity>
-	 <activity
-             android:name=".SettingsActivity">
-         </activity>
-        
     </application>
 
 </manifest>

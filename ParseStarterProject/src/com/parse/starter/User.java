@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,11 +30,6 @@ public class User extends ParseUser {
 		this.setPassword(password);
 		this.restart();
 		saveInBackground();
-	}
-
-	// wrapper for isAuthenticated() in ParseUser
-	public boolean isAuthenticated() {
-		return this.isAuthenticated();
 	}
 
 	/**
@@ -175,12 +169,10 @@ public class User extends ParseUser {
 
 	}
 
-	public int getPuzzle() {
-		return getInt("puzzleID");
-	}
-
 	public int getState() {
 		return getInt("stateAt");
+	}
+	
 	/**
 	 * Gives the current user a new material, and the associated puzzle or
 	 * shuffledWord from the same item
@@ -233,11 +225,6 @@ public class User extends ParseUser {
 
 	
 	// GETTERS AND SETTERS BELOW!!!
-	
-	public static ParseUser getCurrentUser() {
-		return ParseUser.getCurrentUser();
-	}
-
 	public String getPuzzle() {
 		return getString("puzzleID");
 	}
