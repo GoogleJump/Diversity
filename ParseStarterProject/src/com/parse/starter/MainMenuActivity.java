@@ -50,7 +50,7 @@ public class MainMenuActivity extends BaseActivity {
 				// CharacterActivity.class
 				Intent i = new Intent(MainMenuActivity.this,
 						PuzzleActivity.class);
-				String character = ((User) User.getCurrentUser())
+				String character = ((User) User.getCurrentUser()).getUserInfo()
 						.getCurrentCharacter();
 				if (character != null) {
 					i = new Intent(MainMenuActivity.this, MapActivity.class);

@@ -52,14 +52,14 @@ public class PuzzleActivity extends BaseActivity {
 		User currentUser = (User) User.getCurrentUser();
 		userInfo = currentUser.getUserInfo();
 
-		material = currentUser.getMaterial();
+		material = userInfo.getCurrentMaterial();
 
 		// indicates there is nothing to find
 		if (material.equals("")) {
 			setContentView(R.layout.nothing_to_find);
 		} else {
-			final String puzzleID = currentUser.getPuzzle();
-			final String shuffledWord = currentUser.getShuffledWord();
+			final String puzzleID = userInfo.getPuzzleID();
+			final String shuffledWord = userInfo.getShuffledWord();
 
 			if (!puzzleID.equals("")) {
 				this.riddleViewSet(puzzleID);

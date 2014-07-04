@@ -24,7 +24,9 @@ public class UserInfo extends ParseObject {
 	}
 	
 	public void restart() {
+		put("currentMaterial", "someMaterial");
 		put("currentItem", "ITEM");
+		put("currentCharacter", "PANDATESTING");
 		ArrayList<String> emptyList = new ArrayList<String>();
 		put("materialsSolved", emptyList);
 		put("materialsCollected", emptyList);
@@ -32,6 +34,7 @@ public class UserInfo extends ParseObject {
 		put("itemsCollected", emptyList);
 		put("charactersCollected", emptyList);
 		put("shuffledWord", "");
+		put("puzzleID", "1");
 		saveInBackground();
 	}
 
