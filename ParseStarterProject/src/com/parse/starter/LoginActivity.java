@@ -15,7 +15,7 @@ import com.parse.ParseUser;
 /**
  * Activity which displays a login screen to the user, offering registration as well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
   // UI references.
   private EditText usernameView;
   private EditText passwordView;
@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
               Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             } else {
               // Start an intent for the dispatch activity
-              Intent intent = new Intent(LoginActivity.this, ParseStarterProjectActivity.class);
+              Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
               startActivity(intent);
             }

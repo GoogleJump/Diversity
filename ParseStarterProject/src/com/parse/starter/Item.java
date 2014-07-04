@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 @ParseClassName("Item")
 public class Item extends ParseObject {
@@ -23,6 +24,10 @@ public class Item extends ParseObject {
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getMaterials() {
 		return (ArrayList<String>) get("materials");
+	}
+	
+	public static ParseQuery<Item> getQuery() {
+		return ParseQuery.getQuery(Item.class);
 	}
 
 }

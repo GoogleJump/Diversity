@@ -1,3 +1,4 @@
+
 package com.parse.starter;
 
 import android.app.Activity;
@@ -14,7 +15,7 @@ import com.parse.SignUpCallback;
 /**
  * Activity which displays a login screen to the user.
  */
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends BaseActivity {
 	// UI references.
 	private EditText usernameView;
 	private EditText passwordView;
@@ -71,7 +72,7 @@ public class SignUpActivity extends Activity {
 				dlg.show();
 
 				// Set up a new Parse user
-				User user = new User(usernameView.getText().toString(), passwordView.getText().toString(), 0);
+				User user = new User(usernameView.getText().toString(), passwordView.getText().toString());
 				// Call the Parse signup method
 				user.signUpInBackground(new SignUpCallback() {
 
@@ -83,7 +84,7 @@ public class SignUpActivity extends Activity {
 							Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 						} else {
 							// Start an intent for the dispatch activity
-							Intent intent = new Intent(SignUpActivity.this, ParseStarterProjectActivity.class);
+							Intent intent = new Intent(SignUpActivity.this, MainMenuActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 							startActivity(intent);
 						}

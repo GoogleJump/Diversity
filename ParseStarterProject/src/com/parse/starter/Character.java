@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 @ParseClassName("Character")
 public class Character extends ParseObject {
@@ -24,6 +25,10 @@ public class Character extends ParseObject {
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getItems() {
 		return (ArrayList<String>) get("items");
+	}
+	
+	public static ParseQuery<Character> getQuery() {
+		return ParseQuery.getQuery(Character.class);
 	}
 
 }

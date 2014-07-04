@@ -10,7 +10,7 @@ import android.widget.Button;
 /**
  * Activity which displays a registration screen to the user.
  */
-public class SignUpOrLogInActivity extends Activity {
+public class SignUpOrLogInActivity extends BaseActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

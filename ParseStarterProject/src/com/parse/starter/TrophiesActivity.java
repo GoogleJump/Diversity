@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 /**
  * TrophiesActivity.java displays the trophies page view: currently, the
@@ -18,12 +22,12 @@ import android.widget.TextView;
  * pressed, the view changes to the Main Menu view
  */
 
-public class TrophiesActivity extends Activity {
+public class TrophiesActivity extends BaseActivity {
 
 	private Button mainMenu;
-	private Button photoAlbum;
-	private Button inventory;
-	private TextView currentItem = null;
+	private ImageView currentItem = null;
+	private TableRow currentRow = null;
+	private int numItemsInRow = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,19 @@ public class TrophiesActivity extends Activity {
 
 		setContentView(R.layout.trophies);
 		setTitle(R.string.trophies_view_name);
-		LinearLayout lView = (LinearLayout) findViewById(R.id.trophies_list);
+		TableLayout tView = (TableLayout) findViewById(R.id.trophies_list);
 
+		// trying something here
+		Drawable bg = tView.getBackground();
+		if (bg!=null) {
+			if (bg instanceof BitmapDrawable) {
+				BitmapDrawable bmp = (BitmapDrawable) bg;
+				bmp.mutate();
+				bmp.setTileModeXY(TileMode.MIRROR,  TileMode.REPEAT);
+			}
+		}
+		
+		
 		// get current user's list of collected characters to display
 		User currentUser = null;
 		if (User.getCurrentUser() instanceof User)
@@ -47,16 +62,29 @@ public class TrophiesActivity extends Activity {
 
 		// display collected items as strings
 		if (itemsCollected != null) {
-			for (int i = 0; i < itemsCollected.size(); i++) {
-				currentItem = new TextView(this);
-				currentItem.setText(itemsCollected.get(i));
-				lView.addView(currentItem);
+			//for (int i = 0; i < itemsCollected.size(); i++) {
+			int numItems = itemsCollected.size();
+			int numColumns = numItems/numItemsInRow + 1;
+			int itemsPlaced = 0; // counter for filling in items
+			
+			for (int i = 0; i < numColumns; i++) { // for each row
+				currentRow = new TableRow(this);
+				for (int j = 0; j < numItemsInRow; j++) { // 3 in each row
+					if (itemsPlaced < numItems) {
+						currentItem = new ImageView(this);
+						int id = this.getResources().getIdentifier(itemsCollected.get(itemsPlaced), "drawable", "com.parse.starter");
+						currentItem.setImageResource(id);
+						currentRow.addView(currentItem);
+						itemsPlaced++;
+					}
+				}
+				tView.addView(currentRow);
 			}
 		}
 
 		addListenerOnMainMenuButton();
-		addListenerOnPhotosButton();
-		addListenerOnInventoryButton();
+//		addListenerOnPhotosButton();
+//		addListenerOnInventoryButton();
 	}
 
 	/**
@@ -74,33 +102,33 @@ public class TrophiesActivity extends Activity {
 		});
 	}
 
-	/**
-	 * When the photos Button is pressed, view changes to Photo Album
-	 */
-	private void addListenerOnPhotosButton() {
-		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
-		photoAlbum.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-				startActivity(i);
-
-			}
-		});
-	}
-	
-	/**
-	 * When the Inventory Button is pressed,
-	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
-	 */
-	private void addListenerOnInventoryButton() {
-		inventory = (Button) findViewById(R.id.inventory_button_trophies);
-		inventory.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), InventoryActivity.class);
-				startActivity(i);
-			}
-		});
-	}
+//	/**
+//	 * When the photos Button is pressed, view changes to Photo Album
+//	 */
+//	private void addListenerOnPhotosButton() {
+//		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
+//		photoAlbum.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Intent i = new Intent(v.getContext(), PhotosActivity.class);
+//				startActivity(i);
+//
+//			}
+//		});
+//	}
+//	
+//	/**
+//	 * When the Inventory Button is pressed,
+//	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
+//	 */
+//	private void addListenerOnInventoryButton() {
+//		inventory = (Button) findViewById(R.id.inventory_button_trophies);
+//		inventory.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Intent i = new Intent(v.getContext(), InventoryActivity.class);
+//				startActivity(i);
+//			}
+//		});
+//	}
 }

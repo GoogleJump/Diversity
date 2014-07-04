@@ -7,13 +7,14 @@ import com.parse.ParseObject;
 
 @ParseClassName("Material")
 public class Material extends ParseObject {
-	
-	public Material() {}
-	
+
+	public Material() {
+	}
+
 	public String getName() {
 		return getString("name");
 	}
-	
+
 	public ArrayList<String> getSearchTerms() {
 		return (ArrayList<String>) get("searchTerms");
 	}
