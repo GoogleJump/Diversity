@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,8 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 /**
  * PuzzleActivity displays the puzzle view: currently, the puzzle view is
@@ -106,8 +111,7 @@ public class PuzzleActivity extends BaseActivity {
 			ArrayList<String> options = puzzle.getOptions();
 			options.add(correctAnswer);
 
-			// randomly assigning CheckBoxes different answer
-			// options
+			// randomly assigning CheckBoxes different answer options
 			List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(
 					chk1, chk2, chk3, chk4));
 			Collections.shuffle(options);
@@ -316,7 +320,8 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					showCorrectDialog();
+					new UpdateUserMaterialsTask().execute();
+					// showCorrectDialog();
 				} else {
 					showIncorrectDialog();
 				}
@@ -328,11 +333,11 @@ public class PuzzleActivity extends BaseActivity {
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
 	private void showCorrectDialog() {
-		String currentMaterial = currentUser.getMaterial();
-		currentUser.addMaterialSolved(currentMaterial);
-		currentUser.setMaterial("");
-
-		currentUser.getNewMaterialShuffleStyle();
+//		String currentMaterial = currentUser.getMaterial();
+//		currentUser.addMaterialSolved(currentMaterial);
+//		currentUser.setMaterial("");
+//
+//		currentUser.getNewMaterialShuffleStyle();
 		// currentUser.saveInBackground();
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -385,5 +390,30 @@ public class PuzzleActivity extends BaseActivity {
 
 		// show it
 		alertDialog.show();
+	}
+
+	private class UpdateUserMaterialsTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			ArrayList<String> materialsSolved = currentUser
+					.getMaterialsSolved();
+			materialsSolved.add(currentUser.getMaterial());
+			currentUser.put("materialsSolved", materialsSolved);
+			try {
+				currentUser.save();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			System.out.println(currentUser.getMaterialsSolved());
+			showCorrectDialog();
+		}
+
 	}
 }

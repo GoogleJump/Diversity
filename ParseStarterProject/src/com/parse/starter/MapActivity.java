@@ -138,7 +138,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					@Override
 					public void onClick(View v) {
 						startActivity(new Intent(MapActivity.this,
-								PuzzleActivity.class));
+								PersistToCloudActivity.class));
+//						
+//						startActivity(new Intent(MapActivity.this,
+//								PuzzleActivity.class));
 					}
 				});
 	}

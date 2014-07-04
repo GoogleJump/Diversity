@@ -250,6 +250,10 @@ public class User extends ParseUser {
 	public ArrayList<String> getMaterialsSolved() {
 		return (ArrayList<String>) get("materialsSolved");
 	}
+	
+//	public void setMaterialsSolved(ArrayList<String> materialsSolved) {
+//		
+//	}
 
 	// store the names of the items
 	@SuppressWarnings("unchecked")
@@ -268,7 +272,7 @@ public class User extends ParseUser {
 	public ArrayList<String> getMaterialsCollected() {
 		return (ArrayList<String>) get("materialsCollected");
 	}
-
+	
 	// store the names of the materials
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getItemsSolved() {

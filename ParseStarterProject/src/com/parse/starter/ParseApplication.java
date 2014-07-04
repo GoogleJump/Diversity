@@ -13,7 +13,7 @@ public class ParseApplication extends Application {
 		super.onCreate();
 
 		// must register the ParseObjects
-		ParseObject.registerSubclass(Level.class);
+		ParseObject.registerSubclass(UserInfo.class);
 		ParseObject.registerSubclass(Puzzle.class);
 		ParseObject.registerSubclass(User.class);
 		ParseObject.registerSubclass(Material.class);
