@@ -59,7 +59,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private Gson gson;
 
-	private User user;
+	private UserInfo userInfo;
 	private GoogleMap map;
 	private LocationClient locationClient;
 
@@ -94,10 +94,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
 
-		user = ((User) User.getCurrentUser());
+		User user = (User) User.getCurrentUser();
+		userInfo = user.getUserInfo();
 		gson = new Gson();
 
-		
 		addMapActionListeners();
 	}
 
@@ -138,10 +138,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					@Override
 					public void onClick(View v) {
 						startActivity(new Intent(MapActivity.this,
-								PersistToCloudActivity.class));
-//						
-//						startActivity(new Intent(MapActivity.this,
-//								PuzzleActivity.class));
+								PuzzleActivity.class));
 					}
 				});
 	}
@@ -204,8 +201,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	}
 	
 	private void checkForCompletedItem() {
-		ArrayList<String> materialsCollected = user.getMaterialsCollected();		
-		ArrayList<String> itemsSolved = user.getItemsSolved();
+		List<String> materialsCollected = userInfo.getMaterialsCollected();		
+		List<String> itemsSolved = userInfo.getItemsSolved();
 		for ( String item: itemsSolved ) {
 			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
 			query.whereEqualTo("name", item);
@@ -230,13 +227,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		showFoundDialog(name);
 		
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
-			ArrayList<String> materialsSolved = user.getMaterialsSolved();
+			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
 
-			ArrayList<String> materialsCollected = user.getMaterialsCollected();
+			List<String> materialsCollected = userInfo.getMaterialsCollected();
 			materialsCollected.add(name);
 
-			user.saveInBackground(new SaveCallback() {
+			userInfo.saveInBackground(new SaveCallback() {
 				public void done(ParseException e) {
 					if (e != null) {
 						Log.d("Map Activity, updateUser", e.toString());
@@ -244,13 +241,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
-			ArrayList<String> itemsSolved = user.getItemsSolved();
+			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
 
-			ArrayList<String> itemsCollected = user.getItemsCollected();
+			List<String> itemsCollected = userInfo.getItemsCollected();
 			itemsCollected.add(name);
 
-			user.saveInBackground(new SaveCallback() {
+			userInfo.saveInBackground(new SaveCallback() {
 				public void done(ParseException e) {
 					if (e != null) {
 						Log.d("Map Activity, updateUser", e.toString());
@@ -335,7 +332,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		 * Put in the five or less materials in the hashmap
 		 */
 		private void populateMaterialLocations() {
-			ArrayList<String> materialsSolved = user.getMaterialsSolved();
+			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
 			ArrayList<String> materials = new ArrayList<String>(

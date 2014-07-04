@@ -17,9 +17,6 @@ import com.parse.ParseUser;
 @ParseClassName("_User")
 public class User extends ParseUser {
 
-	// For more information about ParseUser:
-	// https://parse.com/docs/android/api/com/parse/ParseUser.html
-
 	// empty constructor is required
 	public User() {
 	}
@@ -28,43 +25,20 @@ public class User extends ParseUser {
 	public User(String username, String password) {
 		this.setUsername(username);
 		this.setPassword(password);
-		this.restart();
 		saveInBackground();
 	}
-
-	/**
-	 * resets the user's credentials when they decide to restart a game
-	 */
-	public void restart() {
-		this.put("puzzleID", "");
-		this.put("currentItem", "JENNIFER"); // hardcoded for now
-		this.put("currentMaterial", "water"); // hardcoded for now
-		this.put("shuffledWord", "tewar");
-		ArrayList<String> itemsCollected = new ArrayList<String>();
-		this.put("itemsCollected", itemsCollected);
-		this.put("currentCharacter", "Pusheen"); // hardcoded for now
-		ArrayList<String> charactersCollected = new ArrayList<String>();
-		this.put("charactersCollected", charactersCollected);
-
-		ArrayList<String> materialsSolved = new ArrayList<String>();
-		materialsSolved.add("bucket");
-		materialsSolved.add("sand");
-		materialsSolved.add("water");
-		this.put("materialsSolved", materialsSolved);
-
-		ArrayList<String> materialsCollected = new ArrayList<String>();
-		this.put("materialsCollected", materialsCollected);
-
-		saveInBackground();
-	}
-
-	// wrapper for isAuthenticated() in ParseUser
-	public boolean isAuthenticated() {
-		return this.isAuthenticated();
-	}
-
-	public static ParseUser getCurrentUser() {
-		return ParseUser.getCurrentUser();
+	
+	public UserInfo getUserInfo() {
+		String usernmae = getString("username");
+		ParseQuery<UserInfo> query = ParseQuery.getQuery(UserInfo.class);
+		query.whereEqualTo("username", usernmae);
+		try {
+			List<UserInfo> results = query.find();
+			return results.get(0);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
