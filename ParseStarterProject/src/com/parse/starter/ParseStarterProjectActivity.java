@@ -18,10 +18,8 @@ public class ParseStarterProjectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		if (ParseUser.getCurrentUser() != null) {
-//			startActivity(new Intent(ParseStarterProjectActivity.this,
-//					MainMenuActivity.class));
 			startActivity(new Intent(ParseStarterProjectActivity.this,
-					PickCharacterActivity.class));
+					MainMenuActivity.class));
 		} else {
 			startActivity(new Intent(ParseStarterProjectActivity.this,
 					SignUpOrLogInActivity.class));

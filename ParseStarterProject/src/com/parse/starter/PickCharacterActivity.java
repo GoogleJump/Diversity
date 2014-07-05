@@ -17,38 +17,44 @@ import android.content.DialogInterface;
 import com.parse.SaveCallback;
 import com.parse.ParseException;
 
+/**
+ * PickCharacterActivity.java lets you pick a character by showing their
+ * pictures and showing popups with character descriptions. If you press the
+ * Main Menu Button, the activity changes to MainMenuActivity.java.
+ * PickCharacterActivity.java uses the layouts viewpager.xml, surfer.xml, and
+ * grandma.xml in order to provide swiping functionality.
+ */
+
 public class PickCharacterActivity extends Activity {
-	
+
 	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
 	private Context context;
 	private User currentUser;
-	
-	public void onCreate(Bundle savedInstanceState){
+
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewpager);
 		context = this;
 
-		//handling user
+		// handling user
 		currentUser = null;
-		if (User.getCurrentUser() instanceof User){
+		if (User.getCurrentUser() instanceof User) {
 			currentUser = ((User) User.getCurrentUser());
 		}
 		if (currentUser == null) {
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
 		}
-		
+
 		pagerAdapter = new CharacterPagerAdapter();
-		ViewPager pager = (ViewPager)findViewById(R.id.pager);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(pagerAdapter);
 
-		
-		//adding listeners to buttons
+		// adding listeners to buttons
 		addListenerOnMainMenuButton();
 	}
 
-	
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
 	 */
@@ -64,126 +70,119 @@ public class PickCharacterActivity extends Activity {
 		});
 	}
 
+	// Private class that handles the swiping functionality (different "views")
 	private class CharacterPagerAdapter extends PagerAdapter {
-		
+
 		private View v;
 		private ImageButton characterPic;
-/*		
-		public CharacterPagerAdapter(Context context) {
-		}
-		*/
-		
+
+		// number of characters
 		public int getCount() {
 			return 2;
 		}
-		
-		public boolean isViewFromObject(View view, Object object){
+
+		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
-		
-		 public Object instantiateItem(final View collection, final int position) {
-	         v = new View(collection.getContext());
-	        LayoutInflater inflater =
-	                (LayoutInflater) collection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-	        int resId = 0;
-	        switch (position) {
-	        case 0:
-	            resId = R.layout.surfer;
-	            v = inflater.inflate(R.layout.surfer, null, false);
-	            characterPic = (ImageButton) v.findViewById(R.id.surfer_picture);
-	            characterPic.setOnClickListener( new OnClickListener() {
-	                public void onClick(View m) {              	
-	                	
-	                	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-	            				context);
-	                	
-	                	alertDialogBuilder
-	    				.setMessage("This is the surfer. He is super cool!")
-	    				.setCancelable(false)
-	    				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-	    					public void onClick(DialogInterface dialog,int id) {		
-    							currentUser.setCurrentCharacter("Surfer");
-    							currentUser.saveInBackground(new SaveCallback() {
-    								public void done(ParseException e) {
-    									if (e != null) {
-    		    							String currentCharacter = currentUser.getCurrentCharacter();
-    		    							Log.d("myApp","currentCharacter is: " + currentCharacter);
-    		    							
-    			    						Intent i = new Intent(PickCharacterActivity.this, GPSActivity.class);
-    			    						PickCharacterActivity.this.finish();
-    		    							startActivity(i);
-    									}
-    								}
-    							});
+		public Object instantiateItem(final View collection, final int position) {
+			v = new View(collection.getContext());
+			LayoutInflater inflater = (LayoutInflater) collection.getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			int resId = 0;
+			switch (position) {
+			case 0: // surfer
+				resId = R.layout.surfer;
+				v = inflater.inflate(resId, null, false);
+				characterPic = (ImageButton) v.findViewById(R.id.surfer_picture); // find the picture button that
+																					// triggers the popup
+				characterPic.setOnClickListener(new OnClickListener() {
+					public void onClick(View m) {
 
-	    					}
-	    				  })
-	    				.setNegativeButton("No",new DialogInterface.OnClickListener() {
-	    					public void onClick(DialogInterface dialog,int id) {
-	    						// if this button is clicked, just close
-	    						// the dialog box and do nothing
-	    						dialog.cancel();
-	    					}
-	    				});
-	     
-	    				// create alert dialog
-	    				AlertDialog alertDialog = alertDialogBuilder.create();
-	     
-	    				// show it
-	    				alertDialog.show();
-	    				
-	                }
-	            });
+						// new popup
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
+						alertDialogBuilder
+							.setMessage("This is the surfer. He is super cool!")
+							// character description
+							.setCancelable(false)
+							.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
+																							// and change activity
+								public void onClick(DialogInterface dialog, int id) {
+									currentUser.setCurrentCharacter("Surfer");
+									currentUser.saveInBackground(new SaveCallback() {
+										public void done(ParseException e) {
+											if (e != null) {
+												String currentCharacter = currentUser.getCurrentCharacter();
+												Log.d("myApp","currentCharacter is: "+ currentCharacter);
+												Intent i = new Intent(PickCharacterActivity.this,GPSActivity.class);
+												PickCharacterActivity.this.finish();
+												startActivity(i);
+											}
+										}
+									});
+								}
+							})
+							.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
+								public void onClick(DialogInterface dialog,int id) {
+									// if this button is clicked,
+									// just close the dialog box and do nothing
+									dialog.cancel();
+								}
+							});
 
-	            break;
-	        case 1:
-	            resId = R.layout.grandma;
-	            v = inflater.inflate(R.layout.grandma, null, false);
-	            characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
-	            characterPic.setOnClickListener( new OnClickListener() {
-	                public void onClick(View m) {
-	                	
-	                	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-	            				context);
-	                	
-	                	alertDialogBuilder
-	    				.setMessage("This is the grandma. She's a cool lady.")
-	    				.setCancelable(false)
-	    				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-	    					public void onClick(DialogInterface dialog,int id) {
-    				//			currentUser.setCurrentCharacter("Grandma");
-    							String currentCharacter = currentUser.getCurrentCharacter();
-    							Log.d("myApp","currentCharacter is: " + currentCharacter);
-	    						Intent i = new Intent(PickCharacterActivity.this, GPSActivity.class);
-	    						PickCharacterActivity.this.finish();
-    							startActivity(i);
-	    					}
-	    				  })
-	    				.setNegativeButton("No",new DialogInterface.OnClickListener() {
-	    					public void onClick(DialogInterface dialog,int id) {
-	    						// if this button is clicked, just close
-	    						// the dialog box and do nothing
-	    						dialog.cancel();
-	    					}
-	    				});
-	     
-	    				// create alert dialog
-	    				AlertDialog alertDialog = alertDialogBuilder.create();
-	     
-	    				// show it
-	    				alertDialog.show();
-	    				
-	                }
-	            });
-	            break;
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
 
-	        }
-	        ((ViewPager) collection).addView(v, 0);
-	        return v;
-	    }
-	        
+						// show it
+						alertDialog.show();
+
+					}
+				});
+				break;
+				
+			case 1: // grandma
+				resId = R.layout.grandma;
+				v = inflater.inflate(resId, null, false);
+				characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
+				characterPic.setOnClickListener(new OnClickListener() {
+					public void onClick(View m) {
+
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+						alertDialogBuilder
+							.setMessage("This is the grandma. She's a cool lady.")
+							.setCancelable(false)
+							.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,int id) {
+									// currentUser.setCurrentCharacter("Grandma");
+									String currentCharacter = currentUser.getCurrentCharacter();
+									Log.d("myApp","currentCharacter is: " + currentCharacter);
+									Intent i = new Intent(PickCharacterActivity.this,GPSActivity.class);
+									PickCharacterActivity.this.finish();
+									startActivity(i);
+								}
+							})
+							.setNegativeButton("No",new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,int id) {
+									// if this button is clicked,
+									// just close the dialog box and do nothing
+									dialog.cancel();
+								}
+							});
+
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+
+						// show it
+						alertDialog.show();
+					}
+				});
+				break;
+			}
+			((ViewPager) collection).addView(v, 0);
+			return v;
+		}
+
 	}
 }
-
