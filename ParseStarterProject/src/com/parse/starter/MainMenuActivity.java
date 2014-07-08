@@ -3,7 +3,6 @@
 
 package com.parse.starter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -51,7 +50,7 @@ public class MainMenuActivity extends BaseActivity {
 				// CharacterActivity.class
 				Intent i = new Intent(MainMenuActivity.this,
 						PuzzleActivity.class);
-				String character = ((User) User.getCurrentUser())
+				String character = ((User) User.getCurrentUser()).getUserInfo()
 						.getCurrentCharacter();
 				if (character != null) {
 					i = new Intent(MainMenuActivity.this, MapActivity.class);

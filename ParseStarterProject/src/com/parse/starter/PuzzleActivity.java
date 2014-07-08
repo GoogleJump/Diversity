@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,22 +42,23 @@ public class PuzzleActivity extends BaseActivity {
 	private EditText anagramView;
 	private Button mapButton;
 	private ImageButton shuffleButton;
-	private User currentUser;
+	private UserInfo userInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		currentUser = (User) User.getCurrentUser();
+		User currentUser = (User) User.getCurrentUser();
+		userInfo = currentUser.getUserInfo();
 
-		material = currentUser.getMaterial();
+		material = userInfo.getCurrentMaterial();
 
 		// indicates there is nothing to find
 		if (material.equals("")) {
 			setContentView(R.layout.nothing_to_find);
 		} else {
-			final String puzzleID = currentUser.getPuzzle();
-			final String shuffledWord = currentUser.getShuffledWord();
+			final String puzzleID = userInfo.getPuzzleID();
+			final String shuffledWord = userInfo.getShuffledWord();
 
 			if (!puzzleID.equals("")) {
 				this.riddleViewSet(puzzleID);
@@ -106,8 +106,7 @@ public class PuzzleActivity extends BaseActivity {
 			ArrayList<String> options = puzzle.getOptions();
 			options.add(correctAnswer);
 
-			// randomly assigning CheckBoxes different answer
-			// options
+			// randomly assigning CheckBoxes different answer options
 			List<CheckBox> checkBoxes = new ArrayList<CheckBox>(Arrays.asList(
 					chk1, chk2, chk3, chk4));
 			Collections.shuffle(options);
@@ -162,8 +161,8 @@ public class PuzzleActivity extends BaseActivity {
 		shuffleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				currentUser.getNewMaterialShuffleStyle();
-				// currentUser.saveInBackground();
+				userInfo.getNewMaterialShuffleStyle();
+				userInfo.saveInBackground();
 
 				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
 				startActivity(i);
@@ -328,12 +327,12 @@ public class PuzzleActivity extends BaseActivity {
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
 	private void showCorrectDialog() {
-		String currentMaterial = currentUser.getMaterial();
-		currentUser.addMaterialSolved(currentMaterial);
-		currentUser.setMaterial("");
+		String currentMaterial = userInfo.getCurrentMaterial();
+		userInfo.addMaterialSolved(currentMaterial);
+		userInfo.setCurrentMaterial("");
+		userInfo.getNewMaterialShuffleStyle();
 
-		currentUser.getNewMaterialShuffleStyle();
-		// currentUser.saveInBackground();
+		userInfo.saveInBackground();
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

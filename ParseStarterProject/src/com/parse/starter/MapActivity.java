@@ -59,7 +59,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private Gson gson;
 
-	private User user;
+	private UserInfo userInfo;
 	private GoogleMap map;
 	private LocationClient locationClient;
 
@@ -94,10 +94,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
 
-		user = ((User) User.getCurrentUser());
+		User user = (User) User.getCurrentUser();
+		userInfo = user.getUserInfo();
 		gson = new Gson();
 
-		
 		addMapActionListeners();
 	}
 
@@ -191,33 +191,78 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					// materialsCollected list
 					Material closestMaterial = placeToMaterial.get(place);
 
-					updateUser(closestMaterial.getName());
+					updateUser(MATERIAL_ITEM.MATERIAL,
+							closestMaterial.getName());
+
+					checkForCompletedItem();
+
 				}
 			}
 		}
 	}
 
-	private void updateUser(String material) {
-		// need popup to reveal material
-		showMaterialFoundDialog(material);
+	private void checkForCompletedItem() {
+		List<String> materialsCollected = userInfo.getMaterialsCollected();
+		List<String> itemsSolved = userInfo.getItemsSolved();
+		for (String item : itemsSolved) {
+			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+			query.whereEqualTo("name", item);
 
-		// need background update
-		ArrayList<String> materialsSolved = user.getMaterialsSolved();
-		materialsSolved.remove(material);
-
-		ArrayList<String> materialsCollected = user.getMaterialsCollected();
-		materialsCollected.add(material);
-
-		user.saveInBackground(new SaveCallback() {
-			public void done(ParseException e) {
-				if (e != null) {
-					Log.d("Map Activity, updateUser", e.toString());
+			try {
+				List<Item> resultsList = query.find();
+				List<String> queriedItemMaterials = resultsList.get(0)
+						.getMaterials();
+				for (String material : queriedItemMaterials) {
+					if (!materialsCollected.contains(material)) {
+						return;
+					}
 				}
+				updateUser(MATERIAL_ITEM.ITEM, item);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-		});
+		}
 	}
 
-	private void showMaterialFoundDialog(String material) {
+	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
+		// need popup to reveal material
+		showFoundDialog(name);
+
+		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
+			List<String> materialsSolved = userInfo.getMaterialsSolved();
+			materialsSolved.remove(name);
+
+			List<String> materialsCollected = userInfo.getMaterialsCollected();
+			materialsCollected.add(name);
+
+			userInfo.saveInBackground(new SaveCallback() {
+				public void done(ParseException e) {
+					if (e != null) {
+						Log.d("Map Activity, updateUser", e.toString());
+					}
+				}
+			});
+		} else {
+			List<String> itemsSolved = userInfo.getItemsSolved();
+			itemsSolved.remove(name);
+
+			List<String> itemsCollected = userInfo.getItemsCollected();
+			itemsCollected.add(name);
+
+			userInfo.saveInBackground(new SaveCallback() {
+				public void done(ParseException e) {
+					if (e != null) {
+						Log.d("Map Activity, updateUser", e.toString());
+					}
+				}
+			});
+		}
+
+		// need background update
+
+	}
+
+	private void showFoundDialog(String materialOrItem) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -225,7 +270,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage("You found a " + material)
+				.setMessage("You found a " + materialOrItem)
 				.setCancelable(false)
 				.setPositiveButton("Yay!",
 						new DialogInterface.OnClickListener() {
@@ -233,6 +278,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 							}
 						});
 		ImageView image = new ImageView(this);
+		// set image here
 		image.setImageResource(R.drawable.map);
 
 		alertDialogBuilder.setView(image);
@@ -291,8 +337,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		 * Put in the five or less materials in the hashmap
 		 */
 		private void populateMaterialLocations() {
-			ArrayList<String> materialsSolved = user.getMaterialsSolved();
-			System.out.println(materialsSolved);
+			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
 			ArrayList<String> materials = new ArrayList<String>(
@@ -412,6 +457,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	@Override
 	public void onProviderDisabled(String provider) {
+	}
+
+	public enum MATERIAL_ITEM {
+		MATERIAL, ITEM;
 	}
 
 }

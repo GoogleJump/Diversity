@@ -1,7 +1,6 @@
 
 package com.parse.starter;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,7 +71,10 @@ public class SignUpActivity extends BaseActivity {
 				dlg.show();
 
 				// Set up a new Parse user
-				User user = new User(usernameView.getText().toString(), passwordView.getText().toString());
+				String username = usernameView.getText().toString();
+				User user = new User(username, passwordView.getText().toString());
+				new UserInfo(username);
+				
 				// Call the Parse signup method
 				user.signUpInBackground(new SignUpCallback() {
 
