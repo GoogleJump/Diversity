@@ -13,12 +13,7 @@ public class ParseStarterProjectActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.title);
-	}
-	
-	@Override
-    public boolean onTouchEvent(MotionEvent event) {
+		
 		if (ParseUser.getCurrentUser() != null) {
 			startActivity(new Intent(ParseStarterProjectActivity.this,
 					MainMenuActivity.class));
@@ -26,8 +21,6 @@ public class ParseStarterProjectActivity extends Activity {
 			startActivity(new Intent(ParseStarterProjectActivity.this,
 					SignUpOrLogInActivity.class));
 		}
-        return true;
-    }
-
+	}
 	
 }

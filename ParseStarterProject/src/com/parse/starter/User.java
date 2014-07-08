@@ -139,7 +139,6 @@ public class User extends ParseUser {
 		this.setItem("");
 		ParseQuery<Character> query = Character.getQuery();
 
-		// NOTE: Have to match value type EXACTLY
 		query.whereEqualTo("name", currentChar);
 
 		try {
@@ -157,7 +156,7 @@ public class User extends ParseUser {
 					}
 				}
 
-				// give user new material if not assigned a new item
+				// give user new material
 				this.getNewMaterialShuffleStyle();
 
 			}
