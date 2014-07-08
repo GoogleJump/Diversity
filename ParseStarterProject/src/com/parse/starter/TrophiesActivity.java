@@ -1,8 +1,7 @@
 package com.parse.starter;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,40 +38,33 @@ public class TrophiesActivity extends BaseActivity {
 
 		// trying something here
 		Drawable bg = tView.getBackground();
-		if (bg!=null) {
+		if (bg != null) {
 			if (bg instanceof BitmapDrawable) {
 				BitmapDrawable bmp = (BitmapDrawable) bg;
 				bmp.mutate();
-				bmp.setTileModeXY(TileMode.MIRROR,  TileMode.REPEAT);
+				bmp.setTileModeXY(TileMode.MIRROR, TileMode.REPEAT);
 			}
 		}
-		
-		
+
 		// get current user's list of collected characters to display
-		User currentUser = null;
-		if (User.getCurrentUser() instanceof User)
-			currentUser = ((User) User.getCurrentUser());
-		ArrayList<String> itemsCollected = null;
-		if (currentUser != null) {
-			itemsCollected = currentUser.getItemsCollected();
-		} else { // display login page
-			Intent i = new Intent(this, SignUpOrLogInActivity.class);
-			startActivity(i);
-		}
+		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
+		List<String> itemsCollected = userInfo.getItemsCollected();
 
 		// display collected items as strings
 		if (itemsCollected != null) {
-			//for (int i = 0; i < itemsCollected.size(); i++) {
+			// for (int i = 0; i < itemsCollected.size(); i++) {
 			int numItems = itemsCollected.size();
-			int numColumns = numItems/numItemsInRow + 1;
+			int numColumns = numItems / numItemsInRow + 1;
 			int itemsPlaced = 0; // counter for filling in items
-			
+
 			for (int i = 0; i < numColumns; i++) { // for each row
 				currentRow = new TableRow(this);
 				for (int j = 0; j < numItemsInRow; j++) { // 3 in each row
 					if (itemsPlaced < numItems) {
 						currentItem = new ImageView(this);
-						int id = this.getResources().getIdentifier(itemsCollected.get(itemsPlaced), "drawable", "com.parse.starter");
+						int id = this.getResources().getIdentifier(
+								itemsCollected.get(itemsPlaced), "drawable",
+								"com.parse.starter");
 						currentItem.setImageResource(id);
 						currentRow.addView(currentItem);
 						itemsPlaced++;
@@ -81,10 +73,7 @@ public class TrophiesActivity extends BaseActivity {
 				tView.addView(currentRow);
 			}
 		}
-
 		addListenerOnMainMenuButton();
-//		addListenerOnPhotosButton();
-//		addListenerOnInventoryButton();
 	}
 
 	/**
@@ -101,34 +90,4 @@ public class TrophiesActivity extends BaseActivity {
 			}
 		});
 	}
-
-//	/**
-//	 * When the photos Button is pressed, view changes to Photo Album
-//	 */
-//	private void addListenerOnPhotosButton() {
-//		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
-//		photoAlbum.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-//				startActivity(i);
-//
-//			}
-//		});
-//	}
-//	
-//	/**
-//	 * When the Inventory Button is pressed,
-//	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
-//	 */
-//	private void addListenerOnInventoryButton() {
-//		inventory = (Button) findViewById(R.id.inventory_button_trophies);
-//		inventory.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), InventoryActivity.class);
-//				startActivity(i);
-//			}
-//		});
-//	}
 }

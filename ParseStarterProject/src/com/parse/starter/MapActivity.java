@@ -190,26 +190,28 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					// remove this material from the materialSolved and to the
 					// materialsCollected list
 					Material closestMaterial = placeToMaterial.get(place);
-					
-					updateUser(MATERIAL_ITEM.MATERIAL, closestMaterial.getName());
-					
+
+					updateUser(MATERIAL_ITEM.MATERIAL,
+							closestMaterial.getName());
+
 					checkForCompletedItem();
 
 				}
 			}
 		}
 	}
-	
+
 	private void checkForCompletedItem() {
-		List<String> materialsCollected = userInfo.getMaterialsCollected();		
+		List<String> materialsCollected = userInfo.getMaterialsCollected();
 		List<String> itemsSolved = userInfo.getItemsSolved();
-		for ( String item: itemsSolved ) {
+		for (String item : itemsSolved) {
 			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
 			query.whereEqualTo("name", item);
-			
+
 			try {
 				List<Item> resultsList = query.find();
-				List<String> queriedItemMaterials = resultsList.get(0).getMaterials();
+				List<String> queriedItemMaterials = resultsList.get(0)
+						.getMaterials();
 				for (String material : queriedItemMaterials) {
 					if (!materialsCollected.contains(material)) {
 						return;
@@ -225,7 +227,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
 		// need popup to reveal material
 		showFoundDialog(name);
-		
+
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
@@ -257,7 +259,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 
 		// need background update
-		
+
 	}
 
 	private void showFoundDialog(String materialOrItem) {
@@ -267,11 +269,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		alertDialogBuilder.setTitle("Congrats!");
 
 		// set dialog message
-		alertDialogBuilder.setMessage("You found a " + materialOrItem).setCancelable(false)
-				.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-					}
-				});
+		alertDialogBuilder
+				.setMessage("You found a " + materialOrItem)
+				.setCancelable(false)
+				.setPositiveButton("Yay!",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
 		ImageView image = new ImageView(this);
 		// set image here
 		image.setImageResource(R.drawable.map);
@@ -453,7 +458,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	public void onProviderDisabled(String provider) {
 	}
-	
+
 	public enum MATERIAL_ITEM {
 		MATERIAL, ITEM;
 	}
