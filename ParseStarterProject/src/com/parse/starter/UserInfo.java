@@ -26,7 +26,7 @@ public class UserInfo extends ParseObject {
 	public void restart() {
 		put("currentMaterial", "someMaterial");
 		put("currentItem", "ITEM");
-		put("currentCharacter", "PANDATESTING");
+		put("currentCharacter", "");
 		ArrayList<String> emptyList = new ArrayList<String>();
 		put("materialsSolved", emptyList);
 		put("materialsCollected", emptyList);

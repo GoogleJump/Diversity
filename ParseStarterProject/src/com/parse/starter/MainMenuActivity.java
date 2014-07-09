@@ -46,14 +46,14 @@ public class MainMenuActivity extends BaseActivity {
 		startContinue.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// temporarily PuzzleActivity, will be changed to
-				// CharacterActivity.class
 				Intent i = new Intent(MainMenuActivity.this,
 						PuzzleActivity.class);
 				String character = ((User) User.getCurrentUser()).getUserInfo()
 						.getCurrentCharacter();
-				if (character != null) {
+				if (character.length() > 0) {
 					i = new Intent(MainMenuActivity.this, MapActivity.class);
+				} else {
+					i = new Intent(MainMenuActivity.this, PickCharacterActivity.class);
 				}
 				startActivity(i);
 			}

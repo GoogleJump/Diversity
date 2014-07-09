@@ -1,21 +1,19 @@
 package com.parse.starter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.ImageButton;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.util.Log;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import com.parse.SaveCallback;
-import com.parse.ParseException;
+import android.widget.ImageButton;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -30,19 +28,18 @@ public class PickCharacterActivity extends Activity {
 	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
 	private Context context;
-	private UserInfo currentUser;
+	private UserInfo userInfo;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewpager);
 		context = this;
 
-		// handling user
-		currentUser = null;
+		userInfo = null;
 		if (User.getCurrentUser() instanceof User) {
-			currentUser = ((User) User.getCurrentUser()).getUserInfo();
+			userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		}
-		if (currentUser == null) {
+		if (userInfo == null) {
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
 		}
@@ -51,7 +48,6 @@ public class PickCharacterActivity extends Activity {
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(pagerAdapter);
 
-		// adding listeners to buttons
 		addListenerOnMainMenuButton();
 	}
 
@@ -65,7 +61,6 @@ public class PickCharacterActivity extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
-
 			}
 		});
 	}
@@ -76,11 +71,12 @@ public class PickCharacterActivity extends Activity {
 		private View v;
 		private ImageButton characterPic;
 
-		// number of characters
+		@Override
 		public int getCount() {
 			return 2;
 		}
 
+		@Override
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
@@ -104,39 +100,20 @@ public class PickCharacterActivity extends Activity {
 
 						alertDialogBuilder
 							.setMessage("This is the surfer. He is super cool!")
-							// character description
 							.setCancelable(false)
 							.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
 																							// and change activity
 								public void onClick(DialogInterface dialog, int id) {
-									currentUser.setCurrentCharacter("Surfer");
-									currentUser.saveInBackground(new SaveCallback() {
-										public void done(ParseException e) {
-											if (e != null) {
-												String currentCharacter = currentUser.getCurrentCharacter();
-												Log.d("myApp","currentCharacter is: "+ currentCharacter);
-												Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
-												PickCharacterActivity.this.finish();
-												startActivity(i);
-											}
-										}
-									});
+									new SaveCharacterTask().execute("Surfer");
 								}
 							})
 							.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
 								public void onClick(DialogInterface dialog,int id) {
-									// if this button is clicked,
-									// just close the dialog box and do nothing
 									dialog.cancel();
 								}
 							});
-
-						// create alert dialog
 						AlertDialog alertDialog = alertDialogBuilder.create();
-
-						// show it
 						alertDialog.show();
-
 					}
 				});
 				break;
@@ -147,7 +124,6 @@ public class PickCharacterActivity extends Activity {
 				characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
 						alertDialogBuilder
@@ -155,26 +131,15 @@ public class PickCharacterActivity extends Activity {
 							.setCancelable(false)
 							.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									// currentUser.setCurrentCharacter("Grandma");
-									String currentCharacter = currentUser.getCurrentCharacter();
-									Log.d("myApp","currentCharacter is: " + currentCharacter);
-									Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
-									PickCharacterActivity.this.finish();
-									startActivity(i);
+									new SaveCharacterTask().execute("Grandma");
 								}
 							})
 							.setNegativeButton("No",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									// if this button is clicked,
-									// just close the dialog box and do nothing
 									dialog.cancel();
 								}
 							});
-
-						// create alert dialog
 						AlertDialog alertDialog = alertDialogBuilder.create();
-
-						// show it
 						alertDialog.show();
 					}
 				});
@@ -182,6 +147,22 @@ public class PickCharacterActivity extends Activity {
 			}
 			((ViewPager) collection).addView(v, 0);
 			return v;
+		}
+		
+		private class SaveCharacterTask extends AsyncTask<String, Void, Void> {
+			@Override
+			protected Void doInBackground(String... params) {
+				String characterSelected = params[0];
+				userInfo.setCurrentCharacter(characterSelected);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
+				PickCharacterActivity.this.finish();
+				startActivity(i);
+			}
 		}
 
 	}
