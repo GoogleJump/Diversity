@@ -153,6 +153,7 @@ public class PickCharacterActivity extends Activity {
 			@Override
 			protected Void doInBackground(String... params) {
 				String characterSelected = params[0];
+				userInfo.getNewItem();
 				userInfo.setCurrentCharacter(characterSelected);
 				return null;
 			}

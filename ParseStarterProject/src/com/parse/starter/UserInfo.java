@@ -22,10 +22,10 @@ public class UserInfo extends ParseObject {
 		put("username", username);
 		restart();
 	}
-	
+
 	public void restart() {
-		put("currentMaterial", "someMaterial");
-		put("currentItem", "ITEM");
+		put("currentMaterial", "");
+		put("currentItem", "");
 		put("currentCharacter", "");
 		ArrayList<String> emptyList = new ArrayList<String>();
 		put("materialsSolved", emptyList);
@@ -36,6 +36,37 @@ public class UserInfo extends ParseObject {
 		put("shuffledWord", "");
 		put("puzzleID", "1");
 		saveInBackground();
+	}
+
+	// FIXME
+	public void getNewItem() {
+		// Chain of async calls, how to work around this?
+		String currentCharacter = getCurrentCharacter();
+		if (currentCharacter.length() == 0) {
+			return;
+		}
+		ParseQuery<Character> query = ParseQuery.getQuery(Character.class);
+		query.whereEqualTo("name", currentCharacter);
+		try {
+			List<Character> results = query.find();
+			Character character = results.get(0);
+			List<String> characterItems = character.getItems();
+			Collections.shuffle(results);
+			List<String> itemsSolved = getItemsSolved();
+			for (int i = 0; i < characterItems.size(); i++) {
+				if (!itemsSolved.contains(characterItems.get(i))) {
+					System.out.println("HEREEEEEE");
+					setCurrentItem(characterItems.get(i));
+					return;
+				}
+			}
+			// Solved all items
+			// TODO: Handle this more gracefully
+			setCurrentItem("FINISHED");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return;
 	}
 
 	/**
@@ -140,7 +171,7 @@ public class UserInfo extends ParseObject {
 		}
 		return shuffled;
 	}
-	
+
 	public void addItemCollected(String item) {
 		add("itemsCollected", item);
 		saveInBackground();

@@ -196,7 +196,6 @@ public class PuzzleActivity extends BaseActivity {
 				Intent i = new Intent(PuzzleActivity.this,
 						MainMenuActivity.class);
 				startActivity(i);
-
 			}
 		});
 	}

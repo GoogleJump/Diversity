@@ -1,6 +1,6 @@
 package com.parse.starter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -21,10 +21,8 @@ public class Character extends ParseObject {
 		return getInt("ID");
 	}
 
-	// store the names of the items that relate to the character
-	@SuppressWarnings("unchecked")
-	public ArrayList<String> getItems() {
-		return (ArrayList<String>) get("items");
+	public List<String> getItems() {
+		return getList("items");
 	}
 	
 	public static ParseQuery<Character> getQuery() {
