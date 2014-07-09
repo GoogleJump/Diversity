@@ -30,7 +30,7 @@ public class PickCharacterActivity extends Activity {
 	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
 	private Context context;
-	private User currentUser;
+	private UserInfo currentUser;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class PickCharacterActivity extends Activity {
 		// handling user
 		currentUser = null;
 		if (User.getCurrentUser() instanceof User) {
-			currentUser = ((User) User.getCurrentUser());
+			currentUser = ((User) User.getCurrentUser()).getUserInfo();
 		}
 		if (currentUser == null) {
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
@@ -115,7 +115,7 @@ public class PickCharacterActivity extends Activity {
 											if (e != null) {
 												String currentCharacter = currentUser.getCurrentCharacter();
 												Log.d("myApp","currentCharacter is: "+ currentCharacter);
-												Intent i = new Intent(PickCharacterActivity.this,GPSActivity.class);
+												Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
 												PickCharacterActivity.this.finish();
 												startActivity(i);
 											}
@@ -158,7 +158,7 @@ public class PickCharacterActivity extends Activity {
 									// currentUser.setCurrentCharacter("Grandma");
 									String currentCharacter = currentUser.getCurrentCharacter();
 									Log.d("myApp","currentCharacter is: " + currentCharacter);
-									Intent i = new Intent(PickCharacterActivity.this,GPSActivity.class);
+									Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
 									PickCharacterActivity.this.finish();
 									startActivity(i);
 								}
