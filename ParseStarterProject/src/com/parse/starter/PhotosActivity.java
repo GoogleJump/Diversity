@@ -24,10 +24,13 @@ public class PhotosActivity extends Activity {
     	this.setContentView(R.layout.photos);
     	addListenerOnMainMenuButton();
     }
-    
+
     @Override
     public void onDestroy(){
     	super.onDestroy();
+//    	// recycle all the bitmaps used
+//		View photoAlbum = findViewById(R.id.dcgpagecurlPageCurlView1);
+//		((PageCurlView) photoAlbum).recycleBitmaps();
     	System.gc();
     	finish();
     }
@@ -73,6 +76,12 @@ public class PhotosActivity extends Activity {
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
+				// recycle all the bitmaps used
+				View photoAlbum = findViewById(R.id.dcgpagecurlPageCurlView1);
+				((PageCurlView) photoAlbum).recycleBitmaps();
+				
+				
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
 

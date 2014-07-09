@@ -112,6 +112,7 @@ public class PageCurlView extends View {
 	private Bitmap mBackground;
 	
 	/** LAGACY List of pages, this is just temporal */
+	/*****/
 	private ArrayList<Bitmap> mPages;
 	
 	/** LAGACY Current selected page */
@@ -309,29 +310,45 @@ public class PageCurlView extends View {
 		mPages = new ArrayList<Bitmap>();
 		
 		// get current user's list of collected characters to display
-				User currentUser = null;
-				if (User.getCurrentUser() instanceof User)
-					currentUser = ((User) User.getCurrentUser());
-				ArrayList<String> charactersCollected = null;
-				if (currentUser != null) {
-					charactersCollected = currentUser.getCharactersCollected();
-				} else { // display login page
-					Log.e("photoalbum", "current user was null?");
-//					Intent i = new Intent(this, SignUpOrLogInActivity.class);
-//					startActivity(i);
-				}
+		User currentUser = null;
+		if (User.getCurrentUser() instanceof User)
+			currentUser = ((User) User.getCurrentUser());
+		ArrayList<String> charactersCollected = null;
+		if (currentUser != null) {
+			charactersCollected = currentUser.getCharactersCollected();
+		} else { // display login page
+			Log.e("photoalbum", "current user was null?");
+//			Intent i = new Intent(this, SignUpOrLogInActivity.class);
+//			startActivity(i);
+		}
 
-				// display collected items as strings
-				if (charactersCollected != null) {
-					for (int i = 0; i < charactersCollected.size(); i++) { // for each row
-						int id = this.getResources().getIdentifier(charactersCollected.get(i), "drawable", "com.parse.starter");
-						mPages.add(BitmapFactory.decodeResource(getResources(),  id));
-					}
-				}
+		// display collected items as strings
+		if (charactersCollected != null) {
+			for (int i = 0; i < charactersCollected.size(); i++) { 
+				int id = this.getResources().getIdentifier(charactersCollected.get(i), "drawable", "com.parse.starter");
+				mPages.add(BitmapFactory.decodeResource(getResources(),  id));
+				Log.e("pagecurler", "plus 1");
+			}
+		}
+		
 		
 		// Create some sample images
-		mForeground = mPages.get(0);
-		mBackground = mPages.get(1);
+		if (mPages.size() > 1) {
+			Log.e("pagecurler", "numPages greater than 1");
+			mForeground = mPages.get(0);
+			mBackground = mPages.get(1);
+		}
+		else if (mPages.size() == 1) {
+			Log.e("pagecurler", "numPages is 1");
+			mForeground = mPages.get(0);
+			mBackground = null;
+		}
+		else {
+			Log.e("pagecurler", "numPages is 0");
+			int id = this.getResources().getIdentifier("pusheen", "drawable",  "com.parse.starter");
+			mForeground = BitmapFactory.decodeResource(getResources(), id);
+			mBackground = null;
+		}
 	}
 	
 	/**
@@ -570,7 +587,7 @@ public class PageCurlView extends View {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (!bBlockTouchInput) {
+		if (!bBlockTouchInput && mPages.size() > 1) {
 			
 			// Get our finger position
 			mFinger.x = event.getX();
@@ -846,8 +863,15 @@ public class PageCurlView extends View {
 	@Deprecated
 	private void SwapViews() {
 		Bitmap temp = mForeground;
+		if(mForeground!=null) {
+			mForeground.recycle();
+		}
 		mForeground = mBackground;
+		if(mBackground!=null) {
+			mBackground.recycle();
+		}
 		mBackground = temp;
+		Log.e("page curl view", "reached swap views");
 	}
 	
 	/**
@@ -929,7 +953,9 @@ public class PageCurlView extends View {
 		
 		// Draw our elements
 		drawForeground(canvas, rect, paint);
-		drawBackground(canvas, rect, paint);
+		if (mBackground != null) {
+			drawBackground(canvas, rect, paint);
+		}
 		drawCurlEdge(canvas);
 		
 		// Draw any debug info once we are done
@@ -1000,6 +1026,8 @@ public class PageCurlView extends View {
 		canvas.save();
 		canvas.clipPath(mask);
 		canvas.drawBitmap(mBackground, null, rect, paint);
+		
+		
 		
 		// Draw the page number (first page is 1 in real life :D 
 		// there is no page number 0 hehe)
@@ -1111,26 +1139,6 @@ public class PageCurlView extends View {
 		posY = debugDrawPoint(canvas,"Origin",mOrigin,Color.MAGENTA,posX,posY);
 		posY = debugDrawPoint(canvas,"Finger",mFinger,Color.GREEN,posX,posY);
 		
-		// Draw some curl stuff (Just some test)
-		/*
-		canvas.save();
-		Vector2D center = new Vector2D(getWidth()/2,getHeight()/2);
-	    //canvas.rotate(315,center.x,center.y);
-	    
-	    // Test each lines
-		//float radius = mA.distance(mD)/2.f;
-	    //float radius = mA.distance(mE)/2.f;
-	    float radius = mA.distance(mF)/2.f;
-		//float radius = 10;
-	    float reduction = 4.f;
-		RectF oval = new RectF();
-		oval.top = center.y-radius/reduction;
-		oval.bottom = center.y+radius/reduction;
-		oval.left = center.x-radius;
-		oval.right = center.x+radius;
-		canvas.drawArc(oval, 0, 360, false, paint);
-		canvas.restore();
-		/**/
 	}
 	
 	private float debugDrawPoint(Canvas canvas, String name, Vector2D point, int color, float posX, float posY) {	
@@ -1145,6 +1153,48 @@ public class PageCurlView extends View {
 		paint.setColor(color);	
 		canvas.drawPoint(X, Y, paint);
 		return posY+15;
+	}
+	
+	// recycle the bitmaps to avoid memory leaks
+	public void recycleBitmaps() {
+		//Bitmap currentPage = null;
+		User currentUser = null;
+		if (User.getCurrentUser() instanceof User)
+			currentUser = ((User) User.getCurrentUser());
+		ArrayList<String> charactersCollected = null;
+		if (currentUser != null) {
+			charactersCollected = currentUser.getCharactersCollected();
+		} else { // display login page
+			Log.e("photoalbum", "current user was null?");
+//			Intent i = new Intent(this, SignUpOrLogInActivity.class);
+//			startActivity(i);
+		}
+		if (charactersCollected != null) {
+			for (int i = 0; i < charactersCollected.size(); i++) { // for each row
+				//currentPage = mPages.get(i);
+				//if (currentPage!=null && currentPage != mForeground) {
+				
+					//currentPage.recycle();
+					mPages.get(i).recycle();
+					//currentPage = null;
+					
+				//}
+		
+			}
+			mPages.clear();
+			
+		}
+		
+		if (mForeground != null) {
+		mForeground.recycle();
+		mForeground = null;
+		}
+		if (mBackground != null) {
+			mBackground.recycle();
+			mBackground = null;
+		}
+		System.gc();
+		Log.e("PageCurler", "reached recylce phase!");
 	}
 
 }

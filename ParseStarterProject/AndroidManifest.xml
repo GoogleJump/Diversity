@@ -26,7 +26,8 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
+    
+    
     <application
         android:name="ParseApplication"
         android:icon="@drawable/ic_launcher"

@@ -29,9 +29,6 @@ import android.widget.TextView;
 public class TrophiesActivity extends Activity {
 
 	private Button mainMenu;
-//	private Button photoAlbum;
-//	private Button inventory;
-	//private TextView currentItem = null;
 	private ImageView currentItem = null;
 	private TableRow currentRow = null;
 	private int numItemsInRow = 3;
@@ -67,9 +64,8 @@ public class TrophiesActivity extends Activity {
 			startActivity(i);
 		}
 
-		// display collected items as strings
+		// display collected items 
 		if (itemsCollected != null) {
-			//for (int i = 0; i < itemsCollected.size(); i++) {
 			int numItems = itemsCollected.size();
 			int numColumns = numItems/numItemsInRow + 1;
 			int itemsPlaced = 0; // counter for filling in items
@@ -90,8 +86,6 @@ public class TrophiesActivity extends Activity {
 		}
 
 		addListenerOnMainMenuButton();
-//		addListenerOnPhotosButton();
-//		addListenerOnInventoryButton();
 	}
 
 	/**
@@ -108,34 +102,4 @@ public class TrophiesActivity extends Activity {
 			}
 		});
 	}
-
-//	/**
-//	 * When the photos Button is pressed, view changes to Photo Album
-//	 */
-//	private void addListenerOnPhotosButton() {
-//		photoAlbum = (Button) findViewById(R.id.photos_button_trophies);
-//		photoAlbum.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-//				startActivity(i);
-//
-//			}
-//		});
-//	}
-//	
-//	/**
-//	 * When the Inventory Button is pressed,
-//	 * 		changes to Inventory view, where all materials collected by the current user is displayed 
-//	 */
-//	private void addListenerOnInventoryButton() {
-//		inventory = (Button) findViewById(R.id.inventory_button_trophies);
-//		inventory.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(v.getContext(), InventoryActivity.class);
-//				startActivity(i);
-//			}
-//		});
-//	}
 }
