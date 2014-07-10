@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <Button android:id="@+id/main_menu_button_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu"/>
+    
+     <TextView
+        style="@style/BiggerFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings" 
+	    android:layout_gravity="center"/>
+     
+     <Button android:id="@+id/restart_button_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/restart"
+        android:layout_marginTop="50sp"
+        android:layout_gravity="center_horizontal"/>
+       
+     <Button android:id="@+id/logout_button_set"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/log_out"
+         android:layout_gravity="center_horizontal"/>
+     
+</LinearLayout>

@@ -3,25 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-     <TextView
+
+    <View 
+        android:layout_width="1dp"
+        android:layout_height="30dp"/>
+    <TextView
         style="@style/BiggerFont"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/main_menu" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu" 
+        android:layout_gravity="center"/>
      
      <Button android:id="@+id/start_continue_button_mm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_continue"
-        android:layout_marginTop="50sp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"/>
- 
-     <Button android:id="@+id/logout_button_mm"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/log_out"
-         android:layout_gravity="center_horizontal"/>
      
      <Button
          android:id="@+id/trophies_button_mm"
@@ -43,5 +41,11 @@
          android:layout_height="wrap_content"
          android:layout_gravity="center_horizontal"
          android:text="@string/inventory" />
+
+     <Button android:id="@+id/settings_button_mm"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/settings"
+         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

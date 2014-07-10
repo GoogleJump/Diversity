@@ -1,21 +1,22 @@
 package com.parse.starter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 @ParseClassName("Material")
 public class Material extends ParseObject {
-	
-	public Material() {}
-	
+
+	public Material() {
+	}
+
 	public String getName() {
 		return getString("name");
 	}
-	
-	public ArrayList<String> getSearchTerms() {
-		return (ArrayList<String>) get("searchTerms");
+
+	public List<String> getSearchTerms() {
+		return getList("searchTerms");
 	}
 
 }
