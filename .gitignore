@@ -2,6 +2,7 @@
 .DS_Store
 ParseStarterProject/bin/
 ParseStarterProject/gen/
+ParseStarterProject/.settings/
 ParseStarterProject/.classpath
 DiversityTestApp/bin/
 bin/
