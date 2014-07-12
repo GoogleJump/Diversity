@@ -23,7 +23,7 @@ public class User extends ParseUser {
 		this.setPassword(password);
 		saveInBackground();
 	}
-	
+
 	public UserInfo getUserInfo() {
 		String usernmae = getString("username");
 		ParseQuery<UserInfo> query = ParseQuery.getQuery(UserInfo.class);
