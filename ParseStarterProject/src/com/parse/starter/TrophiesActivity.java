@@ -36,7 +36,7 @@ public class TrophiesActivity extends BaseActivity {
 		setTitle(R.string.trophies_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.trophies_list);
 
-		// trying something here
+		// a hack to avoid distortions in the background image
 		Drawable bg = tView.getBackground();
 		if (bg != null) {
 			if (bg instanceof BitmapDrawable) {
@@ -50,9 +50,9 @@ public class TrophiesActivity extends BaseActivity {
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		List<String> itemsCollected = userInfo.getItemsCollected();
 
-		// display collected items as strings
+		// display collected items 
 		if (itemsCollected != null) {
-			// for (int i = 0; i < itemsCollected.size(); i++) {
+
 			int numItems = itemsCollected.size();
 			int numColumns = numItems / numItemsInRow + 1;
 			int itemsPlaced = 0; // counter for filling in items

@@ -20,8 +20,8 @@
 
         <TextView
             style="@style/BiggerFont"
-            android:layout_width="256dp"
-            android:layout_height="93dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/inventory_view_name" />
 
     </LinearLayout>
