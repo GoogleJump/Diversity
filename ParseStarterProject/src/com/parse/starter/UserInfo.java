@@ -21,7 +21,7 @@ public class UserInfo extends ParseObject {
 	public UserInfo(String username) {
 		put("username", username);
 		restart();
-	}
+	}		
 
 	public void restart() {
 		put("currentMaterial", "");

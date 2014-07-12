@@ -38,7 +38,7 @@ public class InventoryActivity extends BaseActivity {
 		setTitle(R.string.inventory_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.inventory_list);
 
-		// trying something here
+		// a hack to extend the picture out so it doesn't look warpy
 		Drawable bg = tView.getBackground();
 		if (bg != null) {
 			if (bg instanceof BitmapDrawable) {

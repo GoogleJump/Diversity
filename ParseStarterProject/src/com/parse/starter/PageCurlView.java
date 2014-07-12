@@ -113,6 +113,7 @@ public class PageCurlView extends View {
 	private Bitmap mBackground;
 
 	/** LAGACY List of pages, this is just temporal */
+	/*****/
 	private ArrayList<Bitmap> mPages;
 
 	/** LAGACY Current selected page */
@@ -317,6 +318,7 @@ public class PageCurlView extends View {
 		mPages = new ArrayList<Bitmap>();
 
 		// get current user's list of collected characters to display
+
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		List<String> charactersCollected = userInfo.getCharactersCollected();
 
@@ -331,9 +333,21 @@ public class PageCurlView extends View {
 			}
 		}
 
+
 		// Create some sample images
-		mForeground = mPages.get(0);
-		mBackground = mPages.get(1);
+		if (mPages.size() > 1) {
+			mForeground = mPages.get(0);
+			mBackground = mPages.get(1);
+		}
+		else if (mPages.size() == 1) {
+			mForeground = mPages.get(0);
+			mBackground = null;
+		}
+		else {
+			int id = this.getResources().getIdentifier("pusheen", "drawable",  "com.parse.starter");
+			mForeground = BitmapFactory.decodeResource(getResources(), id);
+			mBackground = null;
+		}
 	}
 
 	/**
@@ -597,12 +611,6 @@ public class PageCurlView extends View {
 	 * 
 	 * @see android.view.View#onDraw(android.graphics.Canvas)
 	 */
-	// @Override
-	// protected void onDraw(Canvas canvas) {
-	// super.onDraw(canvas);
-	// canvas.drawText(mText, getPaddingLeft(), getPaddingTop() - mAscent,
-	// mTextPaint);
-	// }
 
 	// ---------------------------------------------------------------
 	// Curling. This handles touch events, the actual curling
@@ -611,7 +619,9 @@ public class PageCurlView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (!bBlockTouchInput) {
+
+		if (!bBlockTouchInput && mPages.size() > 1) {
+			
 
 			// Get our finger position
 			mFinger.x = event.getX();
@@ -883,8 +893,15 @@ public class PageCurlView extends View {
 	@Deprecated
 	private void SwapViews() {
 		Bitmap temp = mForeground;
+		if(mForeground!=null) {
+			mForeground.recycle();
+		}
 		mForeground = mBackground;
+		if(mBackground!=null) {
+			mBackground.recycle();
+		}
 		mBackground = temp;
+		Log.e("page curl view", "reached swap views");
 	}
 
 	/**
@@ -969,7 +986,9 @@ public class PageCurlView extends View {
 
 		// Draw our elements
 		drawForeground(canvas, rect, paint);
-		drawBackground(canvas, rect, paint);
+		if (mBackground != null) {
+			drawBackground(canvas, rect, paint);
+		}
 		drawCurlEdge(canvas);
 
 		// Draw any debug info once we are done
@@ -1045,6 +1064,7 @@ public class PageCurlView extends View {
 		canvas.drawBitmap(mBackground, null, rect, paint);
 
 		// Draw the page number (first page is 1 in real life :D
+
 		// there is no page number 0 hehe)
 		drawPageNum(canvas, mIndex);
 
@@ -1149,33 +1169,18 @@ public class PageCurlView extends View {
 		paint.setColor(Color.RED);
 		canvas.drawLine(mOrigin.x, mOrigin.y, mMovement.x, mMovement.y, paint);
 
-		posY = debugDrawPoint(canvas, "A", mA, Color.RED, posX, posY);
-		posY = debugDrawPoint(canvas, "B", mB, Color.GREEN, posX, posY);
-		posY = debugDrawPoint(canvas, "C", mC, Color.BLUE, posX, posY);
-		posY = debugDrawPoint(canvas, "D", mD, Color.CYAN, posX, posY);
-		posY = debugDrawPoint(canvas, "E", mE, Color.YELLOW, posX, posY);
-		posY = debugDrawPoint(canvas, "F", mF, Color.LTGRAY, posX, posY);
-		posY = debugDrawPoint(canvas, "Mov", mMovement, Color.DKGRAY, posX,
-				posY);
-		posY = debugDrawPoint(canvas, "Origin", mOrigin, Color.MAGENTA, posX,
-				posY);
-		posY = debugDrawPoint(canvas, "Finger", mFinger, Color.GREEN, posX,
-				posY);
+		
+		posY = debugDrawPoint(canvas,"A",mA,Color.RED,posX,posY);
+		posY = debugDrawPoint(canvas,"B",mB,Color.GREEN,posX,posY);
+		posY = debugDrawPoint(canvas,"C",mC,Color.BLUE,posX,posY);
+		posY = debugDrawPoint(canvas,"D",mD,Color.CYAN,posX,posY);
+		posY = debugDrawPoint(canvas,"E",mE,Color.YELLOW,posX,posY);
+		posY = debugDrawPoint(canvas,"F",mF,Color.LTGRAY,posX,posY);
+		posY = debugDrawPoint(canvas,"Mov",mMovement,Color.DKGRAY,posX,posY);
+		posY = debugDrawPoint(canvas,"Origin",mOrigin,Color.MAGENTA,posX,posY);
+		posY = debugDrawPoint(canvas,"Finger",mFinger,Color.GREEN,posX,posY);
+		
 
-		// Draw some curl stuff (Just some test)
-		/*
-		 * canvas.save(); Vector2D center = new
-		 * Vector2D(getWidth()/2,getHeight()/2);
-		 * //canvas.rotate(315,center.x,center.y);
-		 * 
-		 * // Test each lines //float radius = mA.distance(mD)/2.f; //float
-		 * radius = mA.distance(mE)/2.f; float radius = mA.distance(mF)/2.f;
-		 * //float radius = 10; float reduction = 4.f; RectF oval = new RectF();
-		 * oval.top = center.y-radius/reduction; oval.bottom =
-		 * center.y+radius/reduction; oval.left = center.x-radius; oval.right =
-		 * center.x+radius; canvas.drawArc(oval, 0, 360, false, paint);
-		 * canvas.restore(); /*
-		 */
 	}
 
 	private float debugDrawPoint(Canvas canvas, String name, Vector2D point,
@@ -1193,6 +1198,38 @@ public class PageCurlView extends View {
 		paint.setColor(color);
 		canvas.drawPoint(X, Y, paint);
 		return posY + 15;
+	}
+	
+	// recycle the bitmaps to avoid memory leaks
+	public void recycleBitmaps() {
+		User currentUser = null;
+		if (User.getCurrentUser() instanceof User)
+			currentUser = ((User) User.getCurrentUser());
+		List<String> charactersCollected = null;
+		if (currentUser != null) {
+			charactersCollected = currentUser.getUserInfo().getCharactersCollected();
+		} else { // display login page
+			Log.e("photoalbum", "current user was null?");
+		}
+		if (charactersCollected != null) {
+			for (int i = 0; i < charactersCollected.size(); i++) { // for each row
+				if (mPages.get(i)!=null && mPages.get(i) != mForeground) {
+					mPages.get(i).recycle();
+				}
+			}
+			mPages.clear();
+			
+		}
+		
+		if (mForeground != null) {
+		mForeground.recycle();
+		mForeground = null;
+		}
+		if (mBackground != null) {
+			mBackground.recycle();
+			mBackground = null;
+		}
+		System.gc();
 	}
 
 }
