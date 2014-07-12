@@ -2,4 +2,6 @@
 .DS_Store
 ParseStarterProject/bin/
 DiversityTestApp/bin/
+DiversityTestApp/gen/
+google-play-services_lib/
 bin/
