@@ -12,7 +12,6 @@
 			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="src" path="/google-play-services_lib"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/platforms/android-18/android.jar" sourcepath="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/sources/android-18">
 		<attributes>
