@@ -155,7 +155,6 @@ public class PickCharacterActivity extends Activity {
 				String characterSelected = params[0];
 				userInfo.setCurrentCharacter(characterSelected);
 				userInfo.getNewItem();
-//				userInfo.setCurrentCharacter(characterSelected);
 				return null;
 			}
 			

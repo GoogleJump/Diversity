@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -55,7 +56,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			.setInterval(5000).setFastestInterval(16)
 			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 	private Location location;
-	private final int RADIUS = 20000; // in meters
+	private final int RADIUS = 10000; // in meters
+	private final float ZOOM_LEVEL = 12;
 
 	private Gson gson;
 
@@ -72,6 +74,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		locationClient = new LocationClient(this, this, this);
+		locationClient.connect();
+		
 		setContentView(R.layout.map);
 		addTransitionListeners();
 
@@ -80,19 +85,15 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		map.setMyLocationEnabled(true);
 
-		locationClient = new LocationClient(this, this, this);
-
 		// Default because current location cannot be determined at start time
 		LatLng myLocation = new LatLng(37.4220, -122.0804);
-
 		if (locationClient != null && locationClient.isConnected()) {
-			System.out.println("here");
 			Location currentLocation = locationClient.getLastLocation();
 			myLocation = new LatLng(currentLocation.getLatitude(),
 					currentLocation.getLongitude());
 		}
 
-		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
 
 		User user = (User) User.getCurrentUser();
 		userInfo = user.getUserInfo();
@@ -169,11 +170,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				});
 	}
 
+	// TODO(kseniab): When I locate the items more then once claim popup showing up multiple times;
+	// Fixit
 	private void claimMaterial() {
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
-
-			for (GooglePlace place : places) {
+			Iterator<GooglePlace> placeIterator = places.iterator();
+			while (placeIterator.hasNext()) {
+				GooglePlace place = placeIterator.next();
 				double materialLat = place.getLat();
 				double materialLng = place.getLng();
 
@@ -185,8 +189,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
 						+ Math.pow((materialLng - locationLng), 2)) < .2) {
 					Marker closestMarker = markers.get(place);
-					// What does Marker.remove() do?
 					closestMarker.remove();
+					markers.remove(place);
+					placeIterator.remove();
 
 					// remove this material from the materialSolved and to the
 					// materialsCollected list
@@ -297,6 +302,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 		}
+		// TODO(kseniab): Add a popup if there is no items to be located
 		new PlaceMarkersOnMapTask().execute(places);
 	}
 
@@ -402,9 +408,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		protected void onPostExecute(Void result) {
 			for (GooglePlace place : places) {
 				System.out.println(place.getName());
-				Marker marker = map.addMarker(new MarkerOptions()
-						.position(new LatLng(place.getLat(), place.getLng())));
-				markers.put(place, marker);
+				if (markers.get(place) == null) {
+					Marker marker = map.addMarker(new MarkerOptions()
+							.position(new LatLng(place.getLat(), place.getLng())));
+					markers.put(place, marker);
+				}
 			}
 		}
 	}
@@ -412,8 +420,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	protected void onStart() {
 		super.onStart();
-		// Connect the client.
-		locationClient.connect();
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}
 	}
 
 	@Override
@@ -421,7 +430,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		super.onResume();
 		setUpMapIfNeeded();
 		setUpLocationClientIfNeeded();
-		locationClient.connect();
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}
 	}
 
 	@Override
@@ -443,12 +454,35 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		locationClient.requestLocationUpdates(REQUEST, this); // LocationListener
+		Location currentLocation = locationClient.getLastLocation();
+		LatLng myLocation = new LatLng(currentLocation.getLatitude(),
+				currentLocation.getLongitude());
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
 	}
 
 	@Override
 	public void onDisconnected() {
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
+	}
+	
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
