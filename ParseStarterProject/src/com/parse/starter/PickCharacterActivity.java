@@ -153,8 +153,9 @@ public class PickCharacterActivity extends Activity {
 			@Override
 			protected Void doInBackground(String... params) {
 				String characterSelected = params[0];
-				userInfo.getNewItem();
 				userInfo.setCurrentCharacter(characterSelected);
+				userInfo.getNewItem();
+//				userInfo.setCurrentCharacter(characterSelected);
 				return null;
 			}
 			
@@ -163,7 +164,7 @@ public class PickCharacterActivity extends Activity {
 				Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
 				PickCharacterActivity.this.finish();
 				startActivity(i);
-			}
+ 			}
 		}
 
 	}

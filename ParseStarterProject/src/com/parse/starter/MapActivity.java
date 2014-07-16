@@ -185,6 +185,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
 						+ Math.pow((materialLng - locationLng), 2)) < .2) {
 					Marker closestMarker = markers.get(place);
+					// What does Marker.remove() do?
 					closestMarker.remove();
 
 					// remove this material from the materialSolved and to the
@@ -396,6 +397,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			return false;
 		}
 
+		// This should be called after the PlaceMarkersOnMapTask execution is done
 		@Override
 		protected void onPostExecute(Void result) {
 			for (GooglePlace place : places) {

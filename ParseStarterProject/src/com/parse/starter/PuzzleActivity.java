@@ -51,6 +51,7 @@ public class PuzzleActivity extends BaseActivity {
 		User currentUser = (User) User.getCurrentUser();
 		userInfo = currentUser.getUserInfo();
 
+		// Where is this material being set?
 		material = userInfo.getCurrentMaterial();
 
 		// indicates there is nothing to find
@@ -96,7 +97,7 @@ public class PuzzleActivity extends BaseActivity {
 			TextView question = (TextView) findViewById(R.id.question);
 			question.setText(puzzle.getString("riddle"));
 
-			correctAnswer = puzzle.getString("answer");
+			correctAnswer = puzzle.getString("material");
 
 			chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
 			chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
