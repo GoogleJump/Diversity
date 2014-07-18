@@ -6,10 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -65,18 +64,20 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private GoogleMap map;
 	private LocationClient locationClient;
 
-	private HashMap<GooglePlace, Material> placeToMaterial = new HashMap<GooglePlace, Material>();
-	private List<GooglePlace> places = new ArrayList<GooglePlace>();
-	private HashSet<Material> materialSearchTerms = new HashSet<Material>();
-	private HashMap<GooglePlace, Marker> markers = new HashMap<GooglePlace, Marker>();
+	private ConcurrentHashMap<Material, MaterialMap> materials
+			= new ConcurrentHashMap<Material, MaterialMap>();
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		locationClient = new LocationClient(this, this, this);
-		locationClient.connect();
-		
+		if (locationClient == null) {
+			locationClient = new LocationClient(this, this, this);
+		}
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}		
+	
 		setContentView(R.layout.map);
 		addTransitionListeners();
 
@@ -170,38 +171,37 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				});
 	}
 
-	// TODO(kseniab): When I locate the items more then once claim popup showing up multiple times;
-	// Fixit
 	private void claimMaterial() {
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
-			Iterator<GooglePlace> placeIterator = places.iterator();
-			while (placeIterator.hasNext()) {
-				GooglePlace place = placeIterator.next();
-				double materialLat = place.getLat();
-				double materialLng = place.getLng();
+			ConcurrentHashMap<Material, MaterialMap> materialsToRemove = new ConcurrentHashMap<Material, MaterialMap>();
+			synchronized (materials) {
+				for (Entry<Material, MaterialMap> material: materials.entrySet()) {
+					GooglePlace place = material.getValue().getPlace();
+					double materialLat = place.getLat();
+					double materialLng = place.getLng();
 
-				double locationLat = location.getLatitude();
-				double locationLng = location.getLongitude();
+					double locationLat = location.getLatitude();
+					double locationLng = location.getLongitude();
 
-				// Randomly determined what is "close enough" in terms of the
-				// threshold
-				if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
-						+ Math.pow((materialLng - locationLng), 2)) < .2) {
-					Marker closestMarker = markers.get(place);
-					closestMarker.remove();
-					markers.remove(place);
-					placeIterator.remove();
+						// Randomly determined what is "close enough" in terms of the
+						// threshold
+						// TODO(kseniab): fix the algorithm and make it more sensitive
+						if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
+							+ Math.pow((materialLng - locationLng), 2)) < .2) {
+						Marker closestMarker = material.getValue().getMarker();
+						if (closestMarker != null) {
+							closestMarker.remove();
+							materialsToRemove.put(material.getKey(), material.getValue());
+							updateUser(MATERIAL_ITEM.MATERIAL,
+									material.getKey().getName());
 
-					// remove this material from the materialSolved and to the
-					// materialsCollected list
-					Material closestMaterial = placeToMaterial.get(place);
-
-					updateUser(MATERIAL_ITEM.MATERIAL,
-							closestMaterial.getName());
-
-					checkForCompletedItem();
-
+							checkForCompletedItem();
+						}
+					}
+				}
+				for(Material material : materialsToRemove.keySet()) {
+					materials.remove(material);
 				}
 			}
 		}
@@ -209,8 +209,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private void checkForCompletedItem() {
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
-		List<String> itemsSolved = userInfo.getItemsSolved();
-		for (String item : itemsSolved) {
+		String item = userInfo.getCurrentItem();
 			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
 			query.whereEqualTo("name", item);
 
@@ -228,13 +227,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				e.printStackTrace();
 			}
 		}
-	}
 
+	/**
+	 * Updates the user information about collected items and materials;
+	 * Displays a popup to congratulate user.
+	 * Gets a new Item when the user solved the existing item.
+	 */
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
-		// need popup to reveal material
-		showFoundDialog(name);
-
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
+			showFoundDialog("You found a " + name);
+
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
 
@@ -249,11 +251,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
+			showFoundDialog("You just made a " + name);
+
 			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
 
 			List<String> itemsCollected = userInfo.getItemsCollected();
 			itemsCollected.add(name);
+			userInfo.getNewItem();
 
 			userInfo.saveInBackground(new SaveCallback() {
 				public void done(ParseException e) {
@@ -268,7 +273,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	}
 
-	private void showFoundDialog(String materialOrItem) {
+	private void showFoundDialog(String msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -276,7 +281,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage("You found a " + materialOrItem)
+				.setMessage(msg)
 				.setCancelable(false)
 				.setPositiveButton("Yay!",
 						new DialogInterface.OnClickListener() {
@@ -303,7 +308,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			location = locationClient.getLastLocation();
 		}
 		// TODO(kseniab): Add a popup if there is no items to be located
-		new PlaceMarkersOnMapTask().execute(places);
+		new PlaceMarkersOnMapTask().execute(materials);
 	}
 
 	/**
@@ -315,11 +320,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 * why rendering the markers are is the post execution of the thread.
 	 */
 	private class PlaceMarkersOnMapTask extends
-			AsyncTask<List<GooglePlace>, Void, Void> {
-		protected Void doInBackground(List<GooglePlace>... params) {
+			AsyncTask<ConcurrentHashMap<Material, MaterialMap>, Void, Void> {
+		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMap>... params) {
 			populateMaterialLocations();
 
-			for (Material material : materialSearchTerms) {
+			for (Material material : materials.keySet()) {
 				for (String searchTerm : material.getSearchTerms()) {
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
@@ -347,17 +352,17 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
-			ArrayList<String> materials = new ArrayList<String>(
+			ArrayList<String> allMaterials = new ArrayList<String>(
 					materialsSolved.subList(0, listLength));
 			ParseQuery<Material> query = ParseQuery.getQuery(Material.class);
-			query.whereContainedIn("name", materials);
-
-			materialSearchTerms = new HashSet<Material>();
+			query.whereContainedIn("name", allMaterials);
 
 			try {
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
-					materialSearchTerms.add(m);
+					if (!materials.keySet().contains(m)) {
+					materials.put(m, new MaterialMap());
+					}
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -395,23 +400,33 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					GooglePlacesResponse.class);
 			List<GooglePlace> resultsList = placesJson.getResults();
 			if (resultsList.size() > 0) {
-				GooglePlace materialPlace = resultsList.get(0);
-				places.add(materialPlace);
-				placeToMaterial.put(materialPlace, material);
-				return true;
-			}
-			return false;
+					GooglePlace materialPlace = resultsList.get(0);
+					synchronized (materials) {
+						// TODO(kseniab): would not work becqause the objects are technically different
+						// We probably need to refactor the code to keep only  map of a material to place.
+						MaterialMap materialMap = materials.get(material);
+						if (materialMap != null && materialMap.getPlace() == null) {
+							materialMap.setPlace(materialPlace);
+						}
+					return true;
+					}
+				}
+				return false;
 		}
 
 		// This should be called after the PlaceMarkersOnMapTask execution is done
 		@Override
 		protected void onPostExecute(Void result) {
-			for (GooglePlace place : places) {
-				System.out.println(place.getName());
-				if (markers.get(place) == null) {
-					Marker marker = map.addMarker(new MarkerOptions()
-							.position(new LatLng(place.getLat(), place.getLng())));
-					markers.put(place, marker);
+			synchronized (materials) {
+				for (Entry<Material, MaterialMap> material : materials.entrySet()) {
+					GooglePlace currentPlace = material.getValue().getPlace();
+					Marker currentMarker = material.getValue().getMarker();
+					System.out.println(currentPlace.getName());
+					if (currentMarker == null) {
+						currentMarker = map.addMarker(new MarkerOptions()
+							.position(new LatLng(currentPlace.getLat(), currentPlace.getLng())));
+						material.getValue().setMarker(currentMarker);
+					}
 				}
 			}
 		}
@@ -498,5 +513,25 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	public enum MATERIAL_ITEM {
 		MATERIAL, ITEM;
 	}
+	
+	class MaterialMap {
+	private Marker marker;
+	private GooglePlace place;
 
+	void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+
+	void setPlace(GooglePlace place) {
+		this.place = place;
+	}
+	
+	Marker getMarker() {
+		return marker;
+	}
+
+	GooglePlace getPlace() {
+		return place;
+	}
+}
 }

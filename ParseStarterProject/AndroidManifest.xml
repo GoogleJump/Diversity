@@ -65,8 +65,6 @@
         </activity>
         <activity android:name=".PuzzleActivity" >
         </activity>
-        <activity android:name=".GPSActivity" >
-        </activity>
         <activity android:name=".MainMenuActivity" >
         </activity>
         <activity android:name=".TrophiesActivity" >
@@ -78,10 +76,6 @@
         <activity android:name=".MapActivity" >
         </activity>
         <activity android:name=".InventoryActivity" >
-        </activity>
-        <activity android:name=".SwipingActivity" >
-        </activity>
-        <activity android:name=".StandaloneExample" >
         </activity>
         <activity android:name=".SettingsActivity" >
         </activity>

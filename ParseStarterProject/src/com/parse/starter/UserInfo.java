@@ -54,10 +54,9 @@ public class UserInfo extends ParseObject {
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
 			// What if there is no solve items?
-			List<String> itemsSolved = getItemsSolved();
+			List<String> itemsSolved = getItemsCollected();
 			for (int i = 0; i < characterItems.size(); i++) {
 				if (!itemsSolved.contains(characterItems.get(i))) {
-					System.out.println("HEREEEEEE");
 					setCurrentItem(characterItems.get(i));
 					getNewMaterialShuffleStyle();
 					return;
