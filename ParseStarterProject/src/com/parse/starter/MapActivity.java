@@ -37,6 +37,7 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -64,7 +65,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private GoogleMap map;
 	private LocationClient locationClient;
 
-	private ConcurrentHashMap<Material, MaterialMap> materials
+	private ConcurrentHashMap<Material, MaterialMap> materialsOnTheMap
 			= new ConcurrentHashMap<Material, MaterialMap>();
 
 	@SuppressLint("NewApi")
@@ -85,6 +86,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				R.id.map)).getMap();
 
 		map.setMyLocationEnabled(true);
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
+
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				marker.showInfoWindow();
+				return true;
+			}
+		});
 
 		// Default because current location cannot be determined at start time
 		LatLng myLocation = new LatLng(37.4220, -122.0804);
@@ -175,8 +184,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 			ConcurrentHashMap<Material, MaterialMap> materialsToRemove = new ConcurrentHashMap<Material, MaterialMap>();
-			synchronized (materials) {
-				for (Entry<Material, MaterialMap> material: materials.entrySet()) {
+			synchronized (materialsOnTheMap) {
+				for (Entry<Material, MaterialMap> material: materialsOnTheMap.entrySet()) {
 					GooglePlace place = material.getValue().getPlace();
 					double materialLat = place.getLat();
 					double materialLng = place.getLng();
@@ -201,7 +210,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					}
 				}
 				for(Material material : materialsToRemove.keySet()) {
-					materials.remove(material);
+					materialsOnTheMap.remove(material);
 				}
 			}
 		}
@@ -308,7 +317,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			location = locationClient.getLastLocation();
 		}
 		// TODO(kseniab): Add a popup if there is no items to be located
-		new PlaceMarkersOnMapTask().execute(materials);
+		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);
 	}
 
 	/**
@@ -324,7 +333,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMap>... params) {
 			populateMaterialLocations();
 
-			for (Material material : materials.keySet()) {
+			for (Material material : materialsOnTheMap.keySet()) {
 				for (String searchTerm : material.getSearchTerms()) {
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
@@ -360,8 +369,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			try {
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
-					if (!materials.keySet().contains(m)) {
-					materials.put(m, new MaterialMap());
+					if (!materialsOnTheMap.keySet().contains(m)) {
+					materialsOnTheMap.put(m, new MaterialMap());
 					}
 				}
 			} catch (ParseException e) {
@@ -401,10 +410,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<GooglePlace> resultsList = placesJson.getResults();
 			if (resultsList.size() > 0) {
 					GooglePlace materialPlace = resultsList.get(0);
-					synchronized (materials) {
+					synchronized (materialsOnTheMap) {
 						// TODO(kseniab): would not work becqause the objects are technically different
 						// We probably need to refactor the code to keep only  map of a material to place.
-						MaterialMap materialMap = materials.get(material);
+						MaterialMap materialMap = materialsOnTheMap.get(material);
 						if (materialMap != null && materialMap.getPlace() == null) {
 							materialMap.setPlace(materialPlace);
 						}
@@ -417,14 +426,18 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		// This should be called after the PlaceMarkersOnMapTask execution is done
 		@Override
 		protected void onPostExecute(Void result) {
-			synchronized (materials) {
-				for (Entry<Material, MaterialMap> material : materials.entrySet()) {
+			synchronized (materialsOnTheMap) {
+				for (Entry<Material, MaterialMap> material : materialsOnTheMap.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();
 					Marker currentMarker = material.getValue().getMarker();
-					System.out.println(currentPlace.getName());
+					String placeName = currentPlace.getName();
+					System.out.println(placeName);
 					if (currentMarker == null) {
 						currentMarker = map.addMarker(new MarkerOptions()
-							.position(new LatLng(currentPlace.getLat(), currentPlace.getLng())));
+							.position(new LatLng(currentPlace.getLat(), currentPlace.getLng()))
+	                        .title(placeName)
+	                        .snippet("You can get " + material.getKey().getName() + " here"));
+					
 						material.getValue().setMarker(currentMarker);
 					}
 				}
