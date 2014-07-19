@@ -3,12 +3,16 @@
 
 package com.parse.starter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
 
 /**
  * The MainMenu view shows the main menu with a Start/Continue button that takes
@@ -47,18 +51,31 @@ public class MainMenuActivity extends BaseActivity {
 		startContinue.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainMenuActivity.this,
-						PuzzleActivity.class);
-				String character = ((User) User.getCurrentUser()).getUserInfo()
-						.getCurrentCharacter();
-				if (character.length() > 0) {
-					i = new Intent(MainMenuActivity.this, MapActivity.class);
+				Intent i;
+				if (isOnline()) {
+					String character = ((User) User.getCurrentUser())
+							.getUserInfo().getCurrentCharacter();
+					if (character.length() > 0) {
+						i = new Intent(MainMenuActivity.this, MapActivity.class);
+					} else {
+						i = new Intent(MainMenuActivity.this,
+								PickCharacterActivity.class);
+					}
+					startActivity(i);
 				} else {
-					i = new Intent(MainMenuActivity.this, PickCharacterActivity.class);
+					showWarningDialog("No internet connection. Need internet connection");
 				}
-				startActivity(i);
 			}
 		});
+	}
+
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -68,9 +85,13 @@ public class MainMenuActivity extends BaseActivity {
 		settings = (Button) findViewById(R.id.settings_button_mm);
 		settings.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(MainMenuActivity.this,
-						SettingsActivity.class);
-				startActivity(intent);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							SettingsActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog("No internet connecttion. Need internet connection");
+				}
 			}
 		});
 	}
@@ -84,9 +105,13 @@ public class MainMenuActivity extends BaseActivity {
 		trophies.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainMenuActivity.this,
-						TrophiesActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							TrophiesActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog("No internet connecttion. Need internet connection");
+				}
 			}
 		});
 	}
@@ -100,8 +125,13 @@ public class MainMenuActivity extends BaseActivity {
 		photos.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							PhotosActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog("No internet connecttion. Need internet connection");
+				}
 			}
 		});
 	}
@@ -115,10 +145,37 @@ public class MainMenuActivity extends BaseActivity {
 		inventory.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), InventoryActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							InventoryActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog("No internet connecttion. Need internet connection");
+				}
 			}
 		});
+	}
+
+	private void showWarningDialog(String msg) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Ooops!");
+
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(msg)
+				.setCancelable(false)
+				.setPositiveButton("Got it!",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
 	}
 
 }

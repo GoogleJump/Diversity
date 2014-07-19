@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,7 +22,7 @@ import android.widget.ImageButton;
  * grandma.xml in order to provide swiping functionality.
  */
 
-public class PickCharacterActivity extends Activity {
+public class PickCharacterActivity extends BaseActivity {
 
 	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
@@ -99,7 +98,9 @@ public class PickCharacterActivity extends Activity {
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
 						alertDialogBuilder
-							.setMessage("This is the surfer. He is super cool!")
+							.setMessage("Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was " +
+						"a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. " +
+									"Help the dudes and dudets out.")
 							.setCancelable(false)
 							.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
 																							// and change activity
@@ -127,7 +128,9 @@ public class PickCharacterActivity extends Activity {
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
 						alertDialogBuilder
-							.setMessage("This is the grandma. She's a cool lady.")
+							.setMessage("Oh hello, deary. Are you hungry? I would bake you some fresh cookies, " +
+						"but I think my cats hide all the groceries that I just got from the store. Oh dear, where " +
+									"did I put the sweater I knit you? Can you help me out, deary?")
 							.setCancelable(false)
 							.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {

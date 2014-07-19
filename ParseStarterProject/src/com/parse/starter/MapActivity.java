@@ -19,16 +19,20 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -65,8 +69,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private GoogleMap map;
 	private LocationClient locationClient;
 
-	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap
-			= new ConcurrentHashMap<Material, MaterialMapInfo>();
+	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap = new ConcurrentHashMap<Material, MaterialMapInfo>();
 
 	@SuppressLint("NewApi")
 	@Override
@@ -77,8 +80,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 		if (!locationClient.isConnected()) {
 			locationClient.connect();
-		}		
-	
+		}
+
 		setContentView(R.layout.map);
 		addTransitionListeners();
 
@@ -103,7 +106,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					currentLocation.getLongitude());
 		}
 
-		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
+				ZOOM_LEVEL));
 
 		User user = (User) User.getCurrentUser();
 		userInfo = user.getUserInfo();
@@ -111,6 +115,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		addMapActionListeners();
 	}
+
+
 
 	@SuppressLint("NewApi")
 	private void setUpMapIfNeeded() {
@@ -182,8 +188,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
-			//display a popup
-			showWarningDialog("No items have been located; you need to locate them first.");
+			// display a popup
+			showWarningDialog("No materials have been located; you need to locate them first.");
 			return;
 		}
 
@@ -191,32 +197,32 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			location = locationClient.getLastLocation();
 			ConcurrentHashMap<Material, MaterialMapInfo> materialsToRemove = new ConcurrentHashMap<Material, MaterialMapInfo>();
 			synchronized (materialsOnTheMap) {
-				for (Entry<Material, MaterialMapInfo> material: materialsOnTheMap.entrySet()) {
+				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
+						.entrySet()) {
 					GooglePlace place = material.getValue().getPlace();
-					double materialLat = place.getLat();
-					double materialLng = place.getLng();
+					Location materialLocation = new Location("");
+					materialLocation.setLatitude(place.getLat());
+					materialLocation.setLongitude(place.getLng());
 
-					double locationLat = location.getLatitude();
-					double locationLng = location.getLongitude();
-
-						// Randomly determined what is "close enough" in terms of the
-						// threshold
-						// TODO(kseniab): fix the algorithm and make it more sensitive
-						if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
-							+ Math.pow((materialLng - locationLng), 2)) < .2) {
+					// distance in terms of meters
+					float distance = materialLocation.distanceTo(location);
+					if (distance < 1.5) {
 						Marker closestMarker = material.getValue().getMarker();
 						if (closestMarker != null) {
 							closestMarker.remove();
-							materialsToRemove.put(material.getKey(), material.getValue());
-							updateUser(MATERIAL_ITEM.MATERIAL,
-									material.getKey().getName());
-
+							materialsToRemove.put(material.getKey(),
+									material.getValue());
+							updateUser(MATERIAL_ITEM.MATERIAL, material
+									.getKey().getName());
 							checkForCompletedItem();
 						}
 					}
 				}
-				for(Material material : materialsToRemove.keySet()) {
+				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
+				}
+				if (materialsToRemove.keySet().size() == 0) {
+					showWarningDialog("There are no materials near you");
 				}
 			}
 		}
@@ -225,28 +231,28 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private void checkForCompletedItem() {
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
 		String item = userInfo.getCurrentItem();
-			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-			query.whereEqualTo("name", item);
+		ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+		query.whereEqualTo("name", item);
 
-			try {
-				List<Item> resultsList = query.find();
-				List<String> queriedItemMaterials = resultsList.get(0)
-						.getMaterials();
-				for (String material : queriedItemMaterials) {
-					if (!materialsCollected.contains(material)) {
-						return;
-					}
+		try {
+			List<Item> resultsList = query.find();
+			List<String> queriedItemMaterials = resultsList.get(0)
+					.getMaterials();
+			for (String material : queriedItemMaterials) {
+				if (!materialsCollected.contains(material)) {
+					return;
 				}
-				updateUser(MATERIAL_ITEM.ITEM, item);
-			} catch (ParseException e) {
-				e.printStackTrace();
 			}
+			updateUser(MATERIAL_ITEM.ITEM, item);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+	}
 
 	/**
 	 * Updates the user information about collected items and materials;
-	 * Displays a popup to congratulate user.
-	 * Gets a new Item when the user solved the existing item.
+	 * Displays a popup to congratulate user. Gets a new Item when the user
+	 * solved the existing item.
 	 */
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
@@ -316,6 +322,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		alertDialog.show();
 
 	}
+
 	private void showWarningDialog(String msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -344,7 +351,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			location = locationClient.getLastLocation();
 		}
 		if (userInfo.getMaterialsSolved().isEmpty()) {
-			//display a popup
+			// display a popup
 			showWarningDialog("No solved items. Go solve some puzzles =)");
 			return;
 		}
@@ -361,7 +368,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 */
 	private class PlaceMarkersOnMapTask extends
 			AsyncTask<ConcurrentHashMap<Material, MaterialMapInfo>, Void, Void> {
-		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMapInfo>... params) {
+		protected Void doInBackground(
+				ConcurrentHashMap<Material, MaterialMapInfo>... params) {
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
@@ -401,7 +409,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
 					if (!materialsOnTheMap.keySet().contains(m)) {
-					materialsOnTheMap.put(m, new MaterialMapInfo());
+						materialsOnTheMap.put(m, new MaterialMapInfo());
 					}
 				}
 			} catch (ParseException e) {
@@ -440,33 +448,40 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					GooglePlacesResponse.class);
 			List<GooglePlace> resultsList = placesJson.getResults();
 			if (resultsList.size() > 0) {
-					GooglePlace materialPlace = resultsList.get(0);
-					synchronized (materialsOnTheMap) {
-						MaterialMapInfo materialMap = materialsOnTheMap.get(material);
-						if (materialMap != null && materialMap.getPlace() == null) {
-							materialMap.setPlace(materialPlace);
-						}
-					return true;
+				GooglePlace materialPlace = resultsList.get(0);
+				synchronized (materialsOnTheMap) {
+					MaterialMapInfo materialMap = materialsOnTheMap
+							.get(material);
+					if (materialMap != null && materialMap.getPlace() == null) {
+						materialMap.setPlace(materialPlace);
 					}
+					return true;
 				}
-				return false;
+			}
+			return false;
 		}
 
-		// This should be called after the PlaceMarkersOnMapTask execution is done
+		// This should be called after the PlaceMarkersOnMapTask execution is
+		// done
 		@Override
 		protected void onPostExecute(Void result) {
 			synchronized (materialsOnTheMap) {
-				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap.entrySet()) {
+				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
+						.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();
 					Marker currentMarker = material.getValue().getMarker();
 					String placeName = currentPlace.getName();
-					System.out.println(placeName);
 					if (currentMarker == null) {
 						currentMarker = map.addMarker(new MarkerOptions()
-							.position(new LatLng(currentPlace.getLat(), currentPlace.getLng()))
-	                        .title(placeName)
-	                        .snippet("You can get " + material.getKey().getName() + " here"));
-					
+								.position(
+										new LatLng(currentPlace.getLat(),
+												currentPlace.getLng()))
+								.title(placeName)
+								.snippet(
+										"You can get "
+												+ material.getKey().getName()
+												+ " here"));
+
 						material.getValue().setMarker(currentMarker);
 					}
 				}
@@ -514,7 +529,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		Location currentLocation = locationClient.getLastLocation();
 		LatLng myLocation = new LatLng(currentLocation.getLatitude(),
 				currentLocation.getLongitude());
-		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
+				ZOOM_LEVEL));
 	}
 
 	@Override
@@ -522,6 +538,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null) {
 			locationClient.disconnect();
 		}
+		Toast.makeText(this, "Disconnected. Please re-connect.",
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -539,7 +557,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			locationClient.disconnect();
 		}
 	}
-	
+
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
@@ -555,25 +573,25 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	public enum MATERIAL_ITEM {
 		MATERIAL, ITEM;
 	}
-	
+
 	class MaterialMapInfo {
-	private Marker marker;
-	private GooglePlace place;
+		private Marker marker;
+		private GooglePlace place;
 
-	void setMarker(Marker marker) {
-		this.marker = marker;
-	}
+		void setMarker(Marker marker) {
+			this.marker = marker;
+		}
 
-	void setPlace(GooglePlace place) {
-		this.place = place;
-	}
-	
-	Marker getMarker() {
-		return marker;
-	}
+		void setPlace(GooglePlace place) {
+			this.place = place;
+		}
 
-	GooglePlace getPlace() {
-		return place;
+		Marker getMarker() {
+			return marker;
+		}
+
+		GooglePlace getPlace() {
+			return place;
+		}
 	}
-}
 }
