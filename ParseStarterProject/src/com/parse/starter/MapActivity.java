@@ -65,8 +65,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private GoogleMap map;
 	private LocationClient locationClient;
 
-	private ConcurrentHashMap<Material, MaterialMap> materialsOnTheMap
-			= new ConcurrentHashMap<Material, MaterialMap>();
+	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap
+			= new ConcurrentHashMap<Material, MaterialMapInfo>();
 
 	@SuppressLint("NewApi")
 	@Override
@@ -189,9 +189,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
-			ConcurrentHashMap<Material, MaterialMap> materialsToRemove = new ConcurrentHashMap<Material, MaterialMap>();
+			ConcurrentHashMap<Material, MaterialMapInfo> materialsToRemove = new ConcurrentHashMap<Material, MaterialMapInfo>();
 			synchronized (materialsOnTheMap) {
-				for (Entry<Material, MaterialMap> material: materialsOnTheMap.entrySet()) {
+				for (Entry<Material, MaterialMapInfo> material: materialsOnTheMap.entrySet()) {
 					GooglePlace place = material.getValue().getPlace();
 					double materialLat = place.getLat();
 					double materialLng = place.getLng();
@@ -343,7 +343,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 		}
-		// TODO(kseniab): Add a popup if there is no items to be located
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			//display a popup
 			showWarningDialog("No solved items. Go solve some puzzles =)");
@@ -361,8 +360,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 * why rendering the markers are is the post execution of the thread.
 	 */
 	private class PlaceMarkersOnMapTask extends
-			AsyncTask<ConcurrentHashMap<Material, MaterialMap>, Void, Void> {
-		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMap>... params) {
+			AsyncTask<ConcurrentHashMap<Material, MaterialMapInfo>, Void, Void> {
+		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMapInfo>... params) {
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
@@ -402,7 +401,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
 					if (!materialsOnTheMap.keySet().contains(m)) {
-					materialsOnTheMap.put(m, new MaterialMap());
+					materialsOnTheMap.put(m, new MaterialMapInfo());
 					}
 				}
 			} catch (ParseException e) {
@@ -443,9 +442,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			if (resultsList.size() > 0) {
 					GooglePlace materialPlace = resultsList.get(0);
 					synchronized (materialsOnTheMap) {
-						// TODO(kseniab): would not work becqause the objects are technically different
-						// We probably need to refactor the code to keep only  map of a material to place.
-						MaterialMap materialMap = materialsOnTheMap.get(material);
+						MaterialMapInfo materialMap = materialsOnTheMap.get(material);
 						if (materialMap != null && materialMap.getPlace() == null) {
 							materialMap.setPlace(materialPlace);
 						}
@@ -459,7 +456,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		@Override
 		protected void onPostExecute(Void result) {
 			synchronized (materialsOnTheMap) {
-				for (Entry<Material, MaterialMap> material : materialsOnTheMap.entrySet()) {
+				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();
 					Marker currentMarker = material.getValue().getMarker();
 					String placeName = currentPlace.getName();
@@ -559,7 +556,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		MATERIAL, ITEM;
 	}
 	
-	class MaterialMap {
+	class MaterialMapInfo {
 	private Marker marker;
 	private GooglePlace place;
 
