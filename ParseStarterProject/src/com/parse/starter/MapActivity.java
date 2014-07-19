@@ -181,6 +181,12 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	}
 
 	private void claimMaterial() {
+		if (materialsOnTheMap.isEmpty()) {
+			//display a popup
+			showWarningDialog("No items have been located; you need to locate them first.");
+			return;
+		}
+
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 			ConcurrentHashMap<Material, MaterialMap> materialsToRemove = new ConcurrentHashMap<Material, MaterialMap>();
@@ -310,6 +316,27 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		alertDialog.show();
 
 	}
+	private void showWarningDialog(String msg) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Ooops!");
+
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(msg)
+				.setCancelable(false)
+				.setPositiveButton("Got it!",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+	}
 
 	private void locateMaterials() {
 		// get current location
@@ -317,6 +344,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			location = locationClient.getLastLocation();
 		}
 		// TODO(kseniab): Add a popup if there is no items to be located
+		if (userInfo.getMaterialsSolved().isEmpty()) {
+			//display a popup
+			showWarningDialog("No solved items. Go solve some puzzles =)");
+			return;
+		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);
 	}
 
