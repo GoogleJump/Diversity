@@ -321,28 +321,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	}
 
-	private void showWarningDialog(String msg) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-		// set title
-		alertDialogBuilder.setTitle("Ooops!");
-
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(msg)
-				.setCancelable(false)
-				.setPositiveButton("Got it!",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-	}
-
 	private void locateMaterials() {
 		// get current location
 		if (locationClient != null && locationClient.isConnected()) {

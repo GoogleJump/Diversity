@@ -11,6 +11,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+/**
+ * Documentation about the local datastore: 
+ * http://blog.parse.com/2014/04/30/take-your-app-offline-with-parse-local-datastore/ 
+ */
 @ParseClassName("UserInfo")
 public class UserInfo extends ParseObject {
 
@@ -50,7 +54,6 @@ public class UserInfo extends ParseObject {
 		query.whereEqualTo("name", currentCharacter);
 		try {
 			List<Character> results = query.find();
-//			ParseObject.pin
 			Character character = results.get(0);
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
