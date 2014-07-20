@@ -187,7 +187,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
-			showWarningDialog("No materials have been located; you need to locate them first.");
+			showWarningDialog(R.string.no_located_materials);
 			return;
 		}
 
@@ -220,7 +220,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					materialsOnTheMap.remove(material);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
-					showWarningDialog("There are no materials near you");
+					showWarningDialog(R.string.no_nearby_materials);
 				}
 			}
 		}
@@ -328,7 +328,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
-			showWarningDialog("No solved items. Go solve some puzzles =)");
+			showWarningDialog(R.string.no_solved_materials);
 			return;
 		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);

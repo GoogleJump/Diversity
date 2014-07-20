@@ -3,8 +3,6 @@
 
 package com.parse.starter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -60,7 +58,7 @@ public class MainMenuActivity extends BaseActivity {
 					}
 					startActivity(i);
 				} else {
-					showWarningDialog("No internet connection. Need internet connection");
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -78,7 +76,7 @@ public class MainMenuActivity extends BaseActivity {
 							SettingsActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog("No internet connecttion. Need internet connection");
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -98,7 +96,7 @@ public class MainMenuActivity extends BaseActivity {
 							TrophiesActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog("No internet connecttion. Need internet connection");
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -118,7 +116,7 @@ public class MainMenuActivity extends BaseActivity {
 							PhotosActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog("No internet connecttion. Need internet connection");
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -138,7 +136,7 @@ public class MainMenuActivity extends BaseActivity {
 							InventoryActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog("No internet connecttion. Need internet connection");
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});

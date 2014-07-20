@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
 		return false;
 	}
 	
-	public void showWarningDialog(String msg) {
+	public void showWarningDialog(int msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
