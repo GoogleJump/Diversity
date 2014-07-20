@@ -50,6 +50,7 @@ public class UserInfo extends ParseObject {
 		query.whereEqualTo("name", currentCharacter);
 		try {
 			List<Character> results = query.find();
+//			ParseObject.pin
 			Character character = results.get(0);
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
