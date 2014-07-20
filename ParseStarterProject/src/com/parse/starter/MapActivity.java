@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,6 +37,7 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -55,7 +56,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			.setInterval(5000).setFastestInterval(16)
 			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 	private Location location;
-	private final int RADIUS = 20000; // in meters
+	private final int RADIUS = 10000; // in meters
+	private final float ZOOM_LEVEL = 12;
 
 	private Gson gson;
 
@@ -63,15 +65,20 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private GoogleMap map;
 	private LocationClient locationClient;
 
-	private HashMap<GooglePlace, Material> placeToMaterial = new HashMap<GooglePlace, Material>();
-	private List<GooglePlace> places = new ArrayList<GooglePlace>();
-	private HashSet<Material> materialSearchTerms = new HashSet<Material>();
-	private HashMap<GooglePlace, Marker> markers = new HashMap<GooglePlace, Marker>();
+	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap
+			= new ConcurrentHashMap<Material, MaterialMapInfo>();
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (locationClient == null) {
+			locationClient = new LocationClient(this, this, this);
+		}
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}		
+	
 		setContentView(R.layout.map);
 		addTransitionListeners();
 
@@ -79,20 +86,24 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				R.id.map)).getMap();
 
 		map.setMyLocationEnabled(true);
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
 
-		locationClient = new LocationClient(this, this, this);
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				marker.showInfoWindow();
+				return true;
+			}
+		});
 
 		// Default because current location cannot be determined at start time
 		LatLng myLocation = new LatLng(37.4220, -122.0804);
-
 		if (locationClient != null && locationClient.isConnected()) {
-			System.out.println("here");
 			Location currentLocation = locationClient.getLastLocation();
 			myLocation = new LatLng(currentLocation.getLatitude(),
 					currentLocation.getLongitude());
 		}
 
-		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
 
 		User user = (User) User.getCurrentUser();
 		userInfo = user.getUserInfo();
@@ -172,32 +183,42 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	}
 
 	private void claimMaterial() {
+		if (materialsOnTheMap.isEmpty()) {
+			//display a popup
+			showWarningDialog("No items have been located; you need to locate them first.");
+			return;
+		}
+
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
+			ConcurrentHashMap<Material, MaterialMapInfo> materialsToRemove = new ConcurrentHashMap<Material, MaterialMapInfo>();
+			synchronized (materialsOnTheMap) {
+				for (Entry<Material, MaterialMapInfo> material: materialsOnTheMap.entrySet()) {
+					GooglePlace place = material.getValue().getPlace();
+					double materialLat = place.getLat();
+					double materialLng = place.getLng();
 
-			for (GooglePlace place : places) {
-				double materialLat = place.getLat();
-				double materialLng = place.getLng();
+					double locationLat = location.getLatitude();
+					double locationLng = location.getLongitude();
 
-				double locationLat = location.getLatitude();
-				double locationLng = location.getLongitude();
+						// Randomly determined what is "close enough" in terms of the
+						// threshold
+						// TODO(kseniab): fix the algorithm and make it more sensitive
+						if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
+							+ Math.pow((materialLng - locationLng), 2)) < .2) {
+						Marker closestMarker = material.getValue().getMarker();
+						if (closestMarker != null) {
+							closestMarker.remove();
+							materialsToRemove.put(material.getKey(), material.getValue());
+							updateUser(MATERIAL_ITEM.MATERIAL,
+									material.getKey().getName());
 
-				// Randomly determined what is "close enough" in terms of the
-				// threshold
-				if (Math.sqrt(Math.pow((materialLat - locationLat), 2)
-						+ Math.pow((materialLng - locationLng), 2)) < .2) {
-					Marker closestMarker = markers.get(place);
-					closestMarker.remove();
-
-					// remove this material from the materialSolved and to the
-					// materialsCollected list
-					Material closestMaterial = placeToMaterial.get(place);
-
-					updateUser(MATERIAL_ITEM.MATERIAL,
-							closestMaterial.getName());
-
-					checkForCompletedItem();
-
+							checkForCompletedItem();
+						}
+					}
+				}
+				for(Material material : materialsToRemove.keySet()) {
+					materialsOnTheMap.remove(material);
 				}
 			}
 		}
@@ -205,8 +226,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private void checkForCompletedItem() {
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
-		List<String> itemsSolved = userInfo.getItemsSolved();
-		for (String item : itemsSolved) {
+		String item = userInfo.getCurrentItem();
 			ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
 			query.whereEqualTo("name", item);
 
@@ -224,13 +244,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				e.printStackTrace();
 			}
 		}
-	}
 
+	/**
+	 * Updates the user information about collected items and materials;
+	 * Displays a popup to congratulate user.
+	 * Gets a new Item when the user solved the existing item.
+	 */
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
-		// need popup to reveal material
-		showFoundDialog(name);
-
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
+			showFoundDialog("You found a " + name);
+
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
 
@@ -245,11 +268,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
+			showFoundDialog("You just made a " + name);
+
 			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
 
 			List<String> itemsCollected = userInfo.getItemsCollected();
 			itemsCollected.add(name);
+			userInfo.getNewItem();
 
 			userInfo.saveInBackground(new SaveCallback() {
 				public void done(ParseException e) {
@@ -264,7 +290,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	}
 
-	private void showFoundDialog(String materialOrItem) {
+	private void showFoundDialog(String msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -272,7 +298,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage("You found a " + materialOrItem)
+				.setMessage(msg)
 				.setCancelable(false)
 				.setPositiveButton("Yay!",
 						new DialogInterface.OnClickListener() {
@@ -292,13 +318,39 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		alertDialog.show();
 
 	}
+	private void showWarningDialog(String msg) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Ooops!");
+
+		// set dialog message
+		alertDialogBuilder
+				.setMessage(msg)
+				.setCancelable(false)
+				.setPositiveButton("Got it!",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+							}
+						});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+	}
 
 	private void locateMaterials() {
 		// get current location
 		if (locationClient != null && locationClient.isConnected()) {
 			location = locationClient.getLastLocation();
 		}
-		new PlaceMarkersOnMapTask().execute(places);
+		if (userInfo.getMaterialsSolved().isEmpty()) {
+			//display a popup
+			showWarningDialog("No solved items. Go solve some puzzles =)");
+			return;
+		}
+		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);
 	}
 
 	/**
@@ -310,11 +362,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 * why rendering the markers are is the post execution of the thread.
 	 */
 	private class PlaceMarkersOnMapTask extends
-			AsyncTask<List<GooglePlace>, Void, Void> {
-		protected Void doInBackground(List<GooglePlace>... params) {
+			AsyncTask<ConcurrentHashMap<Material, MaterialMapInfo>, Void, Void> {
+		protected Void doInBackground(ConcurrentHashMap<Material, MaterialMapInfo>... params) {
 			populateMaterialLocations();
 
-			for (Material material : materialSearchTerms) {
+			for (Material material : materialsOnTheMap.keySet()) {
 				for (String searchTerm : material.getSearchTerms()) {
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
@@ -342,17 +394,17 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			Collections.shuffle(materialsSolved);
 			int listLength = Math.min(5, materialsSolved.size());
-			ArrayList<String> materials = new ArrayList<String>(
+			ArrayList<String> allMaterials = new ArrayList<String>(
 					materialsSolved.subList(0, listLength));
 			ParseQuery<Material> query = ParseQuery.getQuery(Material.class);
-			query.whereContainedIn("name", materials);
-
-			materialSearchTerms = new HashSet<Material>();
+			query.whereContainedIn("name", allMaterials);
 
 			try {
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
-					materialSearchTerms.add(m);
+					if (!materialsOnTheMap.keySet().contains(m)) {
+					materialsOnTheMap.put(m, new MaterialMapInfo());
+					}
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -390,21 +442,36 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					GooglePlacesResponse.class);
 			List<GooglePlace> resultsList = placesJson.getResults();
 			if (resultsList.size() > 0) {
-				GooglePlace materialPlace = resultsList.get(0);
-				places.add(materialPlace);
-				placeToMaterial.put(materialPlace, material);
-				return true;
-			}
-			return false;
+					GooglePlace materialPlace = resultsList.get(0);
+					synchronized (materialsOnTheMap) {
+						MaterialMapInfo materialMap = materialsOnTheMap.get(material);
+						if (materialMap != null && materialMap.getPlace() == null) {
+							materialMap.setPlace(materialPlace);
+						}
+					return true;
+					}
+				}
+				return false;
 		}
 
+		// This should be called after the PlaceMarkersOnMapTask execution is done
 		@Override
 		protected void onPostExecute(Void result) {
-			for (GooglePlace place : places) {
-				System.out.println(place.getName());
-				Marker marker = map.addMarker(new MarkerOptions()
-						.position(new LatLng(place.getLat(), place.getLng())));
-				markers.put(place, marker);
+			synchronized (materialsOnTheMap) {
+				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap.entrySet()) {
+					GooglePlace currentPlace = material.getValue().getPlace();
+					Marker currentMarker = material.getValue().getMarker();
+					String placeName = currentPlace.getName();
+					System.out.println(placeName);
+					if (currentMarker == null) {
+						currentMarker = map.addMarker(new MarkerOptions()
+							.position(new LatLng(currentPlace.getLat(), currentPlace.getLng()))
+	                        .title(placeName)
+	                        .snippet("You can get " + material.getKey().getName() + " here"));
+					
+						material.getValue().setMarker(currentMarker);
+					}
+				}
 			}
 		}
 	}
@@ -412,8 +479,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	protected void onStart() {
 		super.onStart();
-		// Connect the client.
-		locationClient.connect();
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}
 	}
 
 	@Override
@@ -421,7 +489,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		super.onResume();
 		setUpMapIfNeeded();
 		setUpLocationClientIfNeeded();
-		locationClient.connect();
+		if (!locationClient.isConnected()) {
+			locationClient.connect();
+		}
 	}
 
 	@Override
@@ -443,12 +513,35 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		locationClient.requestLocationUpdates(REQUEST, this); // LocationListener
+		Location currentLocation = locationClient.getLastLocation();
+		LatLng myLocation = new LatLng(currentLocation.getLatitude(),
+				currentLocation.getLongitude());
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, ZOOM_LEVEL));
 	}
 
 	@Override
 	public void onDisconnected() {
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (locationClient != null) {
+			locationClient.disconnect();
+		}
+	}
+	
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
@@ -464,5 +557,25 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	public enum MATERIAL_ITEM {
 		MATERIAL, ITEM;
 	}
+	
+	class MaterialMapInfo {
+	private Marker marker;
+	private GooglePlace place;
 
+	void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+
+	void setPlace(GooglePlace place) {
+		this.place = place;
+	}
+	
+	Marker getMarker() {
+		return marker;
+	}
+
+	GooglePlace getPlace() {
+		return place;
+	}
+}
 }

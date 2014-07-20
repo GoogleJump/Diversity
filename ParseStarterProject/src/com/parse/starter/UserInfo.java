@@ -41,6 +41,7 @@ public class UserInfo extends ParseObject {
 	// FIXME
 	public void getNewItem() {
 		// Chain of async calls, how to work around this?
+		// This is returning null!
 		String currentCharacter = getCurrentCharacter();
 		if (currentCharacter.length() == 0) {
 			return;
@@ -52,11 +53,12 @@ public class UserInfo extends ParseObject {
 			Character character = results.get(0);
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
-			List<String> itemsSolved = getItemsSolved();
+			// What if there is no solve items?
+			List<String> itemsSolved = getItemsCollected();
 			for (int i = 0; i < characterItems.size(); i++) {
 				if (!itemsSolved.contains(characterItems.get(i))) {
-					System.out.println("HEREEEEEE");
 					setCurrentItem(characterItems.get(i));
+					getNewMaterialShuffleStyle();
 					return;
 				}
 			}

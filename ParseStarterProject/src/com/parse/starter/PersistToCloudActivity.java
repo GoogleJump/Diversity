@@ -24,5 +24,4 @@ public class PersistToCloudActivity extends Activity {
 		
 
 	}
-
 }
