@@ -128,6 +128,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								MainMenuActivity.class));
 					}
@@ -137,6 +138,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								PuzzleActivity.class));
 					}

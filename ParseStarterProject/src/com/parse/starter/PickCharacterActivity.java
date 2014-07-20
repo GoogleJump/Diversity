@@ -60,6 +60,7 @@ public class PickCharacterActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				PickCharacterActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -80,6 +81,28 @@ public class PickCharacterActivity extends Activity {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
+		
+		public void makePopup(final String name, String description){
+			// new popup
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+			alertDialogBuilder
+				.setMessage(description)
+				.setCancelable(false)
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
+																				// and change activity
+					public void onClick(DialogInterface dialog, int id) {
+						new SaveCharacterTask().execute(name);
+					}
+				})
+				.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
 
 		public Object instantiateItem(final View collection, final int position) {
 			v = new View(collection.getContext());
@@ -93,27 +116,8 @@ public class PickCharacterActivity extends Activity {
 				characterPic = (ImageButton) v.findViewById(R.id.surfer_picture); // find the picture button that
 																					// triggers the popup
 				characterPic.setOnClickListener(new OnClickListener() {
-					public void onClick(View m) {
-
-						// new popup
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
-						alertDialogBuilder
-							.setMessage("This is the surfer. He is super cool!")
-							.setCancelable(false)
-							.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
-																							// and change activity
-								public void onClick(DialogInterface dialog, int id) {
-									new SaveCharacterTask().execute("Surfer");
-								}
-							})
-							.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
-								public void onClick(DialogInterface dialog,int id) {
-									dialog.cancel();
-								}
-							});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+					public void onClick(View m) {					
+						makePopup("Surfer","This is the surfer. He is super cool!");
 					}
 				});
 				break;
@@ -124,23 +128,7 @@ public class PickCharacterActivity extends Activity {
 				characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
-						alertDialogBuilder
-							.setMessage("This is the grandma. She's a cool lady.")
-							.setCancelable(false)
-							.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
-									new SaveCharacterTask().execute("Grandma");
-								}
-							})
-							.setNegativeButton("No",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
-									dialog.cancel();
-								}
-							});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+						makePopup("Grandma","This is the grandma. She's a cool lady.");
 					}
 				});
 				break;
@@ -148,6 +136,8 @@ public class PickCharacterActivity extends Activity {
 			((ViewPager) collection).addView(v, 0);
 			return v;
 		}
+		
+		
 		
 		private class SaveCharacterTask extends AsyncTask<String, Void, Void> {
 			@Override

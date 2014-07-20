@@ -105,6 +105,7 @@ public class SignUpActivity extends BaseActivity {
 											MainMenuActivity.class);
 									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 											| Intent.FLAG_ACTIVITY_NEW_TASK);
+									SignUpActivity.this.finish();
 									startActivity(intent);
 								}
 							}

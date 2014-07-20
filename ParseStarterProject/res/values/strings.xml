@@ -20,6 +20,7 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Submit</string>
     <string name="main_menu">Main Menu</string>
+    <string name="about">About</string>
     
     <string name="gps_view_name">Map</string>
     <string name="submit">Submit</string>
@@ -45,8 +46,9 @@
     <string name="no_more_puzzles">You have solved all puzzles for your current item, click map to return to map view.</string>
     
     <string name="choose_a_character">Choose a Character</string>
-    <string-array name="character_array">
-        <item>Dave the Surfer</item>
-        <item>Velma the Grandma</item>
-    </string-array>
+    
+    <string name="synopsis">Welcome to <i>Solve N Go</i>! Be prepared to collect awesome items, explore your city, and build a family!\n</string>
+	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n</string>
+	<string name="artwork"><b>Artwork</b>\nCarolyn Chen\nJamie Forbes\n</string>
+	<string name="ksenia"><b>Mental and Emotional Support aka Best Mentor Ever</b>\nKsenia Bukina\n</string>
 </resources>

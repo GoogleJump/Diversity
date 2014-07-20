@@ -48,4 +48,5 @@
          android:text="@string/settings"
          android:layout_gravity="center_horizontal"/>
 
+
 </LinearLayout>

@@ -56,6 +56,7 @@ public class MainMenuActivity extends BaseActivity {
 				} else {
 					i = new Intent(MainMenuActivity.this, PickCharacterActivity.class);
 				}
+				MainMenuActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -70,6 +71,7 @@ public class MainMenuActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(MainMenuActivity.this,
 						SettingsActivity.class);
+				MainMenuActivity.this.finish();
 				startActivity(intent);
 			}
 		});
@@ -86,6 +88,7 @@ public class MainMenuActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(MainMenuActivity.this,
 						TrophiesActivity.class);
+				MainMenuActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -101,6 +104,7 @@ public class MainMenuActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), PhotosActivity.class);
+				MainMenuActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -116,6 +120,7 @@ public class MainMenuActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), InventoryActivity.class);
+				MainMenuActivity.this.finish();
 				startActivity(i);
 			}
 		});

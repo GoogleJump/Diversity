@@ -165,6 +165,7 @@ public class PuzzleActivity extends BaseActivity {
 				userInfo.saveInBackground();
 
 				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 
@@ -180,6 +181,7 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this, MapActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -195,6 +197,7 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this,
 						MainMenuActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
