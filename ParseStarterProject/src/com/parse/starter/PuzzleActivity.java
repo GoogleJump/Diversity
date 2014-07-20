@@ -163,7 +163,7 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				userInfo.getNewMaterialShuffleStyle();
-				userInfo.saveInBackground();
+				userInfo.saveEventually();
 
 				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
 				startActivity(i);
@@ -332,7 +332,7 @@ public class PuzzleActivity extends BaseActivity {
 		userInfo.setCurrentMaterial("");
 		userInfo.getNewMaterialShuffleStyle();
 
-		userInfo.saveInBackground();
+		userInfo.saveEventually();
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

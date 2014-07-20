@@ -19,13 +19,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +59,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Location location;
 	private final int RADIUS = 10000; // in meters
 	private final float ZOOM_LEVEL = 12;
+	private final double CLAIM_DISTANCE = 1.5;
 
 	private Gson gson;
 
@@ -206,7 +204,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 					// distance in terms of meters
 					float distance = materialLocation.distanceTo(location);
-					if (distance < 1.5) {
+					if (distance < CLAIM_DISTANCE) {
 						Marker closestMarker = material.getValue().getMarker();
 						if (closestMarker != null) {
 							closestMarker.remove();
@@ -264,7 +262,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<String> materialsCollected = userInfo.getMaterialsCollected();
 			materialsCollected.add(name);
 
-			userInfo.saveInBackground(new SaveCallback() {
+			userInfo.saveEventually(new SaveCallback() {
 				public void done(ParseException e) {
 					if (e != null) {
 						Log.d("Map Activity, updateUser", e.toString());
@@ -281,7 +279,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			itemsCollected.add(name);
 			userInfo.getNewItem();
 
-			userInfo.saveInBackground(new SaveCallback() {
+			userInfo.saveEventually(new SaveCallback() {
 				public void done(ParseException e) {
 					if (e != null) {
 						Log.d("Map Activity, updateUser", e.toString());
