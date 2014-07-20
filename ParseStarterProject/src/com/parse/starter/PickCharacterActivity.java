@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -24,6 +25,7 @@ import android.widget.ImageButton;
 
 public class PickCharacterActivity extends BaseActivity {
 
+	private ProgressBar progressBar;
 	private CharacterPagerAdapter pagerAdapter;
 	private Button mainMenu;
 	private Context context;
@@ -33,6 +35,9 @@ public class PickCharacterActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewpager);
 		context = this;
+
+		progressBar = (ProgressBar) findViewById(R.id.progressBarPickCharacter);
+		progressBar.setVisibility(View.GONE);
 
 		userInfo = null;
 		if (User.getCurrentUser() instanceof User) {
@@ -89,59 +94,79 @@ public class PickCharacterActivity extends BaseActivity {
 			case 0: // surfer
 				resId = R.layout.surfer;
 				v = inflater.inflate(resId, null, false);
-				characterPic = (ImageButton) v.findViewById(R.id.surfer_picture); // find the picture button that
-																					// triggers the popup
+				characterPic = (ImageButton) v
+						.findViewById(R.id.surfer_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
 
 						// new popup
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								context);
 
 						alertDialogBuilder
-							.setMessage("Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was " +
-						"a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. " +
-									"Help the dudes and dudets out.")
-							.setCancelable(false)
-							.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
-																							// and change activity
-								public void onClick(DialogInterface dialog, int id) {
-									new SaveCharacterTask().execute("Surfer");
-								}
-							})
-							.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
-								public void onClick(DialogInterface dialog,int id) {
-									dialog.cancel();
-								}
-							});
+								.setMessage(
+										"Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
+												+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
+												+ "Help the dudes and dudets out.")
+								.setCancelable(false)
+								.setPositiveButton("Yes",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												new SaveCharacterTask()
+														.execute("Surfer");
+												progressBar.setVisibility(View.VISIBLE);
+											}
+										})
+								.setNegativeButton("No",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												dialog.cancel();
+											}
+										});
 						AlertDialog alertDialog = alertDialogBuilder.create();
 						alertDialog.show();
 					}
 				});
 				break;
-				
+
 			case 1: // grandma
 				resId = R.layout.grandma;
 				v = inflater.inflate(resId, null, false);
-				characterPic = (ImageButton) v.findViewById(R.id.grandma_picture);
+				characterPic = (ImageButton) v
+						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								context);
 
 						alertDialogBuilder
-							.setMessage("Oh hello, deary. Are you hungry? I would bake you some fresh cookies, " +
-						"but I think my cats hide all the groceries that I just got from the store. Oh dear, where " +
-									"did I put the sweater I knit you? Can you help me out, deary?")
-							.setCancelable(false)
-							.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
-									new SaveCharacterTask().execute("Grandma");
-								}
-							})
-							.setNegativeButton("No",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
-									dialog.cancel();
-								}
-							});
+								.setMessage(
+										"Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
+												+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
+												+ "did I put the sweater I knit you? Can you help me out, deary?")
+								.setCancelable(false)
+								.setPositiveButton("Yes",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												new SaveCharacterTask()
+														.execute("Grandma");
+												progressBar.setVisibility(View.VISIBLE);
+											}
+										})
+								.setNegativeButton("No",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												dialog.cancel();
+											}
+										});
 						AlertDialog alertDialog = alertDialogBuilder.create();
 						alertDialog.show();
 					}
@@ -151,8 +176,9 @@ public class PickCharacterActivity extends BaseActivity {
 			((ViewPager) collection).addView(v, 0);
 			return v;
 		}
-		
-		private class SaveCharacterTask extends AsyncTask<String, Void, Void> {
+
+		private class SaveCharacterTask extends
+				AsyncTask<String, Void, Void> {
 			@Override
 			protected Void doInBackground(String... params) {
 				String characterSelected = params[0];
@@ -160,13 +186,14 @@ public class PickCharacterActivity extends BaseActivity {
 				userInfo.getNewItem();
 				return null;
 			}
-			
+
 			@Override
 			protected void onPostExecute(Void result) {
-				Intent i = new Intent(PickCharacterActivity.this, MapActivity.class);
+				Intent i = new Intent(PickCharacterActivity.this,
+						MapActivity.class);
 				PickCharacterActivity.this.finish();
 				startActivity(i);
- 			}
+			}
 		}
 
 	}

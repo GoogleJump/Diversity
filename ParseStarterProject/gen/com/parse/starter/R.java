@@ -524,6 +524,7 @@ containing a value of this type.
         public static final int passwordAgain=0x7f060021;
         public static final int photos_button_mm=0x7f060035;
         public static final int production=0x7f060007;
+        public static final int progressBarPickCharacter=0x7f060051;
         public static final int puzzle_button=0x7f06003a;
         public static final int question=0x7f060024;
         public static final int randomize_button=0x7f06003c;

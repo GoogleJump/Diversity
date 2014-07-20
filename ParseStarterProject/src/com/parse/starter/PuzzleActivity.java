@@ -166,6 +166,7 @@ public class PuzzleActivity extends BaseActivity {
 				userInfo.saveEventually();
 
 				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 
