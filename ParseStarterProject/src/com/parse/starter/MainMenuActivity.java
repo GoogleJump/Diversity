@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-
 /**
  * The MainMenu view shows the main menu with a Start/Continue button that takes
  * the user to either the Puzzle View or the GPS View depending on their status
@@ -47,16 +46,20 @@ public class MainMenuActivity extends BaseActivity {
 		startContinue.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainMenuActivity.this,
-						PuzzleActivity.class);
-				String character = ((User) User.getCurrentUser()).getUserInfo()
-						.getCurrentCharacter();
-				if (character.length() > 0) {
-					i = new Intent(MainMenuActivity.this, MapActivity.class);
+				Intent i;
+				if (isOnline()) {
+					String character = ((User) User.getCurrentUser())
+							.getUserInfo().getCurrentCharacter();
+					if (character.length() > 0) {
+						i = new Intent(MainMenuActivity.this, MapActivity.class);
+					} else {
+						i = new Intent(MainMenuActivity.this,
+								PickCharacterActivity.class);
+					}
+					startActivity(i);
 				} else {
-					i = new Intent(MainMenuActivity.this, PickCharacterActivity.class);
+					showWarningDialog(R.string.no_internet_connection);
 				}
-				startActivity(i);
 			}
 		});
 	}
@@ -68,9 +71,13 @@ public class MainMenuActivity extends BaseActivity {
 		settings = (Button) findViewById(R.id.settings_button_mm);
 		settings.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(MainMenuActivity.this,
-						SettingsActivity.class);
-				startActivity(intent);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							SettingsActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog(R.string.no_internet_connection);
+				}
 			}
 		});
 	}
@@ -84,9 +91,13 @@ public class MainMenuActivity extends BaseActivity {
 		trophies.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainMenuActivity.this,
-						TrophiesActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							TrophiesActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog(R.string.no_internet_connection);
+				}
 			}
 		});
 	}
@@ -100,8 +111,13 @@ public class MainMenuActivity extends BaseActivity {
 		photos.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), PhotosActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							PhotosActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog(R.string.no_internet_connection);
+				}
 			}
 		});
 	}
@@ -115,8 +131,13 @@ public class MainMenuActivity extends BaseActivity {
 		inventory.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), InventoryActivity.class);
-				startActivity(i);
+				if (isOnline()) {
+					Intent intent = new Intent(MainMenuActivity.this,
+							InventoryActivity.class);
+					startActivity(intent);
+				} else {
+					showWarningDialog(R.string.no_internet_connection);
+				}
 			}
 		});
 	}

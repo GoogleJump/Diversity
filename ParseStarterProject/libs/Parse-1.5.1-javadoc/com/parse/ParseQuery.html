@@ -287,6 +287,30 @@ The ParseQuery class defines a query that is used to fetch ParseObjects. The mos
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#fromLocalDatastore()">fromLocalDatastore</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change the source of this query to all pinned objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#fromPin()">fromPin</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change the source of this query to the default group of pinned objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#fromPin(java.lang.String)">fromPin</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change the source of this query to a specific group of pinned objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#get(java.lang.String)">get</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;objectId)</CODE>
 
@@ -469,7 +493,7 @@ The ParseQuery class defines a query that is used to fetch ParseObjects. The mos
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#setLimit(int)">setLimit</A></B>(int&nbsp;newLimit)</CODE>
 
 <BR>
@@ -485,7 +509,7 @@ The ParseQuery class defines a query that is used to fetch ParseObjects. The mos
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../com/parse/ParseQuery.html#setSkip(int)">setSkip</A></B>(int&nbsp;newSkip)</CODE>
 
 <BR>
@@ -920,9 +944,13 @@ setCachePolicy</H3>
 public void <B>setCachePolicy</B>(<A HREF="../../com/parse/ParseQuery.CachePolicy.html" title="enum in com.parse">ParseQuery.CachePolicy</A>&nbsp;newCachePolicy)</PRE>
 <DL>
 <DD>Change the caching policy of this query.
+
+ Not allowed when Pinning is enabled.
 <P>
 <DD><DL>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseQuery.html#fromLocalDatastore()"><CODE>ParseQuery.fromLocalDatastore()</CODE></A>, 
+<A HREF="../../com/parse/ParseQuery.html#fromPin()"><CODE>ParseQuery.fromPin()</CODE></A>, 
+<A HREF="../../com/parse/ParseQuery.html#fromPin(java.lang.String)"><CODE>ParseQuery.fromPin(String)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -936,6 +964,52 @@ public <A HREF="../../com/parse/ParseQuery.CachePolicy.html" title="enum in com.
 <P>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromLocalDatastore()"><!-- --></A><H3>
+fromLocalDatastore</H3>
+<PRE>
+public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt; <B>fromLocalDatastore</B>()</PRE>
+<DL>
+<DD>Change the source of this query to all pinned objects.
+
+ Requires Pinning to be enabled.
+<P>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseQuery.html#setCachePolicy(com.parse.ParseQuery.CachePolicy)"><CODE>ParseQuery.setCachePolicy(CachePolicy)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromPin()"><!-- --></A><H3>
+fromPin</H3>
+<PRE>
+public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt; <B>fromPin</B>()</PRE>
+<DL>
+<DD>Change the source of this query to the default group of pinned objects.
+
+ Requires Pinning to be enabled.
+<P>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A>, 
+<A HREF="../../com/parse/ParseQuery.html#setCachePolicy(com.parse.ParseQuery.CachePolicy)"><CODE>ParseQuery.setCachePolicy(CachePolicy)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromPin(java.lang.String)"><!-- --></A><H3>
+fromPin</H3>
+<PRE>
+public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt; <B>fromPin</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
+<DL>
+<DD>Change the source of this query to a specific group of pinned objects.
+
+ Requires Pinning to be enabled.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the pinned group<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseQuery.html#setCachePolicy(com.parse.ParseQuery.CachePolicy)"><CODE>ParseQuery.setCachePolicy(CachePolicy)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1596,7 +1670,7 @@ public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">Pars
 <A NAME="setLimit(int)"><!-- --></A><H3>
 setLimit</H3>
 <PRE>
-public void <B>setLimit</B>(int&nbsp;newLimit)</PRE>
+public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt; <B>setLimit</B>(int&nbsp;newLimit)</PRE>
 <DL>
 <DD>Controls the maximum number of results that are returned. Setting a negative limit denotes
  retrieval without a limit. The default limit is 100, with a maximum of 1000 results being
@@ -1638,7 +1712,7 @@ public int <B>getLimit</B>()</PRE>
 <A NAME="setSkip(int)"><!-- --></A><H3>
 setSkip</H3>
 <PRE>
-public void <B>setSkip</B>(int&nbsp;newSkip)</PRE>
+public <A HREF="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>&lt;<A HREF="../../com/parse/ParseQuery.html" title="type parameter in ParseQuery">T</A>&gt; <B>setSkip</B>(int&nbsp;newSkip)</PRE>
 <DL>
 <DD>Controls the number of results to skip before returning any results. This is useful for
  pagination. Default is to skip zero results.

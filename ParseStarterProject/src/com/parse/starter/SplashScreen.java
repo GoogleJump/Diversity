@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +7,7 @@ import android.os.Handler;
 /**
  * Splash Screen that is opened when the app is first turned on
  */
-public class SplashScreen extends Activity {
+public class SplashScreen extends BaseActivity {
 
 	// Splash screen timer
 	private static int SPLASH_TIME_OUT = 3000;

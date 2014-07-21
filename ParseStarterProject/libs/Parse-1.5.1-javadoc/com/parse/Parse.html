@@ -173,6 +173,14 @@ The Parse class contains static functions that handle global configuration for t
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/Parse.html#enableLocalDatastore(android.content.Context)">enableLocalDatastore</A></B>(<A target="_top" HREF="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</A>&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enable pinning in your application.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../com/parse/Parse.html#getLogLevel()">getLogLevel</A></B>()</CODE>
 
@@ -298,7 +306,8 @@ public static void <B>initialize</B>(<A target="_top" HREF="http://developer.and
 <DL>
 <DD>Authenticates this client as belonging to your application. This must be called before your
  application can use the Parse library. The recommended way is to put a call to
- <code>Parse.initialize</code> in each of your <code>onCreate</code> methods. An example:
+ <code>Parse.initialize</code> in your <code>Application</code>'s <code>onCreate</code> method.
+ An example:
  
  <pre>
  import android.app.Application;
@@ -315,6 +324,31 @@ public static void <B>initialize</B>(<A target="_top" HREF="http://developer.and
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>context</CODE> - The active Context for your application.<DD><CODE>applicationId</CODE> - The application id provided in the Parse dashboard.<DD><CODE>clientKey</CODE> - The client key provided in the Parse dashboard.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="enableLocalDatastore(android.content.Context)"><!-- --></A><H3>
+enableLocalDatastore</H3>
+<PRE>
+public static void <B>enableLocalDatastore</B>(<A target="_top" HREF="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</A>&nbsp;context)</PRE>
+<DL>
+<DD>Enable pinning in your application. This must be called before your application can use
+ pinning. The recommended way is to put a call to <code>Parse.enableLocalDatastore</code> in your
+ <code>Application</code>'s <code>onCreate</code> method before <code>Parse.initialize</code>.
+ An example:
+
+ <pre>
+ public class MyApplication extends Application {
+   public void onCreate() {
+     Parse.enableLocalDatastore(this);
+     Parse.initialize(this, &quot;your application id&quot;, &quot;your client key&quot;);
+   }
+ }
+ </pre>
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>context</CODE> - The active Context for your application.</DL>
 </DD>
 </DL>
 <HR>

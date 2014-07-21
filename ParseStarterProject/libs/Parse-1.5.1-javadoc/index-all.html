@@ -196,6 +196,9 @@ Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="c
 <A NAME="_D_"><!-- --></A><H2>
 <B>D</B></H2>
 <DL>
+<DT><A HREF="./com/parse/ParseObject.html#DEFAULT_PIN"><B>DEFAULT_PIN</B></A> - 
+Static variable in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Default name for pinning if not specified.
 <DT><A HREF="./com/parse/ParseObject.html#delete()"><B>delete()</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
 <DD>Deletes this object on the server.
@@ -293,6 +296,9 @@ Static variable in exception com.parse.<A HREF="./com/parse/ParseException.html"
 <DT><A HREF="./com/parse/ParseUser.html#enableAutomaticUser()"><B>enableAutomaticUser()</B></A> - 
 Static method in class com.parse.<A HREF="./com/parse/ParseUser.html" title="class in com.parse">ParseUser</A>
 <DD>Enables automatic creation of anonymous users.
+<DT><A HREF="./com/parse/Parse.html#enableLocalDatastore(android.content.Context)"><B>enableLocalDatastore(Context)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/Parse.html" title="class in com.parse">Parse</A>
+<DD>Enable pinning in your application.
 <DT><A HREF="./com/parse/ParseException.html#EXCEEDED_QUOTA"><B>EXCEEDED_QUOTA</B></A> - 
 Static variable in exception com.parse.<A HREF="./com/parse/ParseException.html" title="class in com.parse">ParseException</A>
 <DD>Error code indicating that an application quota was exceeded.
@@ -325,6 +331,14 @@ Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="c
 <DT><A HREF="./com/parse/ParseObject.html#fetchAllInBackground(java.util.List, com.parse.FindCallback)"><B>fetchAllInBackground(List&lt;T&gt;, FindCallback&lt;T&gt;)</B></A> - 
 Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
 <DD>Fetches all the objects in the provided list in the background
+<DT><A HREF="./com/parse/ParseObject.html#fetchFromLocalDatastore()"><B>fetchFromLocalDatastore()</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Loads data from the local datastore into this object, if it has not been fetched from the
+ server already.
+<DT><A HREF="./com/parse/ParseObject.html#fetchFromLocalDatastoreInBackground(com.parse.GetCallback)"><B>fetchFromLocalDatastoreInBackground(GetCallback&lt;T&gt;)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Loads data from the local datastore into this object, if it has not been fetched from the
+ server already.
 <DT><A HREF="./com/parse/ParseObject.html#fetchIfNeeded()"><B>fetchIfNeeded()</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
 <DD>If this ParseObject has not been fetched (i.e.
@@ -354,6 +368,15 @@ Method in class com.parse.<A HREF="./com/parse/ParseQuery.html" title="class in 
 <DT><A HREF="./com/parse/ParseFacebookUtils.html#finishAuthentication(int, int, android.content.Intent)"><B>finishAuthentication(int, int, Intent)</B></A> - 
 Static method in class com.parse.<A HREF="./com/parse/ParseFacebookUtils.html" title="class in com.parse">ParseFacebookUtils</A>
 <DD>Completes authentication after the Facebook app returns an activity result.
+<DT><A HREF="./com/parse/ParseQuery.html#fromLocalDatastore()"><B>fromLocalDatastore()</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>
+<DD>Change the source of this query to all pinned objects.
+<DT><A HREF="./com/parse/ParseQuery.html#fromPin()"><B>fromPin()</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>
+<DD>Change the source of this query to the default group of pinned objects.
+<DT><A HREF="./com/parse/ParseQuery.html#fromPin(java.lang.String)"><B>fromPin(String)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</A>
+<DD>Change the source of this query to a specific group of pinned objects.
 <DT><A HREF="./com/parse/FunctionCallback.html" title="class in com.parse"><B>FunctionCallback</B></A>&lt;<A HREF="./com/parse/FunctionCallback.html" title="type parameter in FunctionCallback">T</A>&gt; - Class in <A HREF="./com/parse/package-summary.html">com.parse</A><DD>A FunctionCallback is used to run code after <A HREF="./com/parse/ParseCloud.html#callFunction(java.lang.String, java.util.Map)"><CODE>ParseCloud.callFunction(java.lang.String, java.util.Map<java.lang.String, ?>)</CODE></A> is used to run a
  Cloud Function in a background thread.<DT><A HREF="./com/parse/FunctionCallback.html#FunctionCallback()"><B>FunctionCallback()</B></A> - 
 Constructor for class com.parse.<A HREF="./com/parse/FunctionCallback.html" title="class in com.parse">FunctionCallback</A>
@@ -730,8 +753,8 @@ Method in class com.parse.<A HREF="./com/parse/ParseFile.html" title="class in c
 <DD>Whether the file still needs to be saved.
 <DT><A HREF="./com/parse/ParseObject.html#isDirty()"><B>isDirty()</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
-<DD>Whether any key-value pair in this object (or its children) has been added/updated/removed
- and not saved yet.
+<DD>Whether any key-value pair in this object (or its children) has been added/updated/removed and
+ not saved yet.
 <DT><A HREF="./com/parse/ParseObject.html#isDirty(java.lang.String)"><B>isDirty(String)</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
 <DD>Whether a value associated with a key has been added/updated/removed and not saved yet.
@@ -1056,6 +1079,36 @@ Constructor for class com.parse.<A HREF="./com/parse/ParseUser.html" title="clas
 <DT><A HREF="./com/parse/ParseException.html#PASSWORD_MISSING"><B>PASSWORD_MISSING</B></A> - 
 Static variable in exception com.parse.<A HREF="./com/parse/ParseException.html" title="class in com.parse">ParseException</A>
 <DD>Error code indicating that the password is missing or empty.
+<DT><A HREF="./com/parse/ParseObject.html#pin(java.lang.String)"><B>pin(String)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pin()"><B>pin()</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)"><B>pinAll(String, List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAll(java.util.List)"><B>pinAll(List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List, com.parse.SaveCallback)"><B>pinAllInBackground(String, List&lt;T&gt;, SaveCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List)"><B>pinAllInBackground(String, List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAllInBackground(java.util.List, com.parse.SaveCallback)"><B>pinAllInBackground(List&lt;T&gt;, SaveCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinAllInBackground(java.util.List)"><B>pinAllInBackground(List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinInBackground(java.lang.String, com.parse.SaveCallback)"><B>pinInBackground(String, SaveCallback)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#pinInBackground(com.parse.SaveCallback)"><B>pinInBackground(SaveCallback)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Stores the object and every object it points to in the local datastore, recursively.
 <DT><A HREF="./com/parse/ProgressCallback.html" title="class in com.parse"><B>ProgressCallback</B></A> - Class in <A HREF="./com/parse/package-summary.html">com.parse</A><DD>A ProgressCallback is used to get progress of an operation.<DT><A HREF="./com/parse/ProgressCallback.html#ProgressCallback()"><B>ProgressCallback()</B></A> - 
 Constructor for class com.parse.<A HREF="./com/parse/ProgressCallback.html" title="class in com.parse">ProgressCallback</A>
 <DD>&nbsp;
@@ -1151,9 +1204,6 @@ Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="c
 <DD>Saves each object to the server in a background thread.
 <DT><A HREF="./com/parse/SaveCallback.html" title="class in com.parse"><B>SaveCallback</B></A> - Class in <A HREF="./com/parse/package-summary.html">com.parse</A><DD>A SaveCallback is used to run code after saving a <A HREF="./com/parse/ParseObject.html" title="class in com.parse"><CODE>ParseObject</CODE></A> in a background thread.<DT><A HREF="./com/parse/SaveCallback.html#SaveCallback()"><B>SaveCallback()</B></A> - 
 Constructor for class com.parse.<A HREF="./com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>
-<DD>&nbsp;
-<DT><A HREF="./com/parse/ParseInstallation.html#saveEventually(com.parse.SaveCallback)"><B>saveEventually(SaveCallback)</B></A> - 
-Method in class com.parse.<A HREF="./com/parse/ParseInstallation.html" title="class in com.parse">ParseInstallation</A>
 <DD>&nbsp;
 <DT><A HREF="./com/parse/ParseObject.html#saveEventually()"><B>saveEventually()</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
@@ -1422,6 +1472,54 @@ Static method in class com.parse.<A HREF="./com/parse/ParseTwitterUtils.html" ti
 <DT><A HREF="./com/parse/ParseTwitterUtils.html#unlinkInBackground(com.parse.ParseUser, com.parse.SaveCallback)"><B>unlinkInBackground(ParseUser, SaveCallback)</B></A> - 
 Static method in class com.parse.<A HREF="./com/parse/ParseTwitterUtils.html" title="class in com.parse">ParseTwitterUtils</A>
 <DD>Unlinks a user from a Twitter account in the background.
+<DT><A HREF="./com/parse/ParseObject.html#unpin(java.lang.String)"><B>unpin(String)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpin()"><B>unpin()</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAll(java.lang.String, java.util.List)"><B>unpinAll(String, List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAll(java.util.List)"><B>unpinAll(List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAll(java.lang.String)"><B>unpinAll(String)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAll()"><B>unpinAll()</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List, com.parse.DeleteCallback)"><B>unpinAllInBackground(String, List&lt;T&gt;, DeleteCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List)"><B>unpinAllInBackground(String, List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.util.List, com.parse.DeleteCallback)"><B>unpinAllInBackground(List&lt;T&gt;, DeleteCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.util.List)"><B>unpinAllInBackground(List&lt;T&gt;)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, com.parse.DeleteCallback)"><B>unpinAllInBackground(String, DeleteCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(java.lang.String)"><B>unpinAllInBackground(String)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground(com.parse.DeleteCallback)"><B>unpinAllInBackground(DeleteCallback)</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinAllInBackground()"><B>unpinAllInBackground()</B></A> - 
+Static method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinInBackground(java.lang.String, com.parse.DeleteCallback)"><B>unpinInBackground(String, DeleteCallback)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<DT><A HREF="./com/parse/ParseObject.html#unpinInBackground(com.parse.DeleteCallback)"><B>unpinInBackground(DeleteCallback)</B></A> - 
+Method in class com.parse.<A HREF="./com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
 <DT><A HREF="./com/parse/ParseQueryAdapter.html#unregisterDataSetObserver(android.database.DataSetObserver)"><B>unregisterDataSetObserver(DataSetObserver)</B></A> - 
 Method in class com.parse.<A HREF="./com/parse/ParseQueryAdapter.html" title="class in com.parse">ParseQueryAdapter</A>
 <DD>&nbsp;

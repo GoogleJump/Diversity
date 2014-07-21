@@ -524,6 +524,7 @@ containing a value of this type.
         public static final int passwordAgain=0x7f060021;
         public static final int photos_button_mm=0x7f060035;
         public static final int production=0x7f060007;
+        public static final int progressBarPickCharacter=0x7f060051;
         public static final int puzzle_button=0x7f06003a;
         public static final int question=0x7f060024;
         public static final int randomize_button=0x7f06003c;
@@ -578,11 +579,11 @@ containing a value of this type.
         public static final int viewpager=0x7f030014;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f040048;
+        public static final int action_forgot_password=0x7f04004c;
         public static final int action_settings=0x7f040022;
-        public static final int action_sign_in_register=0x7f040046;
-        public static final int action_sign_in_short=0x7f040047;
-        public static final int anagram_view_name=0x7f04002b;
+        public static final int action_sign_in_register=0x7f04004a;
+        public static final int action_sign_in_short=0x7f04004b;
+        public static final int anagram_view_name=0x7f04002c;
         public static final int app_name=0x7f040021;
         public static final int auth_client_needs_enabling_title=0x7f040001;
         public static final int auth_client_needs_installation_title=0x7f040002;
@@ -590,9 +591,9 @@ containing a value of this type.
         public static final int auth_client_play_services_err_notification_msg=0x7f040004;
         public static final int auth_client_requested_by_msg=0x7f040005;
         public static final int auth_client_using_bad_version_title=0x7f040000;
-        public static final int button_send=0x7f04002d;
-        public static final int choose_a_character=0x7f040041;
-        public static final int claim_items=0x7f040039;
+        public static final int button_send=0x7f04002e;
+        public static final int choose_a_character=0x7f040045;
+        public static final int claim_materials=0x7f04003a;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -683,50 +684,54 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f04001e;
         public static final int diversity=0x7f040027;
-        public static final int edit_message=0x7f04002c;
-        public static final int error_blank_password=0x7f040050;
-        public static final int error_blank_username=0x7f04004f;
-        public static final int error_end=0x7f040053;
-        public static final int error_field_required=0x7f04004d;
-        public static final int error_incorrect_password=0x7f04004c;
-        public static final int error_intro=0x7f04004e;
-        public static final int error_invalid_email=0x7f04004a;
-        public static final int error_invalid_password=0x7f04004b;
-        public static final int error_join=0x7f040052;
-        public static final int error_mismatched_passwords=0x7f040051;
-        public static final int gps_view_name=0x7f04002f;
+        public static final int edit_message=0x7f04002d;
+        public static final int error_blank_password=0x7f040054;
+        public static final int error_blank_username=0x7f040053;
+        public static final int error_end=0x7f040057;
+        public static final int error_field_required=0x7f040051;
+        public static final int error_incorrect_password=0x7f040050;
+        public static final int error_intro=0x7f040052;
+        public static final int error_invalid_email=0x7f04004e;
+        public static final int error_invalid_password=0x7f04004f;
+        public static final int error_join=0x7f040056;
+        public static final int error_mismatched_passwords=0x7f040055;
+        public static final int gps_view_name=0x7f040030;
         public static final int hello=0x7f040020;
-        public static final int inventory=0x7f04003b;
-        public static final int inventory_view_name=0x7f04003c;
-        public static final int locate_items=0x7f04003a;
+        public static final int inventory=0x7f04003f;
+        public static final int inventory_view_name=0x7f040040;
+        public static final int locate_materials=0x7f04003b;
         public static final int log_in=0x7f040024;
-        public static final int log_out=0x7f040033;
-        public static final int login_progress_signing_in=0x7f040049;
-        public static final int main_menu=0x7f04002e;
-        public static final int no_more_puzzles=0x7f040040;
-        public static final int okay=0x7f04003f;
-        public static final int photos=0x7f040036;
-        public static final int photos_view_name=0x7f040037;
+        public static final int log_out=0x7f040034;
+        public static final int login_progress_signing_in=0x7f04004d;
+        public static final int main_menu=0x7f04002f;
+        public static final int no_internet_connection=0x7f04002a;
+        public static final int no_located_materials=0x7f04003e;
+        public static final int no_more_puzzles=0x7f040044;
+        public static final int no_nearby_materials=0x7f04003d;
+        public static final int no_solved_materials=0x7f04003c;
+        public static final int okay=0x7f040043;
+        public static final int photos=0x7f040037;
+        public static final int photos_view_name=0x7f040038;
         public static final int powered_by=0x7f040026;
-        public static final int prompt_password=0x7f040044;
-        public static final int prompt_password_again=0x7f040045;
+        public static final int prompt_password=0x7f040048;
+        public static final int prompt_password_again=0x7f040049;
         /**  Strings related to login 
          */
-        public static final int prompt_username=0x7f040043;
-        public static final int puz_desc=0x7f04003e;
-        public static final int puzzle_view_name=0x7f04002a;
-        public static final int randomize=0x7f040038;
-        public static final int restart=0x7f04003d;
-        public static final int settings=0x7f040032;
+        public static final int prompt_username=0x7f040047;
+        public static final int puz_desc=0x7f040042;
+        public static final int puzzle_view_name=0x7f04002b;
+        public static final int randomize=0x7f040039;
+        public static final int restart=0x7f040041;
+        public static final int settings=0x7f040033;
         public static final int sign_up=0x7f040025;
         public static final int slogan=0x7f040028;
-        public static final int start_continue=0x7f040031;
-        public static final int submit=0x7f040030;
-        public static final int title_activity_login=0x7f040042;
+        public static final int start_continue=0x7f040032;
+        public static final int submit=0x7f040031;
+        public static final int title_activity_login=0x7f040046;
         public static final int title_activity_settings=0x7f040029;
         public static final int title_activity_sign_up_or_log_in=0x7f040023;
-        public static final int trophies=0x7f040034;
-        public static final int trophies_view_name=0x7f040035;
+        public static final int trophies=0x7f040035;
+        public static final int trophies_view_name=0x7f040036;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

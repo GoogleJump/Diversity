@@ -21,6 +21,8 @@ public class ParseApplication extends Application {
 		ParseObject.registerSubclass(Character.class);
 		ParseObject.registerSubclass(Material.class);
 
+		Parse.enableLocalDatastore(this);
+
 		// Add your initialization code here
 		Parse.initialize(this, "xpqgrjmUYorIPfo8bUJ3pzj5Idz830HPpqiIT33g",
 				"akCZNpnFr9dV21PiUkuTflZw2vYyMS5ZnA9rp1Hb");
