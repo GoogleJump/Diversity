@@ -159,6 +159,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						// remove all the existing markers
+						// This might not be necessary if the map will be re-rendered
+					/*	for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
+							if (materialInfo.marker != null) {
+								materialInfo.marker.remove();
+							}
+						}
+						materialsOnTheMap.clear(); */
 						locateMaterials();
 					}
 				});
@@ -365,7 +373,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
-				for (String searchTerm : material.getSearchTerms()) {
+				List<String> searchTerms = material.getSearchTerms();
+				Collections.shuffle(searchTerms);
+				for (String searchTerm : searchTerms) {
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
 							+ location.getLongitude() + "&" + "radius="
