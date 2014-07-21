@@ -73,9 +73,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -115,7 +115,24 @@ The ParseObject is a local representation of data that can be saved and retrieve
 <HR>
 
 <P>
+<!-- =========== FIELD SUMMARY =========== -->
 
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN">DEFAULT_PIN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default name for pinning if not specified.</TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 
 <A NAME="constructor_summary"><!-- --></A>
@@ -387,6 +404,33 @@ void</CODE></FONT></TD>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fetches all the objects in the provided list in the background</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#fetchFromLocalDatastore()">fetchFromLocalDatastore</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads data from the local datastore into this object, if it has not been fetched from the
+ server already.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#fetchFromLocalDatastoreInBackground(com.parse.GetCallback)">fetchFromLocalDatastoreInBackground</A></B>(<A HREF="../../com/parse/GetCallback.html" title="class in com.parse">GetCallback</A>&lt;T&gt;&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads data from the local datastore into this object, if it has not been fetched from the
+ server already.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -697,8 +741,8 @@ void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../com/parse/ParseObject.html#isDirty()">isDirty</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether any key-value pair in this object (or its children) has been added/updated/removed
- and not saved yet.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether any key-value pair in this object (or its children) has been added/updated/removed and
+ not saved yet.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -715,6 +759,146 @@ void</CODE></FONT></TD>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a set view of the keys contained in this object.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pin()">pin</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pin(java.lang.String)">pin</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAll(java.util.List)">pinAll</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)">pinAll</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+       <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List)">pinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List, com.parse.SaveCallback)">pinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                   <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List)">pinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                   <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List, com.parse.SaveCallback)">pinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                   <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                   <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinInBackground(com.parse.SaveCallback)">pinInBackground</A></B>(<A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#pinInBackground(java.lang.String, com.parse.SaveCallback)">pinInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the object and every object it points to in the local datastore, recursively.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -851,6 +1035,195 @@ void</CODE></FONT></TD>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Setter for the object id.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpin()">unpin</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpin(java.lang.String)">unpin</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAll()">unpinAll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAll(java.util.List)">unpinAll</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAll(java.lang.String)">unpinAll</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAll(java.lang.String, java.util.List)">unpinAll</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+         <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground()">unpinAllInBackground</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(com.parse.DeleteCallback)">unpinAllInBackground</A></B>(<A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.util.List)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.util.List, com.parse.DeleteCallback)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                     <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, com.parse.DeleteCallback)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                     <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                     <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List, com.parse.DeleteCallback)">unpinAllInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                     <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                     <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the objects and every object they point to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinInBackground(com.parse.DeleteCallback)">unpinInBackground</A></B>(<A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../com/parse/ParseObject.html#unpinInBackground(java.lang.String, com.parse.DeleteCallback)">unpinInBackground</A></B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                  <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the object and every object it points to in the local datastore, recursively.</TD>
+</TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_Object"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -863,6 +1236,29 @@ void</CODE></FONT></TD>
 </TABLE>
 &nbsp;
 <P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="DEFAULT_PIN"><!-- --></A><H3>
+DEFAULT_PIN</H3>
+<PRE>
+public static final <A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>DEFAULT_PIN</B></PRE>
+<DL>
+<DD>Default name for pinning if not specified.
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pin()"><CODE>ParseObject.pin()</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#unpin()"><CODE>ParseObject.unpin()</CODE></A>, 
+<A HREF="../../constant-values.html#com.parse.ParseObject.DEFAULT_PIN">Constant Field Values</A></DL>
+</DL>
 
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 
@@ -1056,8 +1452,8 @@ isDirty</H3>
 <PRE>
 public boolean <B>isDirty</B>()</PRE>
 <DL>
-<DD>Whether any key-value pair in this object (or its children) has been added/updated/removed
- and not saved yet.
+<DD>Whether any key-value pair in this object (or its children) has been added/updated/removed and
+ not saved yet.
 <P>
 <DD><DL>
 
@@ -1413,9 +1809,7 @@ public static void <B>deleteAllInBackground</B>(<A target="_top" HREF="http://de
  because it batches the requests.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>objects</CODE> - The objects to delete.<DD><CODE>callback</CODE> - The callback method to execute when completed.
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE> - Throws an exception if the server returns an error or is inaccessible.</DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - The objects to delete.<DD><CODE>callback</CODE> - The callback method to execute when completed.</DL>
 </DD>
 </DL>
 <HR>
@@ -1985,9 +2379,7 @@ public <A target="_top" HREF="http://developer.android.com/reference/java/lang/O
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>key</CODE> - The key to access the value for.
-<DT><B>Returns:</B><DD>Returns null if there is no such key.
-<DT><B>Throws:</B>
-<DD><CODE>Throws</CODE> - a ParseException if the server could not be reached to load a relational value.</DL>
+<DT><B>Returns:</B><DD>Returns null if there is no such key.</DL>
 </DD>
 </DL>
 <HR>
@@ -1999,6 +2391,473 @@ public boolean <B>hasSameId</B>(<A HREF="../../com/parse/ParseObject.html" title
 <DL>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAllInBackground(java.lang.String, java.util.List, com.parse.SaveCallback)"><!-- --></A><H3>
+pinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                              <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                                                              <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects to be pinned<DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List, com.parse.DeleteCallback)"><CODE>ParseObject.unpinAllInBackground(String, java.util.List, DeleteCallback)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAllInBackground(java.lang.String, java.util.List)"><!-- --></A><H3>
+pinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                              <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects to be pinned<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.lang.String, java.util.List)"><CODE>ParseObject.unpinAllInBackground(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAll(java.lang.String, java.util.List)"><!-- --></A><H3>
+pinAll</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAll</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                  <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)
+                   throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects to be pinned
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAll(java.lang.String, java.util.List)"><CODE>ParseObject.unpinAll(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAllInBackground(java.util.List, com.parse.SaveCallback)"><!-- --></A><H3>
+pinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                                                              <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects to be pinned<DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.util.List, com.parse.DeleteCallback)"><CODE>ParseObject.unpinAllInBackground(java.util.List, DeleteCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAllInBackground(java.util.List)"><!-- --></A><H3>
+pinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects to be pinned<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAllInBackground(java.util.List)"><CODE>ParseObject.unpinAllInBackground(java.util.List)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinAll(java.util.List)"><!-- --></A><H3>
+pinAll</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>pinAll</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)
+                   throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Stores the objects and every object they point to in the local datastore, recursively. If
+ those other objects have not been fetched from Parse, they will not be stored. However, if they
+ have changed data, all of the changes will be retained. To get the objects back later, you can
+ use a ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects to be pinned
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinAll(java.util.List)"><CODE>ParseObject.unpinAll(java.util.List)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.lang.String, java.util.List, com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                                <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                                                                <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects<DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List, com.parse.SaveCallback)"><CODE>ParseObject.pinAllInBackground(String, java.util.List, SaveCallback)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.lang.String, java.util.List)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                                <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.lang.String, java.util.List)"><CODE>ParseObject.pinAllInBackground(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAll(java.lang.String, java.util.List)"><!-- --></A><H3>
+unpinAll</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAll</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                    <A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)
+                     throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>objects</CODE> - the objects
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)"><CODE>ParseObject.pinAll(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.util.List, com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects,
+                                                                <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects<DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List, com.parse.SaveCallback)"><CODE>ParseObject.pinAllInBackground(java.util.List, SaveCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.util.List)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List)"><CODE>ParseObject.pinAllInBackground(java.util.List)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAll(java.util.List)"><!-- --></A><H3>
+unpinAll</H3>
+<PRE>
+public static &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>unpinAll</B>(<A target="_top" HREF="http://developer.android.com/reference/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;&nbsp;objects)
+                     throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>objects</CODE> - the objects
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.util.List)"><CODE>ParseObject.pinAll(java.util.List)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.lang.String, com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                        <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)"><CODE>ParseObject.pinAll(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(java.lang.String)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static void <B>unpinAllInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)"><CODE>ParseObject.pinAll(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAll(java.lang.String)"><!-- --></A><H3>
+unpinAll</H3>
+<PRE>
+public static void <B>unpinAll</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)
+                     throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.lang.String, java.util.List)"><CODE>ParseObject.pinAll(String, java.util.List)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground(com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static void <B>unpinAllInBackground</B>(<A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List, com.parse.SaveCallback)"><CODE>ParseObject.pinAllInBackground(java.util.List, SaveCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAllInBackground()"><!-- --></A><H3>
+unpinAllInBackground</H3>
+<PRE>
+public static void <B>unpinAllInBackground</B>()</PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAllInBackground(java.util.List, com.parse.SaveCallback)"><CODE>ParseObject.pinAllInBackground(java.util.List, SaveCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinAll()"><!-- --></A><H3>
+unpinAll</H3>
+<PRE>
+public static void <B>unpinAll</B>()
+                     throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the objects and every object they point to in the local datastore, recursively.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinAll(java.util.List)"><CODE>ParseObject.pinAll(java.util.List)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fetchFromLocalDatastoreInBackground(com.parse.GetCallback)"><!-- --></A><H3>
+fetchFromLocalDatastoreInBackground</H3>
+<PRE>
+public &lt;T extends <A HREF="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</A>&gt; void <B>fetchFromLocalDatastoreInBackground</B>(<A HREF="../../com/parse/GetCallback.html" title="class in com.parse">GetCallback</A>&lt;T&gt;&nbsp;callback)</PRE>
+<DL>
+<DD>Loads data from the local datastore into this object, if it has not been fetched from the
+ server already. If the object is not stored in the local datastore, this method with do
+ nothing.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fetchFromLocalDatastore()"><!-- --></A><H3>
+fetchFromLocalDatastore</H3>
+<PRE>
+public void <B>fetchFromLocalDatastore</B>()
+                             throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Loads data from the local datastore into this object, if it has not been fetched from the
+ server already. If the object is not stored in the local datastore, this method with throw a
+ CACHE_MISS exception.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinInBackground(java.lang.String, com.parse.SaveCallback)"><!-- --></A><H3>
+pinInBackground</H3>
+<PRE>
+public void <B>pinInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                            <A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Stores the object and every object it points to in the local datastore, recursively. If those
+ other objects have not been fetched from Parse, they will not be stored. However, if they have
+ changed data, all of the changes will be retained. To get the objects back later, you can use a
+ ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinInBackground(java.lang.String, com.parse.DeleteCallback)"><CODE>ParseObject.unpinInBackground(String, DeleteCallback)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pin(java.lang.String)"><!-- --></A><H3>
+pin</H3>
+<PRE>
+public void <B>pin</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)
+         throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Stores the object and every object it points to in the local datastore, recursively. If those
+ other objects have not been fetched from Parse, they will not be stored. However, if they have
+ changed data, all of the changes will be retained. To get the objects back later, you can use a
+ ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpin(java.lang.String)"><CODE>ParseObject.unpin(String)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pinInBackground(com.parse.SaveCallback)"><!-- --></A><H3>
+pinInBackground</H3>
+<PRE>
+public void <B>pinInBackground</B>(<A HREF="../../com/parse/SaveCallback.html" title="class in com.parse">SaveCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Stores the object and every object it points to in the local datastore, recursively. If those
+ other objects have not been fetched from Parse, they will not be stored. However, if they have
+ changed data, all of the changes will be retained. To get the objects back later, you can use a
+ ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpinInBackground(com.parse.DeleteCallback)"><CODE>ParseObject.unpinInBackground(DeleteCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="pin()"><!-- --></A><H3>
+pin</H3>
+<PRE>
+public void <B>pin</B>()
+         throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Stores the object and every object it points to in the local datastore, recursively. If those
+ other objects have not been fetched from Parse, they will not be stored. However, if they have
+ changed data, all of the changes will be retained. To get the objects back later, you can use a
+ ParseQuery that uses ParseQuery#fromLocalDatastore(), or you can create an unfetched
+ pointer with ParseObject.createWithoutData() and then call fetchFromLocalDatastore() on it.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#unpin()"><CODE>ParseObject.unpin()</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinInBackground(java.lang.String, com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinInBackground</H3>
+<PRE>
+public void <B>unpinInBackground</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                              <A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinInBackground(java.lang.String, com.parse.SaveCallback)"><CODE>ParseObject.pinInBackground(String, SaveCallback)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpin(java.lang.String)"><!-- --></A><H3>
+unpin</H3>
+<PRE>
+public void <B>unpin</B>(<A target="_top" HREF="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)
+           throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pin(java.lang.String)"><CODE>ParseObject.pin(String)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpinInBackground(com.parse.DeleteCallback)"><!-- --></A><H3>
+unpinInBackground</H3>
+<PRE>
+public void <B>unpinInBackground</B>(<A HREF="../../com/parse/DeleteCallback.html" title="class in com.parse">DeleteCallback</A>&nbsp;callback)</PRE>
+<DL>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>callback</CODE> - the callback<DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pinInBackground(com.parse.SaveCallback)"><CODE>ParseObject.pinInBackground(SaveCallback)</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unpin()"><!-- --></A><H3>
+unpin</H3>
+<PRE>
+public void <B>unpin</B>()
+           throws <A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></PRE>
+<DL>
+<DD>Removes the object and every object it points to in the local datastore, recursively.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../com/parse/ParseException.html" title="class in com.parse">ParseException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../com/parse/ParseObject.html#pin()"><CODE>ParseObject.pin()</CODE></A>, 
+<A HREF="../../com/parse/ParseObject.html#DEFAULT_PIN"><CODE>ParseObject.DEFAULT_PIN</CODE></A></DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -2052,9 +2911,9 @@ public boolean <B>hasSameId</B>(<A HREF="../../com/parse/ParseObject.html" title
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

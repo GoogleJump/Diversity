@@ -34,81 +34,92 @@ public class SignUpActivity extends BaseActivity {
 		findViewById(R.id.action_button).setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
+						if (!isOnline()) {
+							showWarningDialog(R.string.no_internet_connection);
+						} else {
 
-						// Validate the sign up data
-						boolean validationError = false;
-						StringBuilder validationErrorMessage = new StringBuilder(
-								getResources().getString(R.string.error_intro));
-						if (isEmpty(usernameView)) {
-							validationError = true;
-							validationErrorMessage.append(getResources()
-									.getString(R.string.error_blank_username));
-						}
-						if (isEmpty(passwordView)) {
-							if (validationError) {
+							// Validate the sign up data
+							boolean validationError = false;
+							StringBuilder validationErrorMessage = new StringBuilder(
+									getResources().getString(
+											R.string.error_intro));
+							if (isEmpty(usernameView)) {
+								validationError = true;
 								validationErrorMessage.append(getResources()
-										.getString(R.string.error_join));
+										.getString(
+												R.string.error_blank_username));
 							}
-							validationError = true;
-							validationErrorMessage.append(getResources()
-									.getString(R.string.error_blank_password));
-						}
-						if (!isMatching(passwordView, passwordAgainView)) {
-							if (validationError) {
-								validationErrorMessage.append(getResources()
-										.getString(R.string.error_join));
-							}
-							validationError = true;
-							validationErrorMessage
-									.append(getResources()
-											.getString(
-													R.string.error_mismatched_passwords));
-						}
-						validationErrorMessage.append(getResources().getString(
-								R.string.error_end));
-
-						// If there is a validation error, display the error
-						if (validationError) {
-							Toast.makeText(SignUpActivity.this,
-									validationErrorMessage.toString(),
-									Toast.LENGTH_LONG).show();
-							return;
-						}
-
-						// Set up a progress dialog
-						final ProgressDialog dlg = new ProgressDialog(
-								SignUpActivity.this);
-						dlg.setTitle("Please wait.");
-						dlg.setMessage("Signing up.  Please wait.");
-						dlg.show();
-
-						// Set up a new Parse user
-						String username = usernameView.getText().toString();
-						User user = new User(username, passwordView.getText().toString());
-						new UserInfo(username);
-
-						// Call the Parse signup method
-						user.signUpInBackground(new SignUpCallback() {
-
-							@Override
-							public void done(ParseException e) {
-								dlg.dismiss();
-								if (e != null) {
-									// Show the error message
-									Toast.makeText(SignUpActivity.this,
-											e.getMessage(), Toast.LENGTH_LONG)
-											.show();
-								} else {
-									// Start an intent for the dispatch activity
-									Intent intent = new Intent(
-											SignUpActivity.this,
-											MainMenuActivity.class);
-									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-											| Intent.FLAG_ACTIVITY_NEW_TASK);
-									startActivity(intent);
+							if (isEmpty(passwordView)) {
+								if (validationError) {
+									validationErrorMessage
+											.append(getResources().getString(
+													R.string.error_join));
 								}
+								validationError = true;
+								validationErrorMessage.append(getResources()
+										.getString(
+												R.string.error_blank_password));
 							}
-						});
+							if (!isMatching(passwordView, passwordAgainView)) {
+								if (validationError) {
+									validationErrorMessage
+											.append(getResources().getString(
+													R.string.error_join));
+								}
+								validationError = true;
+								validationErrorMessage
+										.append(getResources()
+												.getString(
+														R.string.error_mismatched_passwords));
+							}
+							validationErrorMessage.append(getResources()
+									.getString(R.string.error_end));
+
+							// If there is a validation error, display the error
+							if (validationError) {
+								Toast.makeText(SignUpActivity.this,
+										validationErrorMessage.toString(),
+										Toast.LENGTH_LONG).show();
+								return;
+							}
+
+							// Set up a progress dialog
+							final ProgressDialog dlg = new ProgressDialog(
+									SignUpActivity.this);
+							dlg.setTitle("Please wait.");
+							dlg.setMessage("Signing up.  Please wait.");
+							dlg.show();
+
+							// Set up a new Parse user
+							String username = usernameView.getText().toString();
+							User user = new User(username, passwordView
+									.getText().toString());
+							new UserInfo(username);
+
+							// Call the Parse signup method
+							user.signUpInBackground(new SignUpCallback() {
+
+								@Override
+								public void done(ParseException e) {
+									dlg.dismiss();
+									if (e != null) {
+										// Show the error message
+										Toast.makeText(SignUpActivity.this,
+												e.getMessage(),
+												Toast.LENGTH_LONG).show();
+									} else {
+										// Start an intent for the dispatch
+										// activity
+										Intent intent = new Intent(
+												SignUpActivity.this,
+												MainMenuActivity.class);
+										intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+												| Intent.FLAG_ACTIVITY_NEW_TASK);
+										startActivity(intent);
+									}
+								}
+							});
+						}
 					}
 				});
 	}
