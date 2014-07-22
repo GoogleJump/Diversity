@@ -702,7 +702,6 @@ containing a value of this type.
         public static final int hello=0x7f040020;
         public static final int inventory=0x7f040040;
         public static final int inventory_view_name=0x7f040041;
-        public static final int ksenia=0x7f04004a;
         public static final int locate_materials=0x7f04003c;
         public static final int log_in=0x7f040024;
         public static final int log_out=0x7f040035;
@@ -732,6 +731,7 @@ containing a value of this type.
         public static final int start_continue=0x7f040033;
         public static final int submit=0x7f040032;
         public static final int synopsis=0x7f040047;
+        public static final int team_lead=0x7f04004a;
         public static final int title_activity_login=0x7f04004b;
         public static final int title_activity_settings=0x7f040029;
         public static final int title_activity_sign_up_or_log_in=0x7f040023;

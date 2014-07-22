@@ -59,7 +59,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Location location;
 	private final int RADIUS = 10000; // in meters
 	private final float ZOOM_LEVEL = 12;
-	private final double CLAIM_DISTANCE = 1.5;
+	private final double CLAIM_DISTANCE = 200000;
 
 	private Gson gson;
 
@@ -360,10 +360,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
-				for (String searchTerm : material.getSearchTerms()) {
-					/**Fix me:(Random selection) List<String> searchTerms = material.getSearchTerms();
+				//for (String searchTerm : material.getSearchTerms()) {
+					/**Fix me:(Random selection) */
+					List<String> searchTerms = material.getSearchTerms();
 									Collections.shuffle(searchTerms);
-									for (String searchTerm : searchTerms) { */
+									for (String searchTerm : searchTerms) { /**/
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
 							+ location.getLongitude() + "&" + "radius="
