@@ -56,10 +56,12 @@ public class MainMenuActivity extends BaseActivity {
 						i = new Intent(MainMenuActivity.this,
 								PickCharacterActivity.class);
 					}
+					MainMenuActivity.this.finish();
 					startActivity(i);
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
 				}
+
 			}
 		});
 	}
@@ -74,6 +76,7 @@ public class MainMenuActivity extends BaseActivity {
 				if (isOnline()) {
 					Intent intent = new Intent(MainMenuActivity.this,
 							SettingsActivity.class);
+					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
@@ -94,6 +97,7 @@ public class MainMenuActivity extends BaseActivity {
 				if (isOnline()) {
 					Intent intent = new Intent(MainMenuActivity.this,
 							TrophiesActivity.class);
+					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
@@ -114,6 +118,7 @@ public class MainMenuActivity extends BaseActivity {
 				if (isOnline()) {
 					Intent intent = new Intent(MainMenuActivity.this,
 							PhotosActivity.class);
+					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
@@ -134,6 +139,7 @@ public class MainMenuActivity extends BaseActivity {
 				if (isOnline()) {
 					Intent intent = new Intent(MainMenuActivity.this,
 							InventoryActivity.class);
+					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
 					showWarningDialog(R.string.no_internet_connection);

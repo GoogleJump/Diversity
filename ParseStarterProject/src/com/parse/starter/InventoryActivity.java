@@ -85,6 +85,7 @@ public class InventoryActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				InventoryActivity.this.finish();
 				startActivity(i);
 			}
 		});
