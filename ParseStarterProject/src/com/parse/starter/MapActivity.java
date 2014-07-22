@@ -362,9 +362,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			for (Material material : materialsOnTheMap.keySet()) {
 				//for (String searchTerm : material.getSearchTerms()) {
 					/**Fix me:(Random selection) */
-					List<String> searchTerms = material.getSearchTerms();
-									Collections.shuffle(searchTerms);
-									for (String searchTerm : searchTerms) { /**/
+			 List<String> searchTerms = material.getSearchTerms();
+			 Collections.shuffle(searchTerms);
+			for (String searchTerm : searchTerms) { /**/
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
 							+ location.getLongitude() + "&" + "radius="
