@@ -22,6 +22,7 @@ public class SettingsActivity extends BaseActivity {
 	private Button mainMenu;
 	private Button restart;
 	private Button logout;
+	private Button about;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class SettingsActivity extends BaseActivity {
 		addListenerOnRestartButton();
 		addListenerOnLogOutButton();
 		addListenerOnMainMenuButton();
+		addListenerOnAboutButton();
 	}
 
 	/**
@@ -48,6 +50,7 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
+				SettingsActivity.this.finish();
 				startActivity(intent);
 			}
 		});
@@ -76,6 +79,21 @@ public class SettingsActivity extends BaseActivity {
 			}
 		});
 	}
+	
+	/**
+	 * When the About Button is pressed, changes to About View
+	 */
+	private void addListenerOnAboutButton() {
+		about = (Button) findViewById(R.id.about_button_mm);
+		about.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(SettingsActivity.this,
+						AboutActivity.class);
+				SettingsActivity.this.finish();
+				startActivity(intent);
+			}
+		});
+	}
 
 	/**
 	 * Displays the restart dialog, which has a yes button to restart the game
@@ -100,6 +118,7 @@ public class SettingsActivity extends BaseActivity {
 						// Start and intent for the dispatch activity
 						Intent intent = new Intent(SettingsActivity.this,
 								MainMenuActivity.class);
+						SettingsActivity.this.finish();
 						startActivity(intent);
 
 					}
@@ -142,6 +161,7 @@ public class SettingsActivity extends BaseActivity {
 								SignUpOrLogInActivity.class);
 						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 								| Intent.FLAG_ACTIVITY_NEW_TASK);
+						SettingsActivity.this.finish();
 						startActivity(intent);
 					}
 				});

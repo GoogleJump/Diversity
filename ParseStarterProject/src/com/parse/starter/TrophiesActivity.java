@@ -85,6 +85,7 @@ public class TrophiesActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				TrophiesActivity.this.finish();
 				startActivity(i);
 
 			}
