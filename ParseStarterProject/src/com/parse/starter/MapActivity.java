@@ -167,7 +167,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					public void onClick(View v) {
 						// remove all the existing markers
 						// This might not be necessary if the map will be re-rendered
-					/*	for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
+						/**Fix me:(Random selection)
+						  	for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
 							if (materialInfo.marker != null) {
 								materialInfo.marker.remove();
 							}
@@ -359,9 +360,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
-				List<String> searchTerms = material.getSearchTerms();
-				Collections.shuffle(searchTerms);
-				for (String searchTerm : searchTerms) {
+				for (String searchTerm : material.getSearchTerms()) {
+					/**Fix me:(Random selection) List<String> searchTerms = material.getSearchTerms();
+									Collections.shuffle(searchTerms);
+									for (String searchTerm : searchTerms) { */
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
 							+ location.getLongitude() + "&" + "radius="
