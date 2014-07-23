@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -167,14 +168,15 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					public void onClick(View v) {
 						// remove all the existing markers
 						// This might not be necessary if the map will be re-rendered
-						/**Fix me:(Random selection)
-						  	for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
-							if (materialInfo.marker != null) {
-								materialInfo.marker.remove();
+						synchronized (materialsOnTheMap)  {
+							for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
+								if (materialInfo.marker != null) {
+									materialInfo.marker.remove();
+								}
 							}
+							materialsOnTheMap.clear();
 						}
-						materialsOnTheMap.clear(); */
-						locateMaterials();
+							locateMaterials();
 					}
 				});
 
@@ -360,11 +362,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
-				//for (String searchTerm : material.getSearchTerms()) {
-					/**Fix me:(Random selection) */
-			 List<String> searchTerms = material.getSearchTerms();
-			 Collections.shuffle(searchTerms);
-			for (String searchTerm : searchTerms) { /**/
+				// TODO(kseniab): pass by value? 
+				ArrayList<String> searchTerms = new ArrayList<String>(material.getSearchTerms());
+				Collections.shuffle(searchTerms);
+				for (String searchTerm : searchTerms) { /**/
 					String request = PLACES_URL + "&location="
 							+ location.getLatitude() + ","
 							+ location.getLongitude() + "&" + "radius="
@@ -399,8 +400,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			try {
 				List<Material> resultsList = query.find();
 				for (Material m : resultsList) {
-					if (!materialsOnTheMap.keySet().contains(m)) {
-						materialsOnTheMap.put(m, new MaterialMapInfo());
+					synchronized (materialsOnTheMap) {
+						if (!materialsOnTheMap.keySet().contains(m)) {
+							materialsOnTheMap.put(m, new MaterialMapInfo());
+						}
 					}
 				}
 			} catch (ParseException e) {
@@ -438,9 +441,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			GooglePlacesResponse placesJson = gson.fromJson(reader,
 					GooglePlacesResponse.class);
 			List<GooglePlace> resultsList = placesJson.getResults();
+			Collections.shuffle(resultsList);
 			if (resultsList.size() > 0) {
 				GooglePlace materialPlace = resultsList.get(0);
 				synchronized (materialsOnTheMap) {
+					System.out.println("Material" + material.getName());
 					MaterialMapInfo materialMap = materialsOnTheMap
 							.get(material);
 					if (materialMap != null && materialMap.getPlace() == null) {
