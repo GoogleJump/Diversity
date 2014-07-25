@@ -350,6 +350,7 @@ public class PuzzleActivity extends BaseActivity {
 				.setPositiveButton("Okay",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								PuzzleActivity.this.finish();
 								startActivity(new Intent(PuzzleActivity.this,
 										MapActivity.class));
 							}
