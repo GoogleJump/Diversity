@@ -175,7 +175,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 								}
 							}
 							materialsOnTheMap.clear();
-						}
+							}
 							locateMaterials();
 					}
 				});
