@@ -3,14 +3,15 @@
     android:id="@+id/character_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/blankbackground">
 
     <TextView
+        style="@style/GameFont"
         android:id="@+id/choose_character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_a_character"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/choose_a_character"/>
 
     <ImageButton
         android:id="@+id/surfer_picture"
@@ -19,10 +20,10 @@
         android:src="@drawable/surfer" />
 
     <TextView
+        style="@style/GameFont"
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Surfer"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Surfer"/>
 
 </LinearLayout>

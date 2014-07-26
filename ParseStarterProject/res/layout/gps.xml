@@ -2,19 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/background"
+    android:gravity="center_horizontal">
 
     <Button
         android:id="@+id/main_menu_button_gps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/home_button_custom" 
+        android:layout_gravity="top"/>
 
     <TextView
-        style="@style/BiggerFont"
+        style="@style/GameFont.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gps_view_name" />
+        android:text="@string/gps_view_name" 
+        android:layout_gravity="center"/>
 
 <!--     <ImageView -->
 <!--         android:id="@+id/imageView2" -->
@@ -24,8 +28,9 @@
 
     <Button
         android:id="@+id/submit_button_gps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit" />
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:background="@drawable/submit_textbutton_custom" 
+        android:layout_gravity="center"/>
 
 </LinearLayout>

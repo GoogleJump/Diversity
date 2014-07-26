@@ -2,53 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/background"
+    android:weightSum="5.0"
     android:gravity="center"
-    android:layout_gravity="center"
-    android:orientation="vertical" >
+    android:layout_gravity="center">
 
-    <View 
-        android:layout_width="1dp"
-        android:layout_height="30dp"/>
-    <TextView
-        style="@style/BiggerFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" 
-        android:layout_gravity="center"/>
      
      <Button android:id="@+id/start_continue_button_mm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start_continue"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/start_continue_textbutton_custom"
+        android:layout_weight="0.5"/>
      
      <Button
          android:id="@+id/trophies_button_mm"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:layout_width="200dp"
+         android:layout_height="0dp"
          android:layout_gravity="center_horizontal"
-         android:text="@string/trophies" />
+         android:background="@drawable/trophy_shelf_textbutton_custom" 
+         android:layout_weight="0.5"/>
      
      <Button
          android:id="@+id/photos_button_mm"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:layout_width="200dp"
+         android:layout_height="0dp"
          android:layout_gravity="center_horizontal"
-         android:text="@string/photos" />
+         android:background="@drawable/photo_album_textbutton_custom"
+         android:layout_weight="0.5"/>
      
      <Button
          android:id="@+id/inventory_button_mm"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:layout_width="200dp"
+         android:layout_height="0dp"
          android:layout_gravity="center_horizontal"
-         android:text="@string/inventory" />
+         android:background="@drawable/inventory_textbutton_custom"
+         android:layout_weight="0.5"/>
 
      <Button android:id="@+id/settings_button_mm"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/settings"
-         android:layout_gravity="center_horizontal"/>
+         android:layout_width="200dp"
+         android:layout_height="0dp"
+         android:background="@drawable/settings_textbutton_custom"
+         android:layout_gravity="center_horizontal"
+         android:layout_weight="0.5"/>
+     
+  <!--        <View 
+        android:layout_width="1dp"
+        android:layout_height="30dp"/>
+   
+     <TextView
+        style="@style/BiggerFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/> -->
 
 
 </LinearLayout>
