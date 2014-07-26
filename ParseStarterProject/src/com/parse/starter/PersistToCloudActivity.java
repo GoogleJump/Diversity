@@ -20,9 +20,6 @@ public class PersistToCloudActivity extends Activity {
 		
 		Material material = new Material();
 		material.put("name", "testing");
-		material.saveInBackground();
-		
-
+		material.saveEventually();
 	}
-
 }

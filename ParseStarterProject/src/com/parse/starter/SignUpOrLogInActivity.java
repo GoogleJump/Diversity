@@ -20,6 +20,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
     ((Button) findViewById(R.id.logInButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // Starts an intent of the log in activity
+    	SignUpOrLogInActivity.this.finish();
         startActivity(new Intent(SignUpOrLogInActivity.this, LoginActivity.class));
       }
     });
@@ -28,6 +29,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
     ((Button) findViewById(R.id.signUpButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // Starts an intent for the sign up activity
+    	SignUpOrLogInActivity.this.finish();
         startActivity(new Intent(SignUpOrLogInActivity.this, SignUpActivity.class));
       }
     });

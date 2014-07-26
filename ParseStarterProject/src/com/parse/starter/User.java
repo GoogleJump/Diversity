@@ -21,9 +21,10 @@ public class User extends ParseUser {
 	public User(String username, String password) {
 		this.setUsername(username);
 		this.setPassword(password);
+		// must be saveInBackground, no saveEventually
 		saveInBackground();
 	}
-	
+
 	public UserInfo getUserInfo() {
 		String usernmae = getString("username");
 		ParseQuery<UserInfo> query = ParseQuery.getQuery(UserInfo.class);

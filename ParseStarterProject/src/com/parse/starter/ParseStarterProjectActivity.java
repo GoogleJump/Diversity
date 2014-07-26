@@ -15,11 +15,12 @@ public class ParseStarterProjectActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
 		if (ParseUser.getCurrentUser() != null) {
+			ParseStarterProjectActivity.this.finish();
 			startActivity(new Intent(ParseStarterProjectActivity.this,
 					MainMenuActivity.class));
 		} else {
+			ParseStarterProjectActivity.this.finish();
 			startActivity(new Intent(ParseStarterProjectActivity.this,
 					SignUpOrLogInActivity.class));
 		}

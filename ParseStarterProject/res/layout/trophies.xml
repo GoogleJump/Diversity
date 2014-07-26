@@ -4,7 +4,8 @@
     android:id="@+id/vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/plain_background">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,14 +16,15 @@
 
         <Button
             android:id="@+id/main_menu_button_trophies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/main_menu" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/home_button_custom"/>
         
         <TextView
-            style="@style/BiggerFont"
+            style="@style/GameFont.Big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/trophies_view_name" />
 
     </LinearLayout>
@@ -33,6 +35,7 @@
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:scaleType="fitXY"
+            android:layout_margin="40dp"
             >
 
           <TableLayout

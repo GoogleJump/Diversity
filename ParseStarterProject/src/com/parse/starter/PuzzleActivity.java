@@ -41,7 +41,7 @@ public class PuzzleActivity extends BaseActivity {
 	private String material;
 	private EditText anagramView;
 	private Button mapButton;
-	private ImageButton shuffleButton;
+	private Button shuffleButton;
 	private UserInfo userInfo;
 
 	@Override
@@ -51,6 +51,7 @@ public class PuzzleActivity extends BaseActivity {
 		User currentUser = (User) User.getCurrentUser();
 		userInfo = currentUser.getUserInfo();
 
+		// Where is this material being set?
 		material = userInfo.getCurrentMaterial();
 
 		// indicates there is nothing to find
@@ -96,7 +97,7 @@ public class PuzzleActivity extends BaseActivity {
 			TextView question = (TextView) findViewById(R.id.question);
 			question.setText(puzzle.getString("riddle"));
 
-			correctAnswer = puzzle.getString("answer");
+			correctAnswer = puzzle.getString("material");
 
 			chk1 = (CheckBox) findViewById(R.id.chkanswer_1);
 			chk2 = (CheckBox) findViewById(R.id.chkanswer_2);
@@ -157,14 +158,15 @@ public class PuzzleActivity extends BaseActivity {
 	 * Gives a random new puzzle to the user when puzzle button is pressed
 	 */
 	private void addListenerOnShuffleButton() {
-		shuffleButton = (ImageButton) findViewById(R.id.new_puzzle_puz);
+		shuffleButton = (Button) findViewById(R.id.new_puzzle_puz);
 		shuffleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				userInfo.getNewMaterialShuffleStyle();
-				userInfo.saveInBackground();
+				userInfo.saveEventually();
 
 				Intent i = new Intent(PuzzleActivity.this, PuzzleActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 
@@ -180,6 +182,7 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this, MapActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -195,6 +198,7 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this,
 						MainMenuActivity.class);
+				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -331,7 +335,7 @@ public class PuzzleActivity extends BaseActivity {
 		userInfo.setCurrentMaterial("");
 		userInfo.getNewMaterialShuffleStyle();
 
-		userInfo.saveInBackground();
+		userInfo.saveEventually();
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

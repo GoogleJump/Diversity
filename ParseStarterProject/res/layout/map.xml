@@ -4,32 +4,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/map_linear_layout_parent" >
+    android:id="@+id/map_linear_layout_parent" 
+    android:background="@drawable/blankbackground">
+
+     <Button
+            android:id="@+id/main_menu_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            android:background="@drawable/home_button_custom"
+            android:layout_marginBottom="10dp"/>
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:orientation="horizontal" 
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        > 
+        
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.MapFragment" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+       
+
+        <Button
+            android:id="@+id/puzzle_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            android:background="@drawable/puzzle_button_custom" 
+            android:layout_marginBottom="10dp"/>
+        
+        <Button
+            android:id="@+id/randomize_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            android:background="@drawable/randomize_button_custom"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/claim_materials_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            android:background="@drawable/claim_button_custom" 
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/locate_materials_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            android:background="@drawable/locate_item_button_custom" 
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/map_linear_layout_parent" 
+    android:background="@drawable/blankbackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.8"
-        android:background="#A000"
         android:gravity="center|top"
         android:orientation="horizontal"
         android:padding="5dp" >
 
         <Button
             android:id="@+id/main_menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:padding="8dp"
-            android:text="@string/main_menu" />
+            android:background="@drawable/home_button_custom"/>
 
         <Button
             android:id="@+id/puzzle_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:padding="8dp"
-            android:text="@string/puzzle_view_name" />
+            android:background="@drawable/puzzle_button_custom" />
     </RelativeLayout>
 
     <LinearLayout
@@ -49,34 +129,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.8"
-        android:background="#A000"
         android:gravity="center|bottom"
         android:orientation="horizontal"
         android:padding="5dp" >
 
         <Button
             android:id="@+id/randomize_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:padding="8dp"
-            android:text="@string/randomize" />
+            android:background="@drawable/randomize_button_custom"/>
 
         <Button
             android:id="@+id/claim_materials_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:padding="8dp"
-            android:text="@string/claim_items" />
+            android:background="@drawable/claim_button_custom" />
 
         <Button
             android:id="@+id/locate_materials_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:padding="8dp"
-            android:text="@string/locate_items" />
+            android:background="@drawable/locate_item_button_custom" />
     </RelativeLayout>
 
-</LinearLayout>
+</LinearLayout> -->
+
+

@@ -11,6 +11,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+/**
+ * Documentation about the local datastore: 
+ * http://blog.parse.com/2014/04/30/take-your-app-offline-with-parse-local-datastore/ 
+ */
 @ParseClassName("UserInfo")
 public class UserInfo extends ParseObject {
 
@@ -21,7 +25,7 @@ public class UserInfo extends ParseObject {
 	public UserInfo(String username) {
 		put("username", username);
 		restart();
-	}
+	}		
 
 	public void restart() {
 		put("currentMaterial", "");
@@ -35,12 +39,13 @@ public class UserInfo extends ParseObject {
 		put("charactersCollected", emptyList);
 		put("shuffledWord", "");
 		put("puzzleID", "1");
-		saveInBackground();
+		saveEventually();
 	}
 
 	// FIXME
 	public void getNewItem() {
 		// Chain of async calls, how to work around this?
+		// This is returning null!
 		String currentCharacter = getCurrentCharacter();
 		if (currentCharacter.length() == 0) {
 			return;
@@ -52,11 +57,12 @@ public class UserInfo extends ParseObject {
 			Character character = results.get(0);
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
-			List<String> itemsSolved = getItemsSolved();
+			// What if there is no solve items?
+			List<String> itemsSolved = getItemsCollected();
 			for (int i = 0; i < characterItems.size(); i++) {
 				if (!itemsSolved.contains(characterItems.get(i))) {
-					System.out.println("HEREEEEEE");
 					setCurrentItem(characterItems.get(i));
+					getNewMaterialShuffleStyle();
 					return;
 				}
 			}
@@ -174,27 +180,27 @@ public class UserInfo extends ParseObject {
 
 	public void addItemCollected(String item) {
 		add("itemsCollected", item);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public void addCharacterCollected(String character) {
 		add("charactersCollected", character);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public void addMaterialCollected(String material) {
 		add("materialsCollected", material);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public void addMaterialSolved(String material) {
 		add("materialsSolved", material);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public void addItemSolved(String item) {
 		add("itemsSolved", item);
-		saveInBackground();
+		saveEventually();
 	}
 
 	/*
@@ -210,7 +216,7 @@ public class UserInfo extends ParseObject {
 
 	public void setCurrentItem(String currentItem) {
 		put("currentItem", currentItem);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public String getCurrentCharacter() {
@@ -219,7 +225,7 @@ public class UserInfo extends ParseObject {
 
 	public void setCurrentCharacter(String currentCharacter) {
 		put("currentCharacter", currentCharacter);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public String getCurrentMaterial() {
@@ -228,7 +234,7 @@ public class UserInfo extends ParseObject {
 
 	public void setCurrentMaterial(String currentMaterial) {
 		put("currentMaterial", currentMaterial);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public List<String> getCharactersCollected() {
@@ -237,7 +243,7 @@ public class UserInfo extends ParseObject {
 
 	public void setCharactersCollected(List<String> newCharactersCollected) {
 		put("charactersCollected", newCharactersCollected);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public List<String> getMaterialsSolved() {
@@ -246,7 +252,7 @@ public class UserInfo extends ParseObject {
 
 	public void setMaterialsSolved(List<String> materialsSolved) {
 		put("materialsSolved", materialsSolved);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public List<String> getMaterialsCollected() {
@@ -255,7 +261,7 @@ public class UserInfo extends ParseObject {
 
 	public void setMaterialsCollected(List<String> materialsCollected) {
 		put("materialsCollected", materialsCollected);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public List<String> getItemsSolved() {
@@ -264,7 +270,7 @@ public class UserInfo extends ParseObject {
 
 	public void setItemsSolved(List<String> itemsSolved) {
 		put("itemsSolved", itemsSolved);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public List<String> getItemsCollected() {
@@ -273,7 +279,7 @@ public class UserInfo extends ParseObject {
 
 	public void setItemsCollected(List<String> itemsCollected) {
 		put("itemsCollected", itemsCollected);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public String getShuffledWord() {
@@ -282,7 +288,7 @@ public class UserInfo extends ParseObject {
 
 	public void setShuffledWord(String shuffledWord) {
 		put("shuffledWord", shuffledWord);
-		saveInBackground();
+		saveEventually();
 	}
 
 	public String getPuzzleID() {
@@ -291,7 +297,7 @@ public class UserInfo extends ParseObject {
 
 	public void setPuzzleID(String puzzleID) {
 		put("puzzleID", puzzleID);
-		saveInBackground();
+		saveEventually();
 	}
 
 }

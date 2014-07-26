@@ -1,5 +1,9 @@
 *~
 .DS_Store
 ParseStarterProject/bin/
+ParseStarterProject/gen/
+ParseStarterProject/.settings/
+ParseStarterProject/.classpath
 DiversityTestApp/bin/
-bin/
+DiversityTestApp/gen/
+google-play-services_lib/

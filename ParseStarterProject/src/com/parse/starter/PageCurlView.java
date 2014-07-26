@@ -344,7 +344,7 @@ public class PageCurlView extends View {
 			mBackground = null;
 		}
 		else {
-			int id = this.getResources().getIdentifier("pusheen", "drawable",  "com.parse.starter");
+			int id = this.getResources().getIdentifier("photo_album_default", "drawable",  "com.parse.starter");
 			mForeground = BitmapFactory.decodeResource(getResources(), id);
 			mBackground = null;
 		}

@@ -3,7 +3,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/puzzle_background">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal" 
+        android:gravity="center_horizontal" 
+        	android:layout_marginTop="20dp">
+        
+        <Button android:id="@+id/main_menu_button_puzzle"
+        	android:layout_width="80dp"
+        	android:layout_height="80dp"
+        	android:background="@drawable/home_button_custom" 
+        	/>
+        <Button android:id="@+id/new_puzzle_puz"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/puzzle_button_custom" />
+        <Button
+            android:id="@+id/gps_button_puzzle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/map_button_custom" />
+        
+     </LinearLayout>
+        
+    <TextView
+        style="@style/GameFont.Big"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/puzzle_view_name" 
+	    android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <TextView 
+        style="@style/GameFont"
+        android:id="@+id/question"
+        android:layout_marginTop="5sp"
+      	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+                android:layout_gravity="center"/>
+    
+    <CheckBox 
+        	style="@style/GameFont"
+		    android:id="@+id/chkanswer_1"
+		    android:layout_width = "250dp"
+	    	android:layout_height = "wrap_content"
+	    	android:gravity="center"
+            android:layout_gravity="center"/>
+    
+    <CheckBox 
+        	style="@style/GameFont"
+		    android:id="@+id/chkanswer_2"
+		    android:layout_width = "250dp"
+	    	android:layout_height = "wrap_content"
+	    	android:gravity="center"
+            android:layout_gravity="center"/>
+    
+    <CheckBox 
+        	style="@style/GameFont"
+		    android:id="@+id/chkanswer_3"
+		    android:layout_width = "250dp"
+	    	android:layout_height = "wrap_content"
+	    	android:gravity="center"
+            android:layout_gravity="center"/>
+    
+    <CheckBox 
+        	style="@style/GameFont"
+		    android:id="@+id/chkanswer_4"
+		    android:layout_width = "250dp"
+	    	android:layout_height = "wrap_content"
+	    	android:gravity="center"
+            android:layout_gravity="center"/>
+    <Button 
+            android:id="@+id/submit_button_puzzle"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:background="@drawable/submit_textbutton_custom" />
+
+  
+    
+   
+</LinearLayout>
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/background2">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,9 +107,9 @@
         android:orientation="horizontal" >
         
         <Button android:id="@+id/main_menu_button_puzzle"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/main_menu" />
+        	android:layout_width="50dp"
+        	android:layout_height="50dp"
+        	android:background="@drawable/home_button" />
         
         <RelativeLayout
         	android:layout_width="match_parent"
@@ -27,7 +123,7 @@
         	    android:layout_alignParentTop="true"
         	    android:padding="10dip"
         	    android:scaleType="fitXY"
-        	    android:src="@drawable/puzzle_piece"
+        	    android:src="@drawable/puzzle_button"
         	    android:adjustViewBounds="true"/>
         	
         </RelativeLayout>
@@ -93,4 +189,4 @@
     </RelativeLayout>
     
    
-</LinearLayout>
+</LinearLayout> -->

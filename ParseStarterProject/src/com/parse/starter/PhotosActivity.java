@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -81,6 +80,7 @@ public class PhotosActivity extends BaseActivity {
 				vg.removeView(photoAlbum);
 				
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				PhotosActivity.this.finish();
 				startActivity(i);
 
 			}
