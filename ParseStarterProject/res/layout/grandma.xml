@@ -3,14 +3,16 @@
     android:id="@+id/character_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/blankbackground"
+    android:gravity="center">
 
     <TextView
+        style="@style/GameFont.Big"
         android:id="@+id/choose_character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_a_character"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/choose_a_character"/>
 
     <ImageButton
         android:id="@+id/grandma_picture"
@@ -19,10 +21,10 @@
         android:src="@drawable/grandma" />
 
     <TextView
+        style="@style/GameFont.Big"
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Grandma"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Grandma"/>
 
 </LinearLayout>

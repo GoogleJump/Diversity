@@ -41,7 +41,7 @@ public class PuzzleActivity extends BaseActivity {
 	private String material;
 	private EditText anagramView;
 	private Button mapButton;
-	private ImageButton shuffleButton;
+	private Button shuffleButton;
 	private UserInfo userInfo;
 
 	@Override
@@ -158,7 +158,7 @@ public class PuzzleActivity extends BaseActivity {
 	 * Gives a random new puzzle to the user when puzzle button is pressed
 	 */
 	private void addListenerOnShuffleButton() {
-		shuffleButton = (ImageButton) findViewById(R.id.new_puzzle_puz);
+		shuffleButton = (Button) findViewById(R.id.new_puzzle_puz);
 		shuffleButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

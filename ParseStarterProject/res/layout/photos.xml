@@ -3,28 +3,31 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:background="@drawable/plain_background">
 	<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
         
          <Button android:id="@+id/main_menu_button_photos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/home_button_custom"/>
         
     <TextView
-        style="@style/BiggerFont"
+        style="@style/GameFont.Big"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="@string/photos_view_name" />
+	    android:text="@string/photos_view_name" 
+	    android:layout_gravity="center"/>
         
     </LinearLayout>
 	<com.parse.starter.PageCurlView
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:id="@+id/dcgpagecurlPageCurlView1"
-		android:background="@drawable/paper">
+		android:background="@drawable/paper"
+		android:layout_margin="40dp">
 	</com.parse.starter.PageCurlView>
 </LinearLayout>
