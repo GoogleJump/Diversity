@@ -42,10 +42,7 @@ public class UserInfo extends ParseObject {
 		saveEventually();
 	}
 
-	// FIXME
 	public void getNewItem() {
-		// Chain of async calls, how to work around this?
-		// This is returning null!
 		String currentCharacter = getCurrentCharacter();
 		if (currentCharacter.length() == 0) {
 			return;
@@ -53,7 +50,9 @@ public class UserInfo extends ParseObject {
 		ParseQuery<Character> query = ParseQuery.getQuery(Character.class);
 		query.whereEqualTo("name", currentCharacter);
 		try {
-			List<Character> results = query.find();
+			Character.unpinAllInBackground("CurrentCharacter");
+			List<Character> results = query.fromLocalDatastore().find();
+			Character.pinAllInBackground("CurrentCharacter", results);
 			Character character = results.get(0);
 			List<String> characterItems = character.getItems();
 			Collections.shuffle(results);
@@ -92,10 +91,13 @@ public class UserInfo extends ParseObject {
 			ParseQuery<Item> query = Item.getQuery();
 
 			query.whereEqualTo("name", currentItem);
+			query.fromLocalDatastore();
 
 			// choosing a random material from the query
 			try {
+				Item.unpinAllInBackground("CurrentItem");
 				List<Item> items = query.find();
+				Item.pinAllInBackground("CurrentItem", items);
 				if (items.size() == 1) {
 					ArrayList<String> itemMaterials = items.get(0)
 							.getMaterials();

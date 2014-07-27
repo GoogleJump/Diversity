@@ -1,5 +1,10 @@
 package com.parse.starter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.parse.ParseObject;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -207,6 +212,9 @@ public class PickCharacterActivity extends BaseActivity {
 				String characterSelected = params[0];
 				userInfo.setCurrentCharacter(characterSelected);
 				userInfo.getNewItem();
+				List<UserInfo> userInfoList = new ArrayList<UserInfo>();
+				userInfoList.add(userInfo);
+				ParseObject.pinAllInBackground("UserInfo", userInfoList);
 				return null;
 			}
 

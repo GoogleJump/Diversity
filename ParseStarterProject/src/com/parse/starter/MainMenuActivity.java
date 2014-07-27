@@ -1,6 +1,3 @@
-// MAKE SURE TO UPDATE onClick in the addListenerOnStartContinueButton once
-// everything is merged
-
 package com.parse.starter;
 
 import android.content.Intent;
@@ -73,14 +70,10 @@ public class MainMenuActivity extends BaseActivity {
 		settings = (Button) findViewById(R.id.settings_button_mm);
 		settings.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if (isOnline()) {
-					Intent intent = new Intent(MainMenuActivity.this,
-							SettingsActivity.class);
-					MainMenuActivity.this.finish();
-					startActivity(intent);
-				} else {
-					showWarningDialog(R.string.no_internet_connection);
-				}
+				Intent intent = new Intent(MainMenuActivity.this,
+						SettingsActivity.class);
+				MainMenuActivity.this.finish();
+				startActivity(intent);
 			}
 		});
 	}
@@ -94,14 +87,10 @@ public class MainMenuActivity extends BaseActivity {
 		trophies.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isOnline()) {
-					Intent intent = new Intent(MainMenuActivity.this,
-							TrophiesActivity.class);
-					MainMenuActivity.this.finish();
-					startActivity(intent);
-				} else {
-					showWarningDialog(R.string.no_internet_connection);
-				}
+				Intent intent = new Intent(MainMenuActivity.this,
+						TrophiesActivity.class);
+				MainMenuActivity.this.finish();
+				startActivity(intent);
 			}
 		});
 	}
@@ -115,14 +104,10 @@ public class MainMenuActivity extends BaseActivity {
 		photos.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isOnline()) {
-					Intent intent = new Intent(MainMenuActivity.this,
-							PhotosActivity.class);
-					MainMenuActivity.this.finish();
-					startActivity(intent);
-				} else {
-					showWarningDialog(R.string.no_internet_connection);
-				}
+				Intent intent = new Intent(MainMenuActivity.this,
+						PhotosActivity.class);
+				MainMenuActivity.this.finish();
+				startActivity(intent);
 			}
 		});
 	}
@@ -136,14 +121,10 @@ public class MainMenuActivity extends BaseActivity {
 		inventory.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isOnline()) {
-					Intent intent = new Intent(MainMenuActivity.this,
-							InventoryActivity.class);
-					MainMenuActivity.this.finish();
-					startActivity(intent);
-				} else {
-					showWarningDialog(R.string.no_internet_connection);
-				}
+				Intent intent = new Intent(MainMenuActivity.this,
+						InventoryActivity.class);
+				MainMenuActivity.this.finish();
+				startActivity(intent);
 			}
 		});
 	}
