@@ -291,6 +291,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<String> itemsCollected = userInfo.getItemsCollected();
 			itemsCollected.add(name);
 			userInfo.getNewItem();
+			
+			userInfo.setMaterialsCollected(Collections.<String>emptyList());
 
 			userInfo.saveEventually(new SaveCallback() {
 				public void done(ParseException e) {
