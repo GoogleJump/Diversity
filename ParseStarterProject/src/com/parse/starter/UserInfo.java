@@ -40,6 +40,10 @@ public class UserInfo extends ParseObject {
 		put("shuffledWord", "");
 		put("puzzleID", "1");
 		saveEventually();
+		
+		List<UserInfo> currentUserInfo = new ArrayList<UserInfo>();
+		currentUserInfo.add(this);
+		ParseObject.pinAllInBackground("UserInfo", currentUserInfo);
 	}
 
 	public void getNewItem() {
