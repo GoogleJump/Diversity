@@ -86,28 +86,6 @@ public class PickCharacterActivity extends BaseActivity {
 			return view == object;
 		}
 		
-		public void makePopup(final String name, String description){
-			// new popup
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
-			alertDialogBuilder
-				.setMessage(description)
-				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
-																				// and change activity
-					public void onClick(DialogInterface dialog, int id) {
-						new SaveCharacterTask().execute(name);
-					}
-				})
-				.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
-					public void onClick(DialogInterface dialog,int id) {
-						dialog.cancel();
-					}
-				});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
 		public Object instantiateItem(final View collection, final int position) {
 			v = new View(collection.getContext());
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
