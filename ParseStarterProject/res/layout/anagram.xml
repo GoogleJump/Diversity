@@ -3,76 +3,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/puzzle_background"
-    android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/main_menu_button_puzzle"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/home_button_custom" />
-
-    <TextView
-        style="@style/GameFont.Big"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20sp"
-        android:gravity="center"
-        android:text="@string/anagram_view_name" />
-
-    <TextView
-        android:id="@+id/question"
-        style="@style/GameFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5sp"
-        android:gravity="center" />
-
-    <EditText
-        android:id="@+id/anagramInput"
-        style="@style/GameFont"
+    android:orientation="vertical" 
+    android:background="@drawable/puzzle_background">
+    
+     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:inputType="text"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textColorHint="#FFFFFF" />
-
-    <Button
-        android:id="@+id/anagramSubmit"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/submit_textbutton_custom"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center|bottom"
+        android:layout_height="wrap_content" 
         android:orientation="horizontal"
-        android:padding="8dp" >
+        android:gravity="center_horizontal" 
+        	android:layout_marginTop="20dp">
+        
+        <Button android:id="@+id/main_menu_button_puzzle"
+        	android:layout_width="80dp"
+        	android:layout_height="80dp"
+        	android:background="@drawable/home_button_custom" />
 
         <Button
             android:id="@+id/new_puzzle_puz"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/puzzle_button_custom"
-            android:padding="8dp" />
-
+            android:background="@drawable/puzzle_button_custom" />
+        
         <Button
             android:id="@+id/gps_button_puzzle"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/map_button_custom"
-            android:padding="8dp" />
-    </LinearLayout>
+            android:background="@drawable/map_button_custom"/>
 
+   <!--      <RelativeLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent">
+        	<ImageButton android:background="@null"
+        	    android:contentDescription="@string/puz_desc"
+        	    android:id="@+id/new_puzzle_puz"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="fill_parent"
+        	    android:layout_alignParentRight="true"
+        	    android:layout_alignParentTop="true"
+        	    android:padding="10dp"
+        	    android:scaleType="fitXY"
+        	    android:src="@drawable/puzzle_button"
+        	    android:adjustViewBounds="true"/> 
+        </RelativeLayout> -->
+       
+     </LinearLayout>
+        
+    <TextView
+        style="@style/GameFont.Big"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:gravity="center"
+	    android:layout_marginTop="20sp"
+	    android:text="@string/anagram_view_name" />
+
+    <TextView 
+        style="@style/GameFont"
+        android:id="@+id/question"
+      	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="5sp"
+	    android:gravity="center"
+        android:layout_gravity="center"/>
+    
+    <EditText
+        		style="@style/GameFont"
+                android:id="@+id/anagramInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" 
+                android:textColorHint="#FFFFFF" 
+                android:gravity="center"
+                android:layout_gravity="center"/>
+    
+    <Button
+                android:id="@+id/anagramSubmit"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:background="@drawable/submit_textbutton_custom" />
+
+	
+		    
+<!--      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/gps_button_puzzle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="@string/gps_view_name" />
+        
+    </RelativeLayout> -->
 </LinearLayout>

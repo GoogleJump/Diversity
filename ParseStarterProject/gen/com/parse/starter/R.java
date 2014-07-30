@@ -576,8 +576,8 @@ containing a value of this type.
         public static final int about=0x7f060016;
         public static final int about_button_mm=0x7f06004a;
         public static final int action_button=0x7f06001c;
-        public static final int anagramInput=0x7f060026;
-        public static final int anagramSubmit=0x7f060027;
+        public static final int anagramInput=0x7f060028;
+        public static final int anagramSubmit=0x7f060029;
         public static final int book_now=0x7f060010;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
@@ -592,7 +592,7 @@ containing a value of this type.
         public static final int claim_materials_button=0x7f06003f;
         public static final int classic=0x7f060011;
         public static final int dcgpagecurlPageCurlView1=0x7f060034;
-        public static final int gps_button_puzzle=0x7f060029;
+        public static final int gps_button_puzzle=0x7f060026;
         public static final int grandma_picture=0x7f06002e;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
@@ -619,7 +619,7 @@ containing a value of this type.
         public static final int match_parent=0x7f06000c;
         public static final int monochrome=0x7f060013;
         public static final int name=0x7f060042;
-        public static final int new_puzzle_puz=0x7f060028;
+        public static final int new_puzzle_puz=0x7f060025;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int pager=0x7f060052;
@@ -630,7 +630,7 @@ containing a value of this type.
         public static final int production=0x7f060007;
         public static final int progressBarPickCharacter=0x7f060053;
         public static final int puzzle_button=0x7f06003d;
-        public static final int question=0x7f060025;
+        public static final int question=0x7f060027;
         public static final int randomize_button=0x7f06003e;
         public static final int restart_button_set=0x7f06004b;
         public static final int sandbox=0x7f060008;
