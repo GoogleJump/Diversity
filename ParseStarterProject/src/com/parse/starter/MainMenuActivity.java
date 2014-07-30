@@ -1,6 +1,3 @@
-// MAKE SURE TO UPDATE onClick in the addListenerOnStartContinueButton once
-// everything is merged
-
 package com.parse.starter;
 
 import android.content.Intent;
