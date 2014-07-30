@@ -1,111 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
     android:background="@drawable/blankbackground"
-    android:gravity="center">
+    android:orientation="vertical" >
 
-        
+    <Button
+        android:id="@+id/main_menu_button_puzzle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/home_button_custom" />
+
     <TextView
         style="@style/GameFont.Big"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/no_more_puzzles" 
-             android:gravity="center"
-             android:layout_marginTop="140dp"/>
- 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
- 
-        <Button android:id="@+id/main_menu_button_puzzle"
-         android:layout_width="50dp"
-         android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-         android:background="@drawable/home_button_custom" />
-        
-        <Button
-            android:id="@+id/gps_button_puzzle"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/map_button_custom"/>
-        
-        <Button android:background="@drawable/puzzle_button_custom"
-             android:id="@+id/new_puzzle_puz"
-             android:layout_width="50dp"
-             android:layout_height="50dp"
-             
-            android:layout_marginTop="16dp"/>
-        
-    </LinearLayout>
-    
-   
-</LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:text="@string/no_more_puzzles" />
 
-<!-- <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/blankbackground">
-    
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal" >
-        
-        <Button android:id="@+id/main_menu_button_puzzle"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/main_menu" />
-        
-        <RelativeLayout
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-         <ImageButton android:background="@null"
-             android:contentDescription="@string/puz_desc"
-             android:id="@+id/new_puzzle_puz"
-             android:layout_width="wrap_content"
-             android:layout_height="fill_parent"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:padding="10dip"
-             android:scaleType="fitXY"
-             android:src="@drawable/puzzle_piece"
-             android:adjustViewBounds="true"/>
-         
-        </RelativeLayout>
-       
-     </LinearLayout>
-        
-    <TextView
-        style="@style/BiggerFont"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/no_more_puzzles" 
-             android:layout_gravity="center"/>
- 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
- 
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <Button
+            android:id="@+id/new_puzzle_puz"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/puzzle_button_custom"
+            android:padding="8dp" />
+
         <Button
             android:id="@+id/gps_button_puzzle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/gps_view_name" />
-        
-    </RelativeLayout>
-    
-   
-</LinearLayout> -->
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/map_button_custom"
+            android:padding="8dp" />
+    </LinearLayout>
+
+</RelativeLayout>
