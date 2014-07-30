@@ -3,31 +3,27 @@
     android:id="@+id/character_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
-    android:background="@drawable/blankbackground"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:gravity="center">
 
     <TextView
+        style="@style/GameFont.Big"
         android:id="@+id/choose_character"
-        style="@style/GameFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="50dp"
-        android:text="@string/choose_a_character" />
+        android:text="@string/choose_a_character"/>
 
     <ImageButton
         android:id="@+id/surfer_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="center"
         android:src="@drawable/surfer" />
 
     <TextView
+        style="@style/GameFont.Big"
         android:id="@+id/character_name"
-        style="@style/GameFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp"
-        android:text="Surfer" />
+        android:text="Surfer"/>
 
 </LinearLayout>

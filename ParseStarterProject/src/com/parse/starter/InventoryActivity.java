@@ -40,13 +40,14 @@ public class InventoryActivity extends BaseActivity {
 
 		// a hack to extend the picture out so it doesn't look warpy
 		Drawable bg = tView.getBackground();
-		if (bg != null) {
+		/*if (bg != null) {
 			if (bg instanceof BitmapDrawable) {
 				BitmapDrawable bmp = (BitmapDrawable) bg;
 				bmp.mutate();
 				bmp.setTileModeXY(null, TileMode.REPEAT);
 			}
-		}
+		} 
+		*/
 
 		// get current user's list of collected characters to display
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
