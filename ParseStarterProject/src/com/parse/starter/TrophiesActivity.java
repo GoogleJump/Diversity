@@ -63,7 +63,7 @@ public class TrophiesActivity extends BaseActivity {
 					if (itemsPlaced < numItems) {
 						currentItem = new ImageView(this);
 						int id = this.getResources().getIdentifier(
-								itemsCollected.get(itemsPlaced), "drawable",
+								itemsCollected.get(itemsPlaced).replace(" ","_"), "drawable",
 								"com.parse.starter");
 						currentItem.setImageResource(id);
 						currentRow.addView(currentItem);
