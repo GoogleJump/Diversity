@@ -598,7 +598,6 @@ containing a value of this type.
         public static final int holo_dark=0x7f060005;
         public static final int holo_light=0x7f060006;
         public static final int hybrid=0x7f060004;
-        public static final int imageView2=0x7f06004e;
         public static final int inventory_button_mm=0x7f060038;
         public static final int inventory_list=0x7f060033;
         public static final int locate_materials_button=0x7f060040;
@@ -612,7 +611,7 @@ containing a value of this type.
         public static final int main_menu_button_photos=0x7f060043;
         public static final int main_menu_button_puzzle=0x7f060024;
         public static final int main_menu_button_set=0x7f060049;
-        public static final int main_menu_button_trophies=0x7f06004f;
+        public static final int main_menu_button_trophies=0x7f06004e;
         public static final int main_menu_pick_character=0x7f060017;
         public static final int map=0x7f06003c;
         public static final int map_linear_layout_parent=0x7f06003a;
@@ -622,13 +621,13 @@ containing a value of this type.
         public static final int new_puzzle_puz=0x7f060025;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
-        public static final int pager=0x7f060052;
-        public static final int pager_view=0x7f060051;
+        public static final int pager=0x7f060051;
+        public static final int pager_view=0x7f060050;
         public static final int password=0x7f06001a;
         public static final int passwordAgain=0x7f060023;
         public static final int photos_button_mm=0x7f060037;
         public static final int production=0x7f060007;
-        public static final int progressBarPickCharacter=0x7f060053;
+        public static final int progressBarPickCharacter=0x7f060052;
         public static final int puzzle_button=0x7f06003d;
         public static final int question=0x7f060027;
         public static final int randomize_button=0x7f06003e;
@@ -651,7 +650,7 @@ containing a value of this type.
         public static final int textView2=0x7f060021;
         public static final int textView3=0x7f06001d;
         public static final int trophies_button_mm=0x7f060036;
-        public static final int trophies_list=0x7f060050;
+        public static final int trophies_list=0x7f06004f;
         public static final int username=0x7f060019;
         public static final int vertical=0x7f060030;
         public static final int wrap_content=0x7f06000d;
