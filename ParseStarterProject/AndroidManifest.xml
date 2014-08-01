@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="5"
         android:targetSdkVersion="15" />
 
     <permission
@@ -43,37 +43,60 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.parse.starter.ParseStarterProjectActivity" >
+        <activity
+            android:name="com.parse.starter.ParseStarterProjectActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
         <activity
             android:name="com.parse.starter.LoginActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Background" >
         </activity>
         <activity
             android:name="com.parse.starter.SignUpActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Background" >
         </activity>
         <activity
             android:name="com.parse.starter.SignUpOrLogInActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".PuzzleActivity" >
+        <activity
+            android:name=".PuzzleActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".MainMenuActivity" >
+        <activity
+            android:name=".MainMenuActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".TrophiesActivity" >
+        <activity
+            android:name=".TrophiesActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".PhotosActivity" >
+        <activity
+            android:name=".PhotosActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".MapActivity" >
+        <activity
+            android:name=".MapActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".InventoryActivity" >
+        <activity
+            android:name=".InventoryActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".SettingsActivity" >
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".AboutActivity" >
+        <activity
+            android:name=".AboutActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
-        <activity android:name=".PickCharacterActivity" >
+        <activity
+            android:name=".PickCharacterActivity"
+            android:theme="@style/Theme.Background" >
         </activity>
 
         <meta-data

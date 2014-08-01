@@ -69,10 +69,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap = new ConcurrentHashMap<Material, MaterialMapInfo>();
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		if (locationClient == null) {
 			locationClient = new LocationClient(this, this, this);
 		}
