@@ -381,11 +381,17 @@ public class PuzzleActivity extends BaseActivity {
 
 		userInfo.saveEventually();
 		
-        final Dialog myDialog = new Dialog(activity);
+        final Dialog myDialog = new Dialog(activity);     
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
-        myDialog.setTitle(title);
+
+//        myDialog.setTitle(title);
         myDialog.setCancelable(false);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#FF000000")));
+//        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#590000")));
+
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+//      text.setMovementMethod(ScrollingMovementMethod.getInstance());
+        dialog_title.setText(title);
 
         TextView text = (TextView) myDialog.findViewById(R.id.message);
 //        text.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -412,14 +418,20 @@ public class PuzzleActivity extends BaseActivity {
 	private void showIncorrectDialog(String title, String message, final Context activity) {
 
         final Dialog myDialog = new Dialog(activity);
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
-        myDialog.setTitle(title);
-        myDialog.setCancelable(false);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#FF000000")));
 
-        TextView text = (TextView) myDialog.findViewById(R.id.message);
+//        myDialog.setTitle(title);
+        myDialog.setCancelable(false);
+//        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#590000")));
+
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+//      text.setMovementMethod(ScrollingMovementMethod.getInstance());
+        dialog_title.setText(title);
+        
+        TextView dialog_text = (TextView) myDialog.findViewById(R.id.message);
 //        text.setMovementMethod(ScrollingMovementMethod.getInstance());
-        text.setText(message);
+        dialog_text.setText(message);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
         yes.setText("Okay");
