@@ -49,7 +49,6 @@ public class BaseActivity extends Activity {
 						});
 		// create alert dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
-
 		// show it
 		alertDialog.show();
 	}

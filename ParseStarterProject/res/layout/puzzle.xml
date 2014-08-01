@@ -89,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:gravity="center" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -108,106 +107,6 @@
             android:background="@drawable/submit_textbutton_custom"
             android:paddingLeft="32dp"
             android:paddingRight="32dp" />
-
     </LinearLayout>
 
 </LinearLayout>
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/background2">
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal" >
-        
-        <Button android:id="@+id/main_menu_button_puzzle"
-        	android:layout_width="50dp"
-        	android:layout_height="50dp"
-        	android:background="@drawable/home_button" />
-        
-        <RelativeLayout
-        	android:layout_width="match_parent"
-        	android:layout_height="match_parent">
-        	<ImageButton android:background="@null"
-        	    android:contentDescription="@string/puz_desc"
-        	    android:id="@+id/new_puzzle_puz"
-        	    android:layout_width="wrap_content"
-        	    android:layout_height="fill_parent"
-        	    android:layout_alignParentRight="true"
-        	    android:layout_alignParentTop="true"
-        	    android:padding="10dip"
-        	    android:scaleType="fitXY"
-        	    android:src="@drawable/puzzle_button"
-        	    android:adjustViewBounds="true"/>
-        	
-        </RelativeLayout>
-       
-     </LinearLayout>
-        
-    <TextView
-        style="@style/BiggerFont"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/puzzle_view_name" 
-	    android:layout_gravity="center"/>
-
-    <TextView android:id="@+id/question"
-        android:layout_marginTop="5sp"
-      	android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
-    
-    <CheckBox 
-		    android:id="@+id/chkanswer_1"
-		    android:layout_width = "wrap_content"
-	    	android:layout_height = "wrap_content"/>
-    
-    <CheckBox 
-		    android:id="@+id/chkanswer_2"
-		    android:layout_width = "wrap_content"
-	    	android:layout_height = "wrap_content"/>
-    
-    <CheckBox 
-		    android:id="@+id/chkanswer_3"
-		    android:layout_width = "wrap_content"
-	    	android:layout_height = "wrap_content"/>
-    
-    <CheckBox 
-		    android:id="@+id/chkanswer_4"
-		    android:layout_width = "wrap_content"
-	    	android:layout_height = "wrap_content"/>
-    <Button 
-            android:id="@+id/submit_button_puzzle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:text="@string/submit" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/gps_button_puzzle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/gps_view_name" />
-        
-    </RelativeLayout>
-    
-   
-</LinearLayout>
--->
