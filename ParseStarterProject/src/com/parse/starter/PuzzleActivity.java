@@ -16,6 +16,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.content.Context;
+import android.app.Dialog;
+
+import android.view.LayoutInflater;
+import android.graphics.drawable.ColorDrawable;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -43,6 +48,7 @@ public class PuzzleActivity extends BaseActivity {
 	private Button mapButton;
 	private Button shuffleButton;
 	private UserInfo userInfo;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -297,9 +303,9 @@ public class PuzzleActivity extends BaseActivity {
 					}
 				}
 				if (showCorrect) {
-					showCorrectDialog();
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n",context);
 				} else {
-					showIncorrectDialog();
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n",context);
 				}
 			}
 		});
@@ -318,9 +324,11 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					showCorrectDialog();
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n",context);
 				} else {
-					showIncorrectDialog();
+	//				showIncorrectDialog();
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n",context);
+
 				}
 			}
 		});
@@ -329,6 +337,7 @@ public class PuzzleActivity extends BaseActivity {
 	/**
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */
+	/*
 	private void showCorrectDialog() {
 		String currentMaterial = userInfo.getCurrentMaterial();
 		userInfo.addMaterialSolved(currentMaterial);
@@ -362,16 +371,97 @@ public class PuzzleActivity extends BaseActivity {
 		// show it
 		alertDialog.show();
 	}
+	*/
+		
+	private void showCorrectDialog(String title, String message, final Context activity) {
+
+		String currentMaterial = userInfo.getCurrentMaterial();
+		userInfo.addMaterialSolved(currentMaterial);
+		userInfo.setCurrentMaterial("");
+		userInfo.getNewMaterialShuffleStyle();
+
+		userInfo.saveEventually();
+		
+        final Dialog myDialog = new Dialog(activity);
+        myDialog.setContentView(R.layout.one_button_dialog);
+        myDialog.setTitle(title);
+        myDialog.setCancelable(false);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        TextView text = (TextView) myDialog.findViewById(R.id.message);
+//        text.setMovementMethod(ScrollingMovementMethod.getInstance());
+        text.setText(message);
+
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Okay");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+				PuzzleActivity.this.finish();
+				startActivity(new Intent(PuzzleActivity.this,
+						MapActivity.class));		
+            }
+        });
+
+        myDialog.show();
+
+    }
+	
+	/**
+	 * Displays the incorrect Dialog, which leaves user on same page
+	 */
+	private void showIncorrectDialog(String title, String message, final Context activity) {
+
+        final Dialog myDialog = new Dialog(activity);
+        myDialog.setContentView(R.layout.one_button_dialog);
+        myDialog.setTitle(title);
+        myDialog.setCancelable(false);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        TextView text = (TextView) myDialog.findViewById(R.id.message);
+//        text.setMovementMethod(ScrollingMovementMethod.getInstance());
+        text.setText(message);
+
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Okay");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.show();
+
+    }
 
 	/**
 	 * Displays the incorrect Dialog, which leaves user on same page
 	 */
+	/*
 	private void showIncorrectDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this,R.style.alertdialog);
 
 		// set title
 		alertDialogBuilder.setTitle("Try again");
+		
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View dialogview = inflater.inflate(R.layout.surfer_dialog, null);
+		
+		alertDialogBuilder.setView(dialogview);
+		
+		TextView text = (TextView) dialogview.findViewById(R.id.message);
+        text.setText("Sorry, you did not solve the puzzle correctly. Try again.");
+        text.setBackgroundResource(R.drawable.background);
+		
+		alertDialogBuilder
+		.setPositiveButton("Okay",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
 
+		
 		// set dialog message
 		alertDialogBuilder
 				.setMessage(
@@ -382,11 +472,15 @@ public class PuzzleActivity extends BaseActivity {
 							public void onClick(DialogInterface dialog, int id) {
 							}
 						});
+		
 
 		// create alert dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
 		// show it
 		alertDialog.show();
+		dialogview.setBackgroundResource(android.graphics.Color.TRANSPARENT);
+//		alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 	}
+	*/
 }
