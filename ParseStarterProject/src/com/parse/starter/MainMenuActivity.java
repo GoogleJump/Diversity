@@ -1,6 +1,3 @@
-// MAKE SURE TO UPDATE onClick in the addListenerOnStartContinueButton once
-// everything is merged
-
 package com.parse.starter;
 
 import android.content.Intent;
@@ -25,7 +22,7 @@ public class MainMenuActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.mainmenu);
 		setTitle(R.string.main_menu);
 

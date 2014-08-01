@@ -15,6 +15,7 @@ public class ParseStarterProjectActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		if (ParseUser.getCurrentUser() != null) {
 			ParseStarterProjectActivity.this.finish();
 			startActivity(new Intent(ParseStarterProjectActivity.this,

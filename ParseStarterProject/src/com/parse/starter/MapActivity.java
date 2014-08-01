@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,10 +69,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap = new ConcurrentHashMap<Material, MaterialMapInfo>();
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		if (locationClient == null) {
 			locationClient = new LocationClient(this, this, this);
 		}
@@ -267,7 +266,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 */
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
-			showFoundDialog("You found a " + name);
+			showFoundDialog("You found a ", name);
 
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
@@ -283,7 +282,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
-			showFoundDialog("You just made a " + name);
+			showFoundDialog("You just made a ", name);
 
 			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
@@ -307,7 +306,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	}
 
-	private void showFoundDialog(String msg) {
+	private void showFoundDialog(String msg, String materialOrItem) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -315,7 +314,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage(msg)
+				.setMessage(msg + materialOrItem)
 				.setCancelable(false)
 				.setPositiveButton("Yay!",
 						new DialogInterface.OnClickListener() {
@@ -324,7 +323,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 						});
 		ImageView image = new ImageView(this);
 		// set image here
-		image.setImageResource(R.drawable.map);
+		image.setImageResource(getResources().getIdentifier(materialOrItem, "drawable", getPackageName()));
 
 		alertDialogBuilder.setView(image);
 

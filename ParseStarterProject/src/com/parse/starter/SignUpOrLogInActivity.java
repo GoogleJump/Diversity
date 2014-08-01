@@ -15,7 +15,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_up_or_log_in);
-
+    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     // Log in button click handler
     ((Button) findViewById(R.id.logInButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {

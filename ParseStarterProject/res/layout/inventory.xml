@@ -28,26 +28,24 @@
 
     </LinearLayout>
 	
-        
-       
-          
             <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:fillViewport="true"
-            android:layout_margin="40dp"
-             >
+                android:id="@+id/scrollView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:layout_margin="40dp"
+           android:orientation="vertical"
+                android:fillViewport="true" >
         
           <TableLayout
               android:id="@+id/inventory_list"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+              
+                android:layout_gravity="center"
               android:adjustViewBounds="true"
-              android:background="@drawable/paperrepeat"
-              android:scaleType="fitCenter"> 
-              
-              
+              android:background="@drawable/paper_custom"
+              android:scaleType="centerCrop" >
 
           </TableLayout>
 		
