@@ -59,7 +59,8 @@
 	<string name="dialog_no">No</string>
 	<string name="character_dialog_surfer">Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers\' belongings all over the place. Help the dudes and dudets out.</string>
 
-	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n</string>
-	<string name="artwork"><b>Artwork</b>Ksenia Bukina\nCarolyn Chen\nJamie Forbes\n</string>
-	<string name="team_lead"><b>Mentor</b>\nKsenia Bukina\n</string>
+	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n Ksenia Bukina\n</string>
+	<string name="artwork"><b>Artwork</b>Carolyn Chen\nJamie Forbes\n</string>
+	<string name="team_lead"><b>Team Lead</b>\nKsenia Bukina\n</string>
+
 </resources>

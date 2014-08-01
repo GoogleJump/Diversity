@@ -385,7 +385,7 @@ public class PuzzleActivity extends BaseActivity {
         myDialog.setContentView(R.layout.one_button_dialog);
         myDialog.setTitle(title);
         myDialog.setCancelable(false);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#FF000000")));
 
         TextView text = (TextView) myDialog.findViewById(R.id.message);
 //        text.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -415,7 +415,7 @@ public class PuzzleActivity extends BaseActivity {
         myDialog.setContentView(R.layout.one_button_dialog);
         myDialog.setTitle(title);
         myDialog.setCancelable(false);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#FF000000")));
 
         TextView text = (TextView) myDialog.findViewById(R.id.message);
 //        text.setMovementMethod(ScrollingMovementMethod.getInstance());
