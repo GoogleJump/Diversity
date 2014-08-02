@@ -2,27 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
-	<classpathentry kind="lib" path="/Users/kseniab/GoogleJump:Diversity/google-play-services_lib/libs/google-play-services.jar"/>
 	<classpathentry kind="lib" path="/Users/kseniab/GoogleJump:Diversity/gson-2.2.4.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/platforms/android-18/android.jar" sourcepath="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/sources/android-18">
-		<attributes>
-			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/platforms/android-19/android.jar" sourcepath="/Users/kseniab/Downloads/adt-bundle-mac-x86_64-20140702/sdk/sources/android-19">
+	<classpathentry kind="lib" path="/Users/kseniab/GoogleJump:Diversity/ParseStarterProject/libs/Parse-1.5.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
+			<attribute name="javadoc_location" value="file:/Users/kseniab/GoogleJump:Diversity/ParseStarterProject/libs/Parse-1.5.1-javadoc/"/>
 		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
 	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
