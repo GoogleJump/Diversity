@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Context;
 
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
@@ -19,7 +18,6 @@ public class SignUpActivity extends BaseActivity {
 	private EditText usernameView;
 	private EditText passwordView;
 	private EditText passwordAgainView;
-	private Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,7 @@ public class SignUpActivity extends BaseActivity {
 				new View.OnClickListener() {
 					public void onClick(View view) {
 						if (!isOnline()) {
-							showWarningDialog(R.string.no_internet_connection, context);
+							showWarningDialog(R.string.no_internet_connection);
 						} else {
 
 							// Validate the sign up data

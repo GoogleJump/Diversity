@@ -18,8 +18,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -28,7 +27,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 
@@ -201,7 +202,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
-			showWarningDialog(R.string.no_located_materials, context);
+			showWarningDialog(R.string.no_located_materials);
 			return;
 		}
 
@@ -234,7 +235,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					materialsOnTheMap.remove(material);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
-					showWarningDialog(R.string.no_nearby_materials, context);
+					showWarningDialog(R.string.no_nearby_materials);
 				}
 			}
 		}
@@ -307,35 +308,36 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		// need background update
 
 	}
+	
+	private void showFoundDialog(String message, String materialOrItem) {
 
-	private void showFoundDialog(String msg, String materialOrItem) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final Dialog myDialog = new Dialog(context);
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.one_button_image_dialog);
+        myDialog.setCancelable(false);
 
-		// set title
-		alertDialogBuilder.setTitle("Congrats!");
-
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(msg + materialOrItem)
-				.setCancelable(false)
-				.setPositiveButton("Yay!",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-		ImageView image = new ImageView(this);
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText("Congrats!");
+        
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message + materialOrItem);
+        
+		ImageView image = (ImageView) myDialog.findViewById(R.id.collected);
 		// set image here
 		image.setImageResource(getResources().getIdentifier(materialOrItem, "drawable", getPackageName()));
 
-		alertDialogBuilder.setView(image);
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Yay!");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
 
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
+        myDialog.show();
 
-		// show it
-		alertDialog.show();
-
-	}
+    }
 
 	private void locateMaterials() {
 		// get current location
@@ -344,7 +346,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
-			showWarningDialog(R.string.no_solved_materials, context);
+			showWarningDialog(R.string.no_solved_materials);
 			return;
 		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);

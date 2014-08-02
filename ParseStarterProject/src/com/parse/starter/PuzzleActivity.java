@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -302,9 +300,9 @@ public class PuzzleActivity extends BaseActivity {
 					}
 				}
 				if (showCorrect) {
-					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n",context);
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n");
 				} else {
-					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n",context);
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n");
 				}
 			}
 		});
@@ -323,10 +321,10 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n",context);
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n");
 				} else {
 	//				showIncorrectDialog();
-					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n",context);
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n");
 
 				}
 			}
@@ -336,7 +334,7 @@ public class PuzzleActivity extends BaseActivity {
 	/**
 	 * Displays the correct dialog, which takes user to the MapActivity
 	 */	
-	private void showCorrectDialog(String title, String message, final Context activity) {
+	private void showCorrectDialog(String title, String message) {
 
 		String currentMaterial = userInfo.getCurrentMaterial();
 		userInfo.addMaterialSolved(currentMaterial);
@@ -345,7 +343,7 @@ public class PuzzleActivity extends BaseActivity {
 
 		userInfo.saveEventually();
 		
-        final Dialog myDialog = new Dialog(activity);     
+        final Dialog myDialog = new Dialog(context);     
         myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
         myDialog.setCancelable(false);
@@ -361,6 +359,7 @@ public class PuzzleActivity extends BaseActivity {
         
         yes.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
+            	myDialog.dismiss();
 				PuzzleActivity.this.finish();
 				startActivity(new Intent(PuzzleActivity.this,
 						MapActivity.class));		
@@ -374,9 +373,9 @@ public class PuzzleActivity extends BaseActivity {
 	/**
 	 * Displays the incorrect Dialog, which leaves user on same page
 	 */
-	private void showIncorrectDialog(String title, String message, final Context activity) {
+	private void showIncorrectDialog(String title, String message) {
 
-        final Dialog myDialog = new Dialog(activity);
+        final Dialog myDialog = new Dialog(context);
         myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
         myDialog.setCancelable(false);

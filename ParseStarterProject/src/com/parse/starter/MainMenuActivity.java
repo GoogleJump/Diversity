@@ -59,7 +59,7 @@ public class MainMenuActivity extends BaseActivity {
 					MainMenuActivity.this.finish();
 					startActivity(i);
 				} else {
-					showWarningDialog(R.string.no_internet_connection, context);
+					showWarningDialog(R.string.no_internet_connection);
 				}
 
 			}
@@ -79,7 +79,7 @@ public class MainMenuActivity extends BaseActivity {
 					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection, context);
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -100,7 +100,7 @@ public class MainMenuActivity extends BaseActivity {
 					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection, context);
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -121,7 +121,7 @@ public class MainMenuActivity extends BaseActivity {
 					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection, context);
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});
@@ -142,7 +142,7 @@ public class MainMenuActivity extends BaseActivity {
 					MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection, context);
+					showWarningDialog(R.string.no_internet_connection);
 				}
 			}
 		});

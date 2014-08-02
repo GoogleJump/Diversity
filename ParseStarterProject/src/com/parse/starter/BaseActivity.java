@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class BaseActivity extends Activity {
+	
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +39,9 @@ public class BaseActivity extends Activity {
 		return false;
 	}
 
-	public void showWarningDialog(int message, final Context activity) {
+	public void showWarningDialog(int message) {
 
-        final Dialog myDialog = new Dialog(activity);
+        final Dialog myDialog = new Dialog(context);
         myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
         myDialog.setCancelable(false);
