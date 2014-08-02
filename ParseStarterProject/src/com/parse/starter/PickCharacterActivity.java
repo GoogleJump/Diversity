@@ -93,31 +93,44 @@ public class PickCharacterActivity extends BaseActivity {
 			int resId = 0;
 			switch (position) {
 			case 0: // surfer
+				final String description = "Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
+						+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
+						+ "Help the dudes and dudettes out.";
+				
+				final String done = "Hey dude, thanks for helping a fellow dude out. I'm all good. Help the other dudes and dudettes in my family.";
+				
 				resId = R.layout.surfer;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.surfer_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-
+						
+						// Indicating if surfer is completed
+						String surferMessage = description;
+						if (userInfo.getCharactersCollected().contains("Surfer")) {
+							surferMessage = done;
+						}
+						
 						// new popup
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 								context);
 
 						alertDialogBuilder
-								.setMessage(
-										"Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
-												+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
-												+ "Help the dudes and dudets out.")
+								.setMessage(surferMessage)
 								.setCancelable(false)
 								.setPositiveButton("Yes",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
 													int id) {
+												if (userInfo.getCharactersCollected().contains("Surfer")) {
+													dialog.cancel();
+												} else {
 												new SaveCharacterTask()
 														.execute("Surfer");
 												progressBar.setVisibility(View.VISIBLE);
+												}
 											}
 										})
 								.setNegativeButton("No",
@@ -135,29 +148,40 @@ public class PickCharacterActivity extends BaseActivity {
 				break;
 
 			case 1: // grandma
+				final String description2 = "Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
+						+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
+						+ "did I put the sweater I knit you? Can you help me out, deary?";
+				final String done2 = "Oh hello, deary. Thanks for helping me, but I don't need your help anymore. Please, go help the rest of my family.";
 				resId = R.layout.grandma;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
+						// Indicating if surfer is completed
+						String grandmaMessage = description2;
+						if (userInfo.getCharactersCollected().contains("Grandma")) {
+							grandmaMessage = done2;
+						}
+						
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 								context);
 
 						alertDialogBuilder
-								.setMessage(
-										"Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
-												+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
-												+ "did I put the sweater I knit you? Can you help me out, deary?")
+								.setMessage(grandmaMessage)
 								.setCancelable(false)
 								.setPositiveButton("Yes",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
 													int id) {
+												if (userInfo.getCharactersCollected().contains("Grandma")) {
+													dialog.cancel();
+												} else {
 												new SaveCharacterTask()
 														.execute("Grandma");
 												progressBar.setVisibility(View.VISIBLE);
+												}
 											}
 										})
 								.setNegativeButton("No",

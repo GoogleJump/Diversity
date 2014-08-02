@@ -114,8 +114,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		addMapActionListeners();
 	}
 
-
-
 	@SuppressLint("NewApi")
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the
@@ -166,16 +164,18 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					@Override
 					public void onClick(View v) {
 						// remove all the existing markers
-						// This might not be necessary if the map will be re-rendered
-						synchronized (materialsOnTheMap)  {
-							for (MaterialMapInfo materialInfo : materialsOnTheMap.values()) {
+						// This might not be necessary if the map will be
+						// re-rendered
+						synchronized (materialsOnTheMap) {
+							for (MaterialMapInfo materialInfo : materialsOnTheMap
+									.values()) {
 								if (materialInfo.marker != null) {
 									materialInfo.marker.remove();
 								}
 							}
 							materialsOnTheMap.clear();
-							}
-							locateMaterials();
+						}
+						locateMaterials();
 					}
 				});
 
@@ -266,7 +266,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 */
 	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
 		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
-			showFoundDialog("You found a ", name);
+			showFoundDialog("You found a ", name, false);
 
 			List<String> materialsSolved = userInfo.getMaterialsSolved();
 			materialsSolved.remove(name);
@@ -282,7 +282,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
-			showFoundDialog("You just made a ", name);
+			showFoundDialog("You just made a ", name, false);
 
 			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
@@ -290,8 +290,19 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<String> itemsCollected = userInfo.getItemsCollected();
 			itemsCollected.add(name);
 			userInfo.getNewItem();
-			
-			userInfo.setMaterialsCollected(Collections.<String>emptyList());
+
+			// indicates that the Character has been completed
+			if (userInfo.getCurrentItem().equals("FINISHED")) {
+				String completedChar = userInfo.getCurrentCharacter();
+				
+				// updating userInfo
+				userInfo.addCharacterCollected(completedChar);
+				userInfo.setCurrentCharacter("");
+				showFoundDialog("You just found all items for ", completedChar,
+						true);
+			}
+
+			userInfo.setMaterialsCollected(Collections.<String> emptyList());
 
 			userInfo.saveEventually(new SaveCallback() {
 				public void done(ParseException e) {
@@ -306,7 +317,19 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	}
 
-	private void showFoundDialog(String msg, String materialOrItem) {
+	/**
+	 * Found dialog that pops up when a material/item/character is found
+	 * 
+	 * @param msg
+	 *            String message to appear in the found dialog
+	 * @param materialOrItemOrChar
+	 *            String name of the material/item/character found dialog is for
+	 * @param isChar
+	 *            boolean that is true if dialog indicates completed character
+	 *            false otherwise
+	 */
+	private void showFoundDialog(String msg, String materialOrItemOrChar,
+			final boolean isChar) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
@@ -314,16 +337,26 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		// set dialog message
 		alertDialogBuilder
-				.setMessage(msg + materialOrItem)
+				.setMessage(msg + materialOrItemOrChar)
 				.setCancelable(false)
 				.setPositiveButton("Yay!",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								if (isChar) {
+									MapActivity.this.finish();
+									startActivity(new Intent(MapActivity.this,
+											MainMenuActivity.class));
+								}
 							}
 						});
 		ImageView image = new ImageView(this);
+
+		// name of the image to add
+		String imageName = materialOrItemOrChar.toLowerCase().replace(' ', '_');
+
 		// set image here
-		image.setImageResource(getResources().getIdentifier(materialOrItem, "drawable", getPackageName()));
+		image.setImageResource(getResources().getIdentifier(imageName,
+				"drawable", getPackageName()));
 
 		alertDialogBuilder.setView(image);
 
@@ -363,8 +396,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			populateMaterialLocations();
 
 			for (Material material : materialsOnTheMap.keySet()) {
-				// TODO(kseniab): pass by value? 
-				ArrayList<String> searchTerms = new ArrayList<String>(material.getSearchTerms());
+				// TODO(kseniab): pass by value?
+				ArrayList<String> searchTerms = new ArrayList<String>(
+						material.getSearchTerms());
 				Collections.shuffle(searchTerms);
 				for (String searchTerm : searchTerms) { /**/
 					String request = PLACES_URL + "&location="
