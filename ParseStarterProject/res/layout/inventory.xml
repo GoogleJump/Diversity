@@ -26,32 +26,23 @@
             android:layout_gravity="center"
             android:text="@string/inventory_view_name" />
 
-    </LinearLayout>
-	
-            <ScrollView
-                android:id="@+id/scrollView1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="fill_vertical"
-                android:layout_margin="40dp"
-           android:orientation="vertical"
-                android:fillViewport="true" >
-        
-          <TableLayout
-              android:id="@+id/inventory_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-              
-                android:layout_gravity="center"
-              android:adjustViewBounds="true"
-              android:background="@drawable/paper_custom"
-              android:scaleType="centerCrop" >
+    </LinearLayout><ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        android:layout_margin="40dp"
+        android:fillViewport="true"
+        android:orientation="vertical" >
 
-          </TableLayout>
-		
-          
-
-        </ScrollView>
-
-   
+        <TableLayout
+            android:id="@+id/inventory_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/paper_custom"
+            android:scaleType="centerCrop" >
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>

@@ -1,12 +1,13 @@
 package com.parse.starter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.content.Context;
 
 import com.parse.ParseUser;
 
@@ -23,6 +24,7 @@ public class SettingsActivity extends BaseActivity {
 	private Button restart;
 	private Button logout;
 	private Button about;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,85 +100,99 @@ public class SettingsActivity extends BaseActivity {
 	/**
 	 * Displays the restart dialog, which has a yes button to restart the game
 	 * for the user, and a no button that returns to the settings view
-	 */
+	 */	
 	private void showRestartDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-		// set title
-		alertDialogBuilder.setTitle("Restart");
+        final Dialog myDialog = new Dialog(context);     
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.two_button_dialog);
+        myDialog.setCancelable(false);
 
-		// set dialog message
-		alertDialogBuilder
-				.setMessage("Are you sure you would like to restart?");
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText("Restart");
 
-		alertDialogBuilder.setPositiveButton("Yes",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
-						userInfo.restart();
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText("Are you sure you would like to restart?\nYou would lose all your collected materials and items.");
 
-						// Start and intent for the dispatch activity
-						Intent intent = new Intent(SettingsActivity.this,
-								MainMenuActivity.class);
-						SettingsActivity.this.finish();
-						startActivity(intent);
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Yes");
+        
+        Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+        no.setText("No");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	myDialog.dismiss();
+				UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
+				userInfo.restart();
 
-					}
-				});
+				// Start and intent for the dispatch activity
+				Intent intent = new Intent(SettingsActivity.this,
+						MainMenuActivity.class);
+				SettingsActivity.this.finish();
+				startActivity(intent);
+		
+            }
+        });
+        
+        no.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
 
-		alertDialogBuilder.setNegativeButton("No",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-					}
-				});
+        myDialog.show();
 
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-	}
+    }
+	
 
 	/**
 	 * Displays the logout dialog, which has a yes button to logout the game for
 	 * the user, and a no button that returns to the settings view
 	 */
 	private void showLogoutDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-		// set title
-		alertDialogBuilder.setTitle("Logout");
+        final Dialog myDialog = new Dialog(context);     
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.two_button_dialog);
+        myDialog.setCancelable(false);
 
-		// set dialog message
-		alertDialogBuilder.setMessage("Are you sure you would like to logout?");
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText("Logout");
 
-		alertDialogBuilder.setPositiveButton("Yes",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						// Call the Parse log out method
-						ParseUser.logOut();
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText("Are you sure you would like to logout?");
 
-						// Start and intent for the dispatch activity
-						Intent intent = new Intent(SettingsActivity.this,
-								SignUpOrLogInActivity.class);
-						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-								| Intent.FLAG_ACTIVITY_NEW_TASK);
-						SettingsActivity.this.finish();
-						startActivity(intent);
-					}
-				});
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Yes");
+        
+        Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+        no.setText("No");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	myDialog.dismiss();
+				// Call the Parse log out method
+				ParseUser.logOut();
 
-		alertDialogBuilder.setNegativeButton("No",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-					}
-				});
+				// Start and intent for the dispatch activity
+				Intent intent = new Intent(SettingsActivity.this,
+						SignUpOrLogInActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				SettingsActivity.this.finish();
+				startActivity(intent);
+            }
+        });
+        
+        no.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
 
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
+        myDialog.show();
 
-		// show it
-		alertDialog.show();
-	}
+    }
 
 }
