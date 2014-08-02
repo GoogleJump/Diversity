@@ -9,7 +9,7 @@
 
     <Button
 
-        android:id="@+id/main_menu_button_inventory"
+        android:id="@+id/main_menu_button_puzzle"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/home_button_custom"
