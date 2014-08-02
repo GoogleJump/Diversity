@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.content.Context;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -66,6 +67,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private UserInfo userInfo;
 	private GoogleMap map;
 	private LocationClient locationClient;
+	private Context context = this;
 
 	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap = new ConcurrentHashMap<Material, MaterialMapInfo>();
 
@@ -199,7 +201,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
-			showWarningDialog(R.string.no_located_materials);
+			showWarningDialog(R.string.no_located_materials, context);
 			return;
 		}
 
@@ -232,7 +234,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					materialsOnTheMap.remove(material);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
-					showWarningDialog(R.string.no_nearby_materials);
+					showWarningDialog(R.string.no_nearby_materials, context);
 				}
 			}
 		}
@@ -342,7 +344,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
-			showWarningDialog(R.string.no_solved_materials);
+			showWarningDialog(R.string.no_solved_materials, context);
 			return;
 		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);

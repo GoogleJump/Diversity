@@ -332,46 +332,10 @@ public class PuzzleActivity extends BaseActivity {
 			}
 		});
 	}
-
+	
 	/**
 	 * Displays the correct dialog, which takes user to the MapActivity
-	 */
-	/*
-	private void showCorrectDialog() {
-		String currentMaterial = userInfo.getCurrentMaterial();
-		userInfo.addMaterialSolved(currentMaterial);
-		userInfo.setCurrentMaterial("");
-		userInfo.getNewMaterialShuffleStyle();
-
-		userInfo.saveEventually();
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-		// set title
-		alertDialogBuilder.setTitle("Congrats!");
-
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(
-						"You correctly solved the puzzle for " + material + "!")
-				.setCancelable(false)
-				.setPositiveButton("Okay",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								PuzzleActivity.this.finish();
-								startActivity(new Intent(PuzzleActivity.this,
-										MapActivity.class));
-							}
-						});
-
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-	}
-	*/
-		
+	 */	
 	private void showCorrectDialog(String title, String message, final Context activity) {
 
 		String currentMaterial = userInfo.getCurrentMaterial();
@@ -384,18 +348,13 @@ public class PuzzleActivity extends BaseActivity {
         final Dialog myDialog = new Dialog(activity);     
         myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
-
-//        myDialog.setTitle(title);
         myDialog.setCancelable(false);
-//        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#590000")));
 
         TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-//      text.setMovementMethod(ScrollingMovementMethod.getInstance());
         dialog_title.setText(title);
 
-        TextView text = (TextView) myDialog.findViewById(R.id.message);
-//        text.setMovementMethod(ScrollingMovementMethod.getInstance());
-        text.setText(message);
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
         yes.setText("Okay");
@@ -420,18 +379,13 @@ public class PuzzleActivity extends BaseActivity {
         final Dialog myDialog = new Dialog(activity);
         myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.one_button_dialog);
-
-//        myDialog.setTitle(title);
         myDialog.setCancelable(false);
-//        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#590000")));
 
         TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-//      text.setMovementMethod(ScrollingMovementMethod.getInstance());
         dialog_title.setText(title);
         
-        TextView dialog_text = (TextView) myDialog.findViewById(R.id.message);
-//        text.setMovementMethod(ScrollingMovementMethod.getInstance());
-        dialog_text.setText(message);
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
         yes.setText("Okay");
@@ -446,52 +400,4 @@ public class PuzzleActivity extends BaseActivity {
 
     }
 
-	/**
-	 * Displays the incorrect Dialog, which leaves user on same page
-	 */
-	/*
-	private void showIncorrectDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this,R.style.alertdialog);
-
-		// set title
-		alertDialogBuilder.setTitle("Try again");
-		
-		LayoutInflater inflater = LayoutInflater.from(this);
-		View dialogview = inflater.inflate(R.layout.surfer_dialog, null);
-		
-		alertDialogBuilder.setView(dialogview);
-		
-		TextView text = (TextView) dialogview.findViewById(R.id.message);
-        text.setText("Sorry, you did not solve the puzzle correctly. Try again.");
-        text.setBackgroundResource(R.drawable.background);
-		
-		alertDialogBuilder
-		.setPositiveButton("Okay",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-					}
-				});
-
-		
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(
-						"Sorry, you did not solve the puzzle correctly. Try again.")
-				.setCancelable(false)
-				.setPositiveButton("Okay",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-		
-
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-		dialogview.setBackgroundResource(android.graphics.Color.TRANSPARENT);
-//		alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-	}
-	*/
 }

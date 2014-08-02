@@ -2,13 +2,18 @@ package com.parse.starter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class BaseActivity extends Activity {
 
@@ -31,26 +36,31 @@ public class BaseActivity extends Activity {
 		}
 		return false;
 	}
-	
-	public void showWarningDialog(int msg) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-		// set title
-		alertDialogBuilder.setTitle("Ooops!");
+	public void showWarningDialog(int message, final Context activity) {
 
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(msg)
-				.setCancelable(false)
-				.setPositiveButton("Got it!",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		// show it
-		alertDialog.show();
-	}
+        final Dialog myDialog = new Dialog(activity);
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.one_button_dialog);
+        myDialog.setCancelable(false);
+
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText("Ooops!");
+        
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message);
+
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Got it!");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.show();
+
+    }
 
 }
