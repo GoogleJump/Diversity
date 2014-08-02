@@ -112,7 +112,7 @@ public class SettingsActivity extends BaseActivity {
         dialog_title.setText("Restart");
 
         TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
-        dialog_message.setText("Are you sure you would like to restart?");
+        dialog_message.setText("Are you sure you would like to restart?\nYou would lose all your collected materials and items.");
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
         yes.setText("Yes");

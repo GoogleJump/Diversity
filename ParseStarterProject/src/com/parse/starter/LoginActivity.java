@@ -30,7 +30,9 @@ public class LoginActivity extends BaseActivity {
 
 		// Set up the login form.
 		usernameView = (EditText) findViewById(R.id.username);
+		usernameView.setHint(R.string.username_hint);
 		passwordView = (EditText) findViewById(R.id.password);
+		passwordView.setHint(R.string.password_hint);
 
 		// Set up the submit button click handler
 		findViewById(R.id.action_button).setOnClickListener(

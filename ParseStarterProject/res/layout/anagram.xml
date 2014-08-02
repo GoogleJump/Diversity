@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:ems="10"
             android:gravity="center"
-            android:inputType="text"
+            android:inputType="textFilter"
             android:maxLines="1"
             android:singleLine="true"
             android:textColorHint="#FFFFFF" >

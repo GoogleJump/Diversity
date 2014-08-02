@@ -227,10 +227,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 									material.getValue());
 							updateUser(MATERIAL_ITEM.MATERIAL, material
 									.getKey().getName());
-							checkForCompletedItem();
 						}
 					}
 				}
+				checkForCompletedItem();
 				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
 				}

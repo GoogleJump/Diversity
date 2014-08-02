@@ -148,7 +148,7 @@ public class PickCharacterActivity extends BaseActivity {
 						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						showCharacterDescriptionDialog("Grandma","Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hide all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?");
+						showCharacterDescriptionDialog("Grandma","Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hid all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?");
 					}
 				});
 				break;
