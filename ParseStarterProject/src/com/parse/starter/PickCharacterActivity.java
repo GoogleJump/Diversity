@@ -85,70 +85,122 @@ public class PickCharacterActivity extends BaseActivity {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
-		
-		private void showCharacterDescriptionDialog(final String name, String message) {
 
-	        final Dialog myDialog = new Dialog(context);     
-	        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-	        myDialog.setContentView(R.layout.two_button_dialog);
-	        myDialog.setCancelable(false);
+		private void showCharacterDescriptionDialog(final String name,
+				String message, boolean completed) {
 
-	        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-	        dialog_title.setText(name + "'s Story");
+			final Dialog myDialog = new Dialog(context);
+			myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+			if (completed) {
+				myDialog.setContentView(R.layout.one_button_dialog);
+			} else {
+				myDialog.setContentView(R.layout.two_button_dialog);
+			}
+			myDialog.setCancelable(false);
 
-	        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
-	        dialog_message.setText(message);
+			TextView dialog_title = (TextView) myDialog
+					.findViewById(R.id.title);
+			dialog_title.setText(name + "'s Story");
 
-	        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-	        yes.setText("Yes");
-	        
-	        Button no = (Button) myDialog.findViewById(R.id.dialog_no);
-	        no.setText("No");
-	        
-	        yes.setOnClickListener(new OnClickListener() {
-	            public void onClick(View v) {
-	            	myDialog.dismiss();
-					new SaveCharacterTask().execute(name);
-					progressBar.setVisibility(View.VISIBLE);
-	            }
-	        });
-	        
-	        no.setOnClickListener(new OnClickListener() {
-	            public void onClick(View v) {
-	                myDialog.dismiss();
-	            }
-	        });
+			TextView dialog_message = (TextView) myDialog
+					.findViewById(R.id.message);
+			dialog_message.setText(message);
 
-	        myDialog.show();
+			if (completed) {
+				Button ok = (Button) myDialog.findViewById(R.id.dialog_yes);
+				ok.setText("Ok");
+				
+				ok.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
+					}
+				});
+			} else {
+				Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+				yes.setText("Yes");
 
-	    }
-		
+				Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+				no.setText("No");
+
+				yes.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
+						new SaveCharacterTask().execute(name);
+						progressBar.setVisibility(View.VISIBLE);
+					}
+				});
+
+				no.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
+					}
+				});
+
+			}
+
+			myDialog.show();
+
+		}
+
 		public Object instantiateItem(final View collection, final int position) {
 			v = new View(collection.getContext());
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			int resId = 0;
+
 			switch (position) {
 			case 0: // surfer
+				final String surferDescription = "Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
+						+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
+						+ "Help the dudes and dudettes out.";
+
+				final String surferCompleteDescription = "Hey dude, thanks for helping a fellow dude out. I'm all good. Help the other dudes and dudettes in my family.";
+
+				final String surferMessage;
+				final boolean surferCompleted;
+				if (userInfo.getCharactersCollected().contains("Surfer")) {
+					surferMessage = surferCompleteDescription;
+					surferCompleted = true;
+				} else {
+					surferMessage = surferDescription;
+					surferCompleted = false;
+				}
+
 				resId = R.layout.surfer;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.surfer_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						showCharacterDescriptionDialog("Surfer","Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. Help the dudes and dudets out.");
+						showCharacterDescriptionDialog("Surfer", surferMessage, surferCompleted);
 					}
 				});
 				break;
 
 			case 1: // grandma
+				final String grandmaDescription = "Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
+						+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
+						+ "did I put the sweater I knit you? Can you help me out, deary?";
+				final String grandmaCompleteDescription = "Oh hello, deary. Thanks for helping me, but I don't need your help anymore. Please, go help the rest of my family.";
+
+				final String grandmaMessage;
+				final boolean grandmaCompleted;
+				if (userInfo.getCharactersCollected().contains("Grandma")) {
+					grandmaMessage = grandmaCompleteDescription;
+					grandmaCompleted = true;
+				} else {
+					grandmaMessage = grandmaDescription;
+					grandmaCompleted = false;
+				}
+
 				resId = R.layout.grandma;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						showCharacterDescriptionDialog("Grandma","Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hid all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?");
+						showCharacterDescriptionDialog("Grandma",
+								grandmaMessage, grandmaCompleted);
 					}
 				});
 				break;
@@ -157,8 +209,7 @@ public class PickCharacterActivity extends BaseActivity {
 			return v;
 		}
 
-		private class SaveCharacterTask extends
-				AsyncTask<String, Void, Void> {
+		private class SaveCharacterTask extends AsyncTask<String, Void, Void> {
 			@Override
 			protected Void doInBackground(String... params) {
 				String characterSelected = params[0];
