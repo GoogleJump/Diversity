@@ -215,6 +215,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
 						.entrySet()) {
 					GooglePlace place = material.getValue().getPlace();
+					System.out.println(place);
 					Location materialLocation = new Location("");
 					materialLocation.setLatitude(place.getLat());
 					materialLocation.setLongitude(place.getLng());
@@ -480,7 +481,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			if (resultsList.size() > 0) {
 				GooglePlace materialPlace = resultsList.get(0);
 				synchronized (materialsOnTheMap) {
-					System.out.println("Material" + material.getName());
 					MaterialMapInfo materialMap = materialsOnTheMap
 							.get(material);
 					if (materialMap != null && materialMap.getPlace() == null) {

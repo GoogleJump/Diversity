@@ -32,14 +32,6 @@
         android:gravity="bottom|center" >
 
         <Button
-            android:id="@+id/new_puzzle_puz"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/puzzle_button_custom"
-            android:padding="8dp" />
-
-        <Button
             android:id="@+id/gps_button_puzzle"
             android:layout_width="80dp"
             android:layout_height="80dp"
