@@ -1,8 +1,7 @@
 package com.parse.starter;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -86,6 +86,43 @@ public class PickCharacterActivity extends BaseActivity {
 			return view == object;
 		}
 		
+		private void showCharacterDescriptionDialog(final String name, String message) {
+
+	        final Dialog myDialog = new Dialog(context);     
+	        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+	        myDialog.setContentView(R.layout.two_button_dialog);
+	        myDialog.setCancelable(false);
+
+	        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+	        dialog_title.setText(name + "'s Story");
+
+	        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+	        dialog_message.setText(message);
+
+	        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+	        yes.setText("Yes");
+	        
+	        Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+	        no.setText("No");
+	        
+	        yes.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	            	myDialog.dismiss();
+					new SaveCharacterTask().execute(name);
+					progressBar.setVisibility(View.VISIBLE);
+	            }
+	        });
+	        
+	        no.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                myDialog.dismiss();
+	            }
+	        });
+
+	        myDialog.show();
+
+	    }
+		
 		public Object instantiateItem(final View collection, final int position) {
 			v = new View(collection.getContext());
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
@@ -99,37 +136,7 @@ public class PickCharacterActivity extends BaseActivity {
 						.findViewById(R.id.surfer_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-
-						// new popup
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								context);
-
-						alertDialogBuilder
-								.setMessage(
-										"Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
-												+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
-												+ "Help the dudes and dudets out.")
-								.setCancelable(false)
-								.setPositiveButton("Yes",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												new SaveCharacterTask()
-														.execute("Surfer");
-												progressBar.setVisibility(View.VISIBLE);
-											}
-										})
-								.setNegativeButton("No",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+						showCharacterDescriptionDialog("Surfer","Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. Help the dudes and dudets out.");
 					}
 				});
 				break;
@@ -141,35 +148,7 @@ public class PickCharacterActivity extends BaseActivity {
 						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								context);
-
-						alertDialogBuilder
-								.setMessage(
-										"Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
-												+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
-												+ "did I put the sweater I knit you? Can you help me out, deary?")
-								.setCancelable(false)
-								.setPositiveButton("Yes",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												new SaveCharacterTask()
-														.execute("Grandma");
-												progressBar.setVisibility(View.VISIBLE);
-											}
-										})
-								.setNegativeButton("No",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+						showCharacterDescriptionDialog("Grandma","Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hide all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?");
 					}
 				});
 				break;

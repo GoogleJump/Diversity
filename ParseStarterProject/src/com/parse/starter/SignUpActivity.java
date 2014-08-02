@@ -18,7 +18,7 @@ public class SignUpActivity extends BaseActivity {
 	private EditText usernameView;
 	private EditText passwordView;
 	private EditText passwordAgainView;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

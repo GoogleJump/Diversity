@@ -54,7 +54,15 @@
     <string name="choose_a_character">Choose a Character</string>
     
     <string name="synopsis">Welcome to <i>Solve N Go</i>! Be prepared to collect awesome items, explore your city, and build a family!\n</string>
+    
+	<string name="dialog_yes">Yes</string>
+	<string name="dialog_no">No</string>
+	<string name="character_dialog_surfer">Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers\' belongings all over the place. Help the dudes and dudets out.</string>
+
 	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n Ksenia Bukina\n</string>
 	<string name="artwork"><b>Artwork</b>Carolyn Chen\nJamie Forbes\n</string>
 	<string name="team_lead"><b>Team Lead</b>\nKsenia Bukina\n</string>
+	
+	<color name="red">#590000</color>
+
 </resources>

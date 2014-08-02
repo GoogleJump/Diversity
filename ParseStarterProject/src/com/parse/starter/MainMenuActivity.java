@@ -1,10 +1,12 @@
 package com.parse.starter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
 
 /**
  * The MainMenu view shows the main menu with a Start/Continue button that takes
@@ -18,6 +20,7 @@ public class MainMenuActivity extends BaseActivity {
 	private Button trophies;
 	private Button photos;
 	private Button inventory;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

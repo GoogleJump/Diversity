@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import android.content.Context;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -19,6 +20,7 @@ public class LoginActivity extends BaseActivity {
 	// UI references.
 	private EditText usernameView;
 	private EditText passwordView;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

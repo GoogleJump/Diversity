@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +13,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Context;
+import android.app.Dialog;
+
+import android.view.LayoutInflater;
+import android.graphics.drawable.ColorDrawable;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -42,6 +45,7 @@ public class PuzzleActivity extends BaseActivity {
 	private Button mapButton;
 	private Button shuffleButton;
 	private UserInfo userInfo;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -296,9 +300,9 @@ public class PuzzleActivity extends BaseActivity {
 					}
 				}
 				if (showCorrect) {
-					showCorrectDialog();
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n");
 				} else {
-					showIncorrectDialog();
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n");
 				}
 			}
 		});
@@ -317,75 +321,82 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				// indicates the answer is correct
 				if (anagramView.getText().toString().equals(correctAnswer)) {
-					showCorrectDialog();
+					showCorrectDialog("Congrats!","You correctly solved the puzzle for " + material + "!\n");
 				} else {
-					showIncorrectDialog();
+	//				showIncorrectDialog();
+					showIncorrectDialog("Try Again","Sorry, you did not solve the puzzle correctly. Try again.\n");
+
 				}
 			}
 		});
 	}
-
+	
 	/**
 	 * Displays the correct dialog, which takes user to the MapActivity
-	 */
-	private void showCorrectDialog() {
+	 */	
+	private void showCorrectDialog(String title, String message) {
+
 		String currentMaterial = userInfo.getCurrentMaterial();
 		userInfo.addMaterialSolved(currentMaterial);
 		userInfo.setCurrentMaterial("");
 		userInfo.getNewMaterialShuffleStyle();
 
 		userInfo.saveEventually();
+		
+        final Dialog myDialog = new Dialog(context);     
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.one_button_dialog);
+        myDialog.setCancelable(false);
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText(title);
 
-		// set title
-		alertDialogBuilder.setTitle("Congrats!");
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message);
 
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(
-						"You correctly solved the puzzle for " + material + "!")
-				.setCancelable(false)
-				.setPositiveButton("Okay",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								PuzzleActivity.this.finish();
-								startActivity(new Intent(PuzzleActivity.this,
-										MapActivity.class));
-							}
-						});
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Okay");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	myDialog.dismiss();
+				PuzzleActivity.this.finish();
+				startActivity(new Intent(PuzzleActivity.this,
+						MapActivity.class));		
+            }
+        });
 
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
+        myDialog.show();
 
-		// show it
-		alertDialog.show();
-	}
-
+    }
+	
 	/**
 	 * Displays the incorrect Dialog, which leaves user on same page
 	 */
-	private void showIncorrectDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	private void showIncorrectDialog(String title, String message) {
 
-		// set title
-		alertDialogBuilder.setTitle("Try again");
+        final Dialog myDialog = new Dialog(context);
+        myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.one_button_dialog);
+        myDialog.setCancelable(false);
 
-		// set dialog message
-		alertDialogBuilder
-				.setMessage(
-						"Sorry, you did not solve the puzzle correctly. Try again.")
-				.setCancelable(false)
-				.setPositiveButton("Okay",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+        TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
+        dialog_title.setText(title);
+        
+        TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
+        dialog_message.setText(message);
 
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
+        Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+        yes.setText("Okay");
+        
+        yes.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
 
-		// show it
-		alertDialog.show();
-	}
+        myDialog.show();
+
+    }
+
 }
