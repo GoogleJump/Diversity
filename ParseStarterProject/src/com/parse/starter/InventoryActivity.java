@@ -26,7 +26,8 @@ public class InventoryActivity extends BaseActivity {
 	private Button mainMenu;
 	private ImageView currentMaterial = null;
 	private TableRow currentRow = null;
-	private int numMaterialsInRow = 3;
+	// changing to 1 so that all the materials can be seen
+	private int numMaterialsInRow = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
