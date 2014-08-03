@@ -18,10 +18,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -259,6 +257,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					return;
 				}
 			}
+			System.out.println("item completed");
 			updateUser(MATERIAL_ITEM.ITEM, item);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -288,7 +287,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
+			System.out.println("in the else statement of updateuser");
 			showFoundDialog("You just made a ", name, false);
+			System.out.println("made the dialog");
 
 			List<String> itemsSolved = userInfo.getItemsSolved();
 			itemsSolved.remove(name);
@@ -350,6 +351,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		dialog_message.setText(message + materialOrItem);
 
 		ImageView image = (ImageView) myDialog.findViewById(R.id.collected);
+		System.out.println("before setting the picture in the image view");
 
 		// name of the image to add
 		String imageName = materialOrItem.toLowerCase().replace(' ', '_');
