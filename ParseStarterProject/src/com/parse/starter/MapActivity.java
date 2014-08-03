@@ -72,6 +72,12 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private ConcurrentHashMap<Material, MaterialMapInfo> materialsOnTheMap = new ConcurrentHashMap<Material, MaterialMapInfo>();
 
+	private Button mainMenuButton;
+	private Button puzzleButton;
+	private Button randomizeButton;
+	private Button claimButton;
+	private Button locateButton;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,6 +90,12 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 
 		setContentView(R.layout.map);
+		mainMenuButton = (Button) findViewById(R.id.main_menu_button);
+		puzzleButton = (Button) findViewById(R.id.puzzle_button);
+		randomizeButton = (Button) findViewById(R.id.randomize_button);
+		claimButton = (Button) findViewById(R.id.claim_materials_button);
+		locateButton = (Button) findViewById(R.id.locate_materials_button);
+		
 		addTransitionListeners();
 
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(
@@ -166,6 +178,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						changeAllButtonStates(false);
 						// remove all the existing markers
 						// This might not be necessary if the map will be
 						// re-rendered
@@ -194,11 +207,21 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						changeAllButtonStates(false);
+						findViewById(R.id.locate_materials_button).setEnabled(false);
 						locateMaterials();
 					}
 				});
 	}
-
+	
+	private void changeAllButtonStates(boolean enabled) {
+		mainMenuButton.setEnabled(enabled);
+		puzzleButton.setEnabled(enabled);
+		randomizeButton.setEnabled(enabled);
+		claimButton.setEnabled(enabled);
+		locateButton.setEnabled(enabled);
+	}
+	
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
@@ -502,6 +525,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					}
 				}
 			}
+			changeAllButtonStates(true);
 		}
 	}
 
