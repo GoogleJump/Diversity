@@ -287,15 +287,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			});
 		} else {
-			System.out.println("in the else statement of updateuser");
 			showFoundDialog("You just made a ", name, false);
-			System.out.println("made the dialog");
 
-			List<String> itemsSolved = userInfo.getItemsSolved();
-			itemsSolved.remove(name);
-
-			List<String> itemsCollected = userInfo.getItemsCollected();
-			itemsCollected.add(name);
+			userInfo.addItemCollected(name);
 			userInfo.getNewItem();
 
 			// indicates that the Character has been completed
@@ -308,20 +302,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				showFoundDialog("You just found all items for ", completedChar,
 						true);
 			}
-
 			userInfo.setMaterialsCollected(Collections.<String> emptyList());
-
-			userInfo.saveEventually(new SaveCallback() {
-				public void done(ParseException e) {
-					if (e != null) {
-						Log.d("Map Activity, updateUser", e.toString());
-					}
-				}
-			});
 		}
-
 		// need background update
-
 	}
 
 	/**
