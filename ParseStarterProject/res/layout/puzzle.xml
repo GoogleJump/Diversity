@@ -7,32 +7,11 @@
     android:background="@drawable/puzzle_background"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_weight="0.1"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/main_menu_button_puzzle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/home_button_custom" />
-
-        <Button
-            android:id="@+id/new_puzzle_puz"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/puzzle_button_custom" />
-
-        <Button
-            android:id="@+id/gps_button_puzzle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/map_button_custom" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/main_menu_button_puzzle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/home_button_custom" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,6 +86,27 @@
             android:background="@drawable/submit_textbutton_custom"
             android:paddingLeft="32dp"
             android:paddingRight="32dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/new_puzzle_puz"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/puzzle_button_custom" />
+
+        <Button
+            android:id="@+id/gps_button_puzzle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/map_button_custom" />
     </LinearLayout>
 
 </LinearLayout>
