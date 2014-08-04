@@ -39,15 +39,20 @@
             android:layout_margin="40dp"
              >
         
-          <TableLayout
+          <!-- <TableLayout
               android:id="@+id/inventory_list"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:adjustViewBounds="true"
               android:background="@drawable/paperrepeat"
+              android:scaleType="fitCenter">  -->
+              
+              <TableLayout
+              android:id="@+id/inventory_list"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/paperrepeat"
               android:scaleType="fitCenter"> 
-              
-              
 
           </TableLayout>
 		
