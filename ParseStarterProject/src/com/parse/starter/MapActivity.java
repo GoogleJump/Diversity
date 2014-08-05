@@ -227,6 +227,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
 			showWarningDialog(R.string.no_located_materials);
+			changeAllButtonStates(true);
 			return;
 		}
 
@@ -263,6 +264,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 				if (materialsToRemove.keySet().size() == 0) {
 					showWarningDialog(R.string.no_nearby_materials);
+					changeAllButtonStates(true);
 				}
 			}
 		}
@@ -399,6 +401,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
 			showWarningDialog(R.string.no_solved_materials);
+			changeAllButtonStates(true);
 			return;
 		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);
