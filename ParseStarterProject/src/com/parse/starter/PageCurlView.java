@@ -352,6 +352,10 @@ public class PageCurlView extends View {
 		}
 	}
 
+	private String getPackageName() {
+		return "com.team.diversity.android";
+	}
+
 	/**
 	 * Reset points to it's initial clip edge state
 	 */

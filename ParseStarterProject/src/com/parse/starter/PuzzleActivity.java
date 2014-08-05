@@ -181,7 +181,6 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this, MapActivity.class);
-				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -197,7 +196,6 @@ public class PuzzleActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(PuzzleActivity.this,
 						MainMenuActivity.class);
-				PuzzleActivity.this.finish();
 				startActivity(i);
 			}
 		});
@@ -324,7 +322,6 @@ public class PuzzleActivity extends BaseActivity {
 							"You correctly solved the puzzle for " + material
 									+ "!\n");
 				} else {
-					// showIncorrectDialog();
 					showIncorrectDialog("Try Again",
 							"Sorry, you did not solve the puzzle correctly. Try again.\n");
 
@@ -363,15 +360,19 @@ public class PuzzleActivity extends BaseActivity {
 		yes.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				myDialog.dismiss();
-				PuzzleActivity.this.finish();
-				startActivity(new Intent(PuzzleActivity.this, MapActivity.class));
+				Intent i = new Intent(PuzzleActivity.this, MapActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				
+				startActivity(i);
 			}
 		});
 
 		myDialog.show();
 
 	}
-
+	
+	
 	/**
 	 * Displays the incorrect Dialog, which leaves user on same page
 	 */

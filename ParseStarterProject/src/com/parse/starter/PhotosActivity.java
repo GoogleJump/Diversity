@@ -82,7 +82,6 @@ public class PhotosActivity extends BaseActivity {
 				vg.removeView(photoAlbum);
 				
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				PhotosActivity.this.finish();
 				startActivity(i);
 
 			}

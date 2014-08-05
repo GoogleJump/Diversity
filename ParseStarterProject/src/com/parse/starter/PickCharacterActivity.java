@@ -94,7 +94,6 @@ public class PickCharacterActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				PickCharacterActivity.this.finish();
 				startActivity(i);
 			}
 		});
