@@ -81,7 +81,10 @@ public class PhotosActivity extends BaseActivity {
 				ViewGroup vg = (ViewGroup)(photoAlbum.getParent());
 				vg.removeView(photoAlbum);
 				
+				PhotosActivity.this.finish();
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(i);
 
 			}
