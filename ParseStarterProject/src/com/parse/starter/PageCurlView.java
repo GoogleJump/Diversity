@@ -326,10 +326,12 @@ public class PageCurlView extends View {
 		if (charactersCollected != null) {
 			for (int i = 0; i < charactersCollected.size(); i++) { // for each
 																	// row
+				String character = charactersCollected.get(i).toLowerCase()+"_final";
 				int id = this.getResources().getIdentifier(
-						charactersCollected.get(i), "drawable",
-						getPackageName());
+						character, "drawable",
+						"com.parse.starter");
 				mPages.add(BitmapFactory.decodeResource(getResources(), id));
+				Log.e("in page curl view", "here is a character");
 			}
 		}
 
