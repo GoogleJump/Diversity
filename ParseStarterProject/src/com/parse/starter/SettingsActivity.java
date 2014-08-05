@@ -50,7 +50,6 @@ public class SettingsActivity extends BaseActivity {
 		mainMenu = (Button) findViewById(R.id.main_menu_button_set);
 		mainMenu.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				SettingsActivity.this.finish();
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -128,7 +127,6 @@ public class SettingsActivity extends BaseActivity {
 				userInfo.restart();
 
 				// Start and intent for the dispatch activity
-				SettingsActivity.this.finish();
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
