@@ -1,8 +1,5 @@
 package com.parse.starter;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,20 +13,20 @@ import android.widget.Button;
  * grandma.xml in order to provide swiping functionality.
  */
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends BaseActivity {
 	
 	private Button mainMenu;
-	private UserInfo userInfo;
 
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 	    setContentView(R.layout.about);
 
-		userInfo = null;
+	    User user = null;
 		if (User.getCurrentUser() instanceof User) {
-			userInfo = ((User) User.getCurrentUser()).getUserInfo();
+			user = ((User) User.getCurrentUser());
 		}
-		if (userInfo == null) {
+		if (user == null) {
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
 		}

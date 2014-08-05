@@ -1,8 +1,7 @@
 package com.parse.starter;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -85,27 +85,61 @@ public class PickCharacterActivity extends BaseActivity {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
-		
-		public void makePopup(final String name, String description){
-			// new popup
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-			alertDialogBuilder
-				.setMessage(description)
-				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() { // set character to surfer
-																				// and change activity
-					public void onClick(DialogInterface dialog, int id) {
-						new SaveCharacterTask().execute(name);
-					}
-				})
-				.setNegativeButton("No",new DialogInterface.OnClickListener() { // go back to the activity
-					public void onClick(DialogInterface dialog,int id) {
-						dialog.cancel();
+		private void showCharacterDescriptionDialog(final String name,
+				String message, boolean completed) {
+
+			final Dialog myDialog = new Dialog(context);
+			myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+			if (completed) {
+				myDialog.setContentView(R.layout.one_button_dialog);
+			} else {
+				myDialog.setContentView(R.layout.two_button_dialog);
+			}
+			myDialog.setCancelable(false);
+
+			TextView dialog_title = (TextView) myDialog
+					.findViewById(R.id.title);
+			dialog_title.setText(name + "'s Story");
+
+			TextView dialog_message = (TextView) myDialog
+					.findViewById(R.id.message);
+			dialog_message.setText(message);
+
+			if (completed) {
+				Button ok = (Button) myDialog.findViewById(R.id.dialog_yes);
+				ok.setText("Ok");
+				
+				ok.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
 					}
 				});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			} else {
+				Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+				yes.setText("Yes");
+
+				Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+				no.setText("No");
+
+				yes.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
+						new SaveCharacterTask().execute(name);
+						progressBar.setVisibility(View.VISIBLE);
+					}
+				});
+
+				no.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						myDialog.dismiss();
+					}
+				});
+
+			}
+
+			myDialog.show();
+
 		}
 
 		public Object instantiateItem(final View collection, final int position) {
@@ -113,85 +147,60 @@ public class PickCharacterActivity extends BaseActivity {
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			int resId = 0;
+
 			switch (position) {
 			case 0: // surfer
+				final String surferDescription = "Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
+						+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
+						+ "Help the dudes and dudettes out.";
+
+				final String surferCompleteDescription = "Hey dude, thanks for helping a fellow dude out. I'm all good. Help the other dudes and dudettes in my family.";
+
+				final String surferMessage;
+				final boolean surferCompleted;
+				if (userInfo.getCharactersCollected().contains("Surfer")) {
+					surferMessage = surferCompleteDescription;
+					surferCompleted = true;
+				} else {
+					surferMessage = surferDescription;
+					surferCompleted = false;
+				}
+
 				resId = R.layout.surfer;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.surfer_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-
-						// new popup
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								context);
-
-						alertDialogBuilder
-								.setMessage(
-										"Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
-												+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
-												+ "Help the dudes and dudets out.")
-								.setCancelable(false)
-								.setPositiveButton("Yes",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												new SaveCharacterTask()
-														.execute("Surfer");
-												progressBar.setVisibility(View.VISIBLE);
-											}
-										})
-								.setNegativeButton("No",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+						showCharacterDescriptionDialog("Surfer", surferMessage, surferCompleted);
 					}
 				});
 				break;
 
 			case 1: // grandma
+				final String grandmaDescription = "Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
+						+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
+						+ "did I put the sweater I knit you? Can you help me out, deary?";
+				final String grandmaCompleteDescription = "Oh hello, deary. Thanks for helping me, but I don't need your help anymore. Please, go help the rest of my family.";
+
+				final String grandmaMessage;
+				final boolean grandmaCompleted;
+				if (userInfo.getCharactersCollected().contains("Grandma")) {
+					grandmaMessage = grandmaCompleteDescription;
+					grandmaCompleted = true;
+				} else {
+					grandmaMessage = grandmaDescription;
+					grandmaCompleted = false;
+				}
+
 				resId = R.layout.grandma;
 				v = inflater.inflate(resId, null, false);
 				characterPic = (ImageButton) v
 						.findViewById(R.id.grandma_picture);
 				characterPic.setOnClickListener(new OnClickListener() {
 					public void onClick(View m) {
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								context);
-
-						alertDialogBuilder
-								.setMessage(
-										"Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
-												+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
-												+ "did I put the sweater I knit you? Can you help me out, deary?")
-								.setCancelable(false)
-								.setPositiveButton("Yes",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												new SaveCharacterTask()
-														.execute("Grandma");
-												progressBar.setVisibility(View.VISIBLE);
-											}
-										})
-								.setNegativeButton("No",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
+						showCharacterDescriptionDialog("Grandma",
+								grandmaMessage, grandmaCompleted);
 					}
 				});
 				break;
@@ -200,8 +209,7 @@ public class PickCharacterActivity extends BaseActivity {
 			return v;
 		}
 
-		private class SaveCharacterTask extends
-				AsyncTask<String, Void, Void> {
+		private class SaveCharacterTask extends AsyncTask<String, Void, Void> {
 			@Override
 			protected Void doInBackground(String... params) {
 				String characterSelected = params[0];

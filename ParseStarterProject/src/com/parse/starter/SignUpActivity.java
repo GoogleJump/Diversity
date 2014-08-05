@@ -18,11 +18,11 @@ public class SignUpActivity extends BaseActivity {
 	private EditText usernameView;
 	private EditText passwordView;
 	private EditText passwordAgainView;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.activity_signup);
 
 		// Set up the signup form.
@@ -91,11 +91,10 @@ public class SignUpActivity extends BaseActivity {
 							dlg.show();
 
 							// Set up a new Parse user
-							String username = usernameView.getText().toString();
+							final String username = usernameView.getText().toString();
 							User user = new User(username, passwordView
 									.getText().toString());
-							new UserInfo(username);
-
+							
 							// Call the Parse signup method
 							user.signUpInBackground(new SignUpCallback() {
 
@@ -110,6 +109,7 @@ public class SignUpActivity extends BaseActivity {
 									} else {
 										// Start an intent for the dispatch
 										// activity
+										new UserInfo(username);
 										Intent intent = new Intent(
 												SignUpActivity.this,
 												MainMenuActivity.class);

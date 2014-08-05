@@ -13,6 +13,7 @@ public class PersistToCloudActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
 		// set view to the persist_to_cloud.xml
 		setContentView(R.layout.persist_to_cloud);

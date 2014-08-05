@@ -4,10 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="@drawable/blankbackground">
+    android:gravity="center">
 
     <TextView
-        style="@style/GameFont"
+        style="@style/GameFont.Big"
         android:id="@+id/choose_character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:src="@drawable/surfer" />
 
     <TextView
-        style="@style/GameFont"
+        style="@style/GameFont.Big"
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -15,12 +15,11 @@ public class SignUpOrLogInActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_up_or_log_in);
-
+    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     // Log in button click handler
     ((Button) findViewById(R.id.logInButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // Starts an intent of the log in activity
-    	SignUpOrLogInActivity.this.finish();
         startActivity(new Intent(SignUpOrLogInActivity.this, LoginActivity.class));
       }
     });
@@ -29,7 +28,6 @@ public class SignUpOrLogInActivity extends BaseActivity {
     ((Button) findViewById(R.id.signUpButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // Starts an intent for the sign up activity
-    	SignUpOrLogInActivity.this.finish();
         startActivity(new Intent(SignUpOrLogInActivity.this, SignUpActivity.class));
       }
     });

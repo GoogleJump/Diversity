@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import android.content.Context;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -19,16 +20,19 @@ public class LoginActivity extends BaseActivity {
 	// UI references.
 	private EditText usernameView;
 	private EditText passwordView;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
 		usernameView = (EditText) findViewById(R.id.username);
+		usernameView.setHint(R.string.username_hint);
 		passwordView = (EditText) findViewById(R.id.password);
+		passwordView.setHint(R.string.password_hint);
 
 		// Set up the submit button click handler
 		findViewById(R.id.action_button).setOnClickListener(

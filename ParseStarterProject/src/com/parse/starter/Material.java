@@ -29,6 +29,10 @@ public class Material extends ParseObject {
 	}
 	
 	@Override public int hashCode() {
-		return getSearchTerms().hashCode();
+		return getName().toLowerCase().hashCode();
+	}
+
+	@Override public String toString() {
+		return "Name: " + getName() + " ST: " + getSearchTerms();
 	}
 }

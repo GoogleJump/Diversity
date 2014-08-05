@@ -3,8 +3,6 @@ package com.parse.starter;
 import java.util.List;
 
 import android.content.Intent;
-import android.graphics.Shader.TileMode;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -33,20 +31,21 @@ public class InventoryActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.inventory);
 		setTitle(R.string.inventory_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.inventory_list);
 
 		// a hack to extend the picture out so it doesn't look warpy
 		Drawable bg = tView.getBackground();
-		if (bg != null) {
+		/*if (bg != null) {
 			if (bg instanceof BitmapDrawable) {
 				BitmapDrawable bmp = (BitmapDrawable) bg;
 				bmp.mutate();
 				bmp.setTileModeXY(null, TileMode.REPEAT);
 			}
-		}
+		} 
+		*/
 
 		// get current user's list of collected characters to display
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();

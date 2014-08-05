@@ -31,7 +31,7 @@ public class TrophiesActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.trophies);
 		setTitle(R.string.trophies_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.trophies_list);
@@ -63,7 +63,7 @@ public class TrophiesActivity extends BaseActivity {
 					if (itemsPlaced < numItems) {
 						currentItem = new ImageView(this);
 						int id = this.getResources().getIdentifier(
-								itemsCollected.get(itemsPlaced), "drawable",
+								itemsCollected.get(itemsPlaced).replace(" ","_"), "drawable",
 								"com.parse.starter");
 						currentItem.setImageResource(id);
 						currentRow.addView(currentItem);
