@@ -328,7 +328,7 @@ public class PageCurlView extends View {
 																	// row
 				int id = this.getResources().getIdentifier(
 						charactersCollected.get(i), "drawable",
-						"com.parse.starter");
+						getPackageName());
 				mPages.add(BitmapFactory.decodeResource(getResources(), id));
 			}
 		}
@@ -348,6 +348,10 @@ public class PageCurlView extends View {
 			mForeground = BitmapFactory.decodeResource(getResources(), id);
 			mBackground = null;
 		}
+	}
+
+	private String getPackageName() {
+		return "com.team.diversity.android";
 	}
 
 	/**

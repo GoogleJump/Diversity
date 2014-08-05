@@ -4,6 +4,7 @@ import java.util.List;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class InventoryActivity extends BaseActivity {
 		// get current user's list of collected characters to display
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
+		Log.d("inventory activity: ", materialsCollected.toString());
 
 		if (materialsCollected != null) {
 			int numMaterials = materialsCollected.size();
@@ -64,7 +66,7 @@ public class InventoryActivity extends BaseActivity {
 						currentMaterial = new ImageView(this);
 						int id = this.getResources().getIdentifier(
 								materialsCollected.get(materialsPlaced),
-								"drawable", "com.parse.starter");
+								"drawable", getPackageName());
 						currentMaterial.setImageResource(id);
 						currentRow.addView(currentMaterial);
 						materialsPlaced++;
@@ -75,6 +77,7 @@ public class InventoryActivity extends BaseActivity {
 		}
 		addListenerOnMainMenuButton();
 	}
+	
 
 	/**
 	 * When the mainMenu Button is pressed, view changes to MainMenuView
@@ -85,7 +88,6 @@ public class InventoryActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				InventoryActivity.this.finish();
 				startActivity(i);
 			}
 		});

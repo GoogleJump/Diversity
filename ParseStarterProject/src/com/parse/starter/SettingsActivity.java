@@ -52,7 +52,6 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
-				SettingsActivity.this.finish();
 				startActivity(intent);
 			}
 		});
@@ -91,7 +90,6 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						AboutActivity.class);
-				SettingsActivity.this.finish();
 				startActivity(intent);
 			}
 		});
@@ -129,7 +127,9 @@ public class SettingsActivity extends BaseActivity {
 				// Start and intent for the dispatch activity
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
-				SettingsActivity.this.finish();
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				//SettingsActivity.this.finish();
 				startActivity(intent);
 		
             }
@@ -180,7 +180,6 @@ public class SettingsActivity extends BaseActivity {
 						SignUpOrLogInActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 						| Intent.FLAG_ACTIVITY_NEW_TASK);
-				SettingsActivity.this.finish();
 				startActivity(intent);
             }
         });

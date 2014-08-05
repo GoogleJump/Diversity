@@ -128,6 +128,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		addMapActionListeners();
 	}
 
+	@Override
+	public void onBackPressed() {
+		//MapActivity.this.finish();
+		startActivity(new Intent(MapActivity.this,
+				MainMenuActivity.class));
+	}
+
 	@SuppressLint("NewApi")
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the
@@ -155,7 +162,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						MapActivity.this.finish();
+						//MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								MainMenuActivity.class));
 					}
@@ -165,7 +172,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						MapActivity.this.finish();
+						//MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								PuzzleActivity.class));
 					}
