@@ -44,6 +44,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/shelfrepeat" 
               android:scaleType="fitXY"
+              android:gravity="center_horizontal"
               >
 
           </TableLayout>

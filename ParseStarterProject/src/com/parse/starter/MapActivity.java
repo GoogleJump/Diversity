@@ -9,14 +9,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -32,7 +30,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -45,10 +42,12 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.wallet.EnableWalletOptimizationReceiver;
 import com.google.gson.Gson;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.team.diversity.android.R;
 
 public class MapActivity extends BaseActivity implements LocationListener,
 		ConnectionCallbacks, OnConnectionFailedListener,
@@ -226,6 +225,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
 			showWarningDialog(R.string.no_located_materials);
+			changeAllButtonStates(true);
 			return;
 		}
 
@@ -249,17 +249,20 @@ public class MapActivity extends BaseActivity implements LocationListener,
 							closestMarker.remove();
 							materialsToRemove.put(material.getKey(),
 									material.getValue());
-							updateUser(MATERIAL_ITEM.MATERIAL, material
-									.getKey().getName());
+							
+							// updating userInfo when materials are solved
+							updateUserMaterial(material.getKey().getName());							
 						}
 					}
 				}
 				checkForCompletedItem();
 				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
+					showFoundDialog("You found a ", material.getName(), false);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
 					showWarningDialog(R.string.no_nearby_materials);
+					changeAllButtonStates(true);
 				}
 			}
 		}
@@ -281,55 +284,57 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				}
 			}
 			System.out.println("item completed");
-			updateUser(MATERIAL_ITEM.ITEM, item);
+			updateUserOther(item);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Updates the user information about collected items and materials;
+	 * Updates the user information about collected items;
 	 * Displays a popup to congratulate user. Gets a new Item when the user
-	 * solved the existing item.
+	 * solved the existing item and when the user has more items to solve
 	 */
-	private void updateUser(MATERIAL_ITEM materialOrItem, String name) {
-		if (materialOrItem == MATERIAL_ITEM.MATERIAL) {
-			showFoundDialog("You found a ", name, false);
+	private void updateUserOther(String name) {
+		userInfo.addItemCollected(name);
+		userInfo.getNewItem();
 
-			List<String> materialsSolved = userInfo.getMaterialsSolved();
-			materialsSolved.remove(name);
+		// indicates that the Character has been completed
+		if (userInfo.getCurrentItem().equals("FINISHED")) {
+			String completedChar = userInfo.getCurrentCharacter();
 
-			List<String> materialsCollected = userInfo.getMaterialsCollected();
-			materialsCollected.add(name);
-
-			userInfo.saveEventually(new SaveCallback() {
-				public void done(ParseException e) {
-					if (e != null) {
-						Log.d("Map Activity, updateUser", e.toString());
-					}
-				}
-			});
-		} else {
-			showFoundDialog("You just made a ", name, false);
-
-			userInfo.addItemCollected(name);
-			userInfo.getNewItem();
-
-			// indicates that the Character has been completed
-			if (userInfo.getCurrentItem().equals("FINISHED")) {
-				String completedChar = userInfo.getCurrentCharacter();
-
-				// updating userInfo
-				userInfo.addCharacterCollected(completedChar);
-				userInfo.setCurrentCharacter("");
-				showFoundDialog("You just found all items for ", completedChar,
-						true);
-			}
-			userInfo.setMaterialsCollected(Collections.<String> emptyList());
+			// updating userInfo
+			userInfo.addCharacterCollected(completedChar);
+			userInfo.setCurrentCharacter("");
+			showFoundDialog("You just found all items for ", completedChar,
+					true);
 		}
+		showFoundDialog("You just made a ", name, false);
+		userInfo.setMaterialsCollected(Collections.<String> emptyList());
 		// need background update
 	}
 
+	/**
+	 * Updates the user information about collected materials;
+	 * Displays a popup to congratulate user. Gets a Material when the user
+	 * solved the existing item and when the user has more items to solve
+	 */
+	private void updateUserMaterial(String name) {
+		List<String> materialsSolved = userInfo.getMaterialsSolved();
+		materialsSolved.remove(name);
+
+		List<String> materialsCollected = userInfo.getMaterialsCollected();
+		materialsCollected.add(name);
+		
+		userInfo.saveEventually(new SaveCallback() {
+			public void done(ParseException e) {
+				if (e != null) {
+					Log.d("Map Activity, updateUser", e.toString());
+				}
+			}
+		});
+
+	}
 	/**
 	 * Found dialog that pops up when a material/item/character is found
 	 * 
@@ -370,7 +375,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		yes.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				myDialog.dismiss();
+				if (isChar) {
+					myDialog.dismiss();
+					Intent i = new Intent(MapActivity.this,
+							MainMenuActivity.class);
+					MapActivity.this.finish();
+					startActivity(i);
+				}
+				else {
+					myDialog.dismiss();
+				}
 			}
 		});
 
@@ -385,6 +399,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
 			showWarningDialog(R.string.no_solved_materials);
+			changeAllButtonStates(true);
 			return;
 		}
 		new PlaceMarkersOnMapTask().execute(materialsOnTheMap);

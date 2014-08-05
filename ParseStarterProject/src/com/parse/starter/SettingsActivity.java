@@ -8,8 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Context;
-
 import com.parse.ParseUser;
+import com.team.diversity.android.R;
 
 /**
  * SettingsActivity displays the Settings page of the app. Contains a MainMenu

@@ -2,6 +2,7 @@ package com.parse.starter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.team.diversity.android.R;
 
 /**
  * This class is an example of how to persist data to cloud

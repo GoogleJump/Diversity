@@ -3,7 +3,6 @@ package com.parse.starter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -21,6 +20,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import com.team.diversity.android.R;
 
 /**
  * 
@@ -326,10 +326,12 @@ public class PageCurlView extends View {
 		if (charactersCollected != null) {
 			for (int i = 0; i < charactersCollected.size(); i++) { // for each
 																	// row
+				String character = charactersCollected.get(i).toLowerCase()+"_final";
 				int id = this.getResources().getIdentifier(
-						charactersCollected.get(i), "drawable",
+						character, "drawable",
 						"com.parse.starter");
 				mPages.add(BitmapFactory.decodeResource(getResources(), id));
+				Log.e("in page curl view", "here is a character");
 			}
 		}
 

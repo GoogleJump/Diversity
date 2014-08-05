@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.team.diversity.android.R;
 
 /**
  * Adapted from PageCurler's code: com.mystictreegames.pagecurl

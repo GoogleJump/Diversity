@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.team.diversity.android.R;
 
 /**
  * PuzzleActivity displays the puzzle view: currently, the puzzle view is
@@ -320,7 +319,7 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// indicates the answer is correct
-				if (anagramView.getText().toString().equals(correctAnswer)) {
+				if (anagramView.getText().toString().toLowerCase().equals(correctAnswer)) {
 					showCorrectDialog("Congrats!",
 							"You correctly solved the puzzle for " + material
 									+ "!\n");

@@ -1,5 +1,7 @@
 package com.parse.starter;
 
+import com.team.diversity.android.R;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

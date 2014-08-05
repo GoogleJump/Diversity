@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.team.diversity.android.R;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,6 +48,7 @@ public class PickCharacterActivity extends BaseActivity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.viewpager);
 		context = this;
 
@@ -127,7 +129,7 @@ public class PickCharacterActivity extends BaseActivity {
 
 			TextView dialog_message = (TextView) myDialog
 					.findViewById(R.id.message);
-			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(), "string","com.parse.starter"));
+			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(), "string",getPackageName()));
 
 			Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
 			yes.setText("Yes");
@@ -174,7 +176,7 @@ public class PickCharacterActivity extends BaseActivity {
 					TextView characterName = (TextView) v.findViewById(R.id.character_name);
 					characterName.setText(theCharacter);
 					
-					characterPic.setImageResource(context.getResources().getIdentifier(theCharacter.toLowerCase(), "drawable","com.parse.starter"));
+					characterPic.setImageResource(context.getResources().getIdentifier(theCharacter.toLowerCase(), "drawable",getPackageName()));
 					
 					characterPic.setOnClickListener(new OnClickListener() {
 						public void onClick(View m) {

@@ -2,8 +2,8 @@ package com.parse.starter;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.parse.ParseUser;
+import com.team.diversity.android.R;
 
 public class ParseStarterProjectActivity extends BaseActivity {
 
