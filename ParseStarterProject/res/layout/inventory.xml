@@ -39,7 +39,7 @@
             android:id="@+id/inventory_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:background="@drawable/paper_custom"
             android:scaleType="centerCrop" >
