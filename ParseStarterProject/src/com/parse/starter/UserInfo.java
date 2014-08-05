@@ -42,10 +42,7 @@ public class UserInfo extends ParseObject {
 		saveEventually();
 	}
 
-	// FIXME
 	public void getNewItem() {
-		// Chain of async calls, how to work around this?
-		// This is returning null!
 		String currentCharacter = getCurrentCharacter();
 		if (currentCharacter.length() == 0) {
 			return;

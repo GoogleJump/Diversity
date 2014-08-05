@@ -26,7 +26,9 @@ public class TrophiesActivity extends BaseActivity {
 	private Button mainMenu;
 	private ImageView currentItem = null;
 	private TableRow currentRow = null;
-	private int numItemsInRow = 3;
+	// changed to 1 because the view can really only accommodate 1 item due to
+	// size of the picture
+	private int numItemsInRow = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class TrophiesActivity extends BaseActivity {
 
 			for (int i = 0; i < numColumns; i++) { // for each row
 				currentRow = new TableRow(this);
-				for (int j = 0; j < numItemsInRow; j++) { // 3 in each row
+				for (int j = 0; j < numItemsInRow; j++) { 
 					if (itemsPlaced < numItems) {
 						currentItem = new ImageView(this);
 						int id = this.getResources().getIdentifier(
