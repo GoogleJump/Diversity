@@ -1,5 +1,9 @@
 package com.parse.starter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +20,12 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.team.diversity.android.R;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.starter.MapActivity.MATERIAL_ITEM;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -31,7 +42,10 @@ public class PickCharacterActivity extends BaseActivity {
 	private Button mainMenu;
 	private Context context;
 	private UserInfo userInfo;
-
+	private boolean firstTime;
+	private List<String> charactersNotCollected;
+	private List<String> charactersCollected;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -48,6 +62,20 @@ public class PickCharacterActivity extends BaseActivity {
 		if (userInfo == null) {
 			Intent i = new Intent(this, SignUpOrLogInActivity.class);
 			startActivity(i);
+		}
+		
+		charactersCollected = userInfo.getCharactersCollected();
+		charactersNotCollected = new ArrayList<String>();
+		
+		ParseQuery<Character> query = ParseQuery.getQuery("Character");
+		query.whereNotContainedIn("name", charactersCollected);
+		try {
+			List<Character> resultsList = query.find();
+			for (Character character: resultsList){
+				charactersNotCollected.add(character.getName());
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 
 		pagerAdapter = new CharacterPagerAdapter();
@@ -79,7 +107,7 @@ public class PickCharacterActivity extends BaseActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return charactersNotCollected.size();
 		}
 
 		@Override
@@ -87,16 +115,11 @@ public class PickCharacterActivity extends BaseActivity {
 			return view == object;
 		}
 
-		private void showCharacterDescriptionDialog(final String name,
-				String message, boolean completed) {
+		private void showCharacterDescriptionDialog(final String name) {
 
 			final Dialog myDialog = new Dialog(context);
 			myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-			if (completed) {
-				myDialog.setContentView(R.layout.one_button_dialog);
-			} else {
-				myDialog.setContentView(R.layout.two_button_dialog);
-			}
+			myDialog.setContentView(R.layout.two_button_dialog);
 			myDialog.setCancelable(false);
 
 			TextView dialog_title = (TextView) myDialog
@@ -105,107 +128,63 @@ public class PickCharacterActivity extends BaseActivity {
 
 			TextView dialog_message = (TextView) myDialog
 					.findViewById(R.id.message);
-			dialog_message.setText(message);
+			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(), "string",getPackageName()));
 
-			if (completed) {
-				Button ok = (Button) myDialog.findViewById(R.id.dialog_yes);
-				ok.setText("Ok");
-				
-				ok.setOnClickListener(new OnClickListener() {
-					public void onClick(View v) {
-						myDialog.dismiss();
-					}
-				});
-			} else {
-				Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-				yes.setText("Yes");
+			Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+			yes.setText("Yes");
 
-				Button no = (Button) myDialog.findViewById(R.id.dialog_no);
-				no.setText("No");
+			Button no = (Button) myDialog.findViewById(R.id.dialog_no);
+			no.setText("No");
 
-				yes.setOnClickListener(new OnClickListener() {
-					public void onClick(View v) {
-						myDialog.dismiss();
-						new SaveCharacterTask().execute(name);
-						progressBar.setVisibility(View.VISIBLE);
-					}
-				});
+			yes.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					myDialog.dismiss();
+					new SaveCharacterTask().execute(name);
+					progressBar.setVisibility(View.VISIBLE);
+				}
+			});
 
-				no.setOnClickListener(new OnClickListener() {
-					public void onClick(View v) {
-						myDialog.dismiss();
-					}
-				});
-
-			}
+			no.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					myDialog.dismiss();
+				}
+			});
 
 			myDialog.show();
 
 		}
 
+		@Override
 		public Object instantiateItem(final View collection, final int position) {
 			v = new View(collection.getContext());
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			int resId = 0;
+			
+			for (int i = 0; i < charactersNotCollected.size(); i++){
+				if (position == i){
 
-			switch (position) {
-			case 0: // surfer
-				final String surferDescription = "Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was "
-						+ "a tiny dude. I rode this crazy wave that scatterd all the beachgoers' belongings all over the place. "
-						+ "Help the dudes and dudettes out.";
+					final String theCharacter = charactersNotCollected.get(i);
 
-				final String surferCompleteDescription = "Hey dude, thanks for helping a fellow dude out. I'm all good. Help the other dudes and dudettes in my family.";
-
-				final String surferMessage;
-				final boolean surferCompleted;
-				if (userInfo.getCharactersCollected().contains("Surfer")) {
-					surferMessage = surferCompleteDescription;
-					surferCompleted = true;
-				} else {
-					surferMessage = surferDescription;
-					surferCompleted = false;
+					resId = R.layout.character;
+					
+					v = inflater.inflate(resId, null, false);
+					characterPic = (ImageButton) v
+							.findViewById(R.id.character_picture);
+					
+					TextView characterName = (TextView) v.findViewById(R.id.character_name);
+					characterName.setText(theCharacter);
+					
+					characterPic.setImageResource(context.getResources().getIdentifier(theCharacter.toLowerCase(), "drawable",getPackageName()));
+					
+					characterPic.setOnClickListener(new OnClickListener() {
+						public void onClick(View m) {
+							showCharacterDescriptionDialog(theCharacter);
+						}
+					});
 				}
-
-				resId = R.layout.surfer;
-				v = inflater.inflate(resId, null, false);
-				characterPic = (ImageButton) v
-						.findViewById(R.id.surfer_picture);
-				characterPic.setOnClickListener(new OnClickListener() {
-					public void onClick(View m) {
-						showCharacterDescriptionDialog("Surfer", surferMessage, surferCompleted);
-					}
-				});
-				break;
-
-			case 1: // grandma
-				final String grandmaDescription = "Oh hello, deary. Are you hungry? I would bake you some fresh cookies, "
-						+ "but I think my cats hide all the groceries that I just got from the store. Oh dear, where "
-						+ "did I put the sweater I knit you? Can you help me out, deary?";
-				final String grandmaCompleteDescription = "Oh hello, deary. Thanks for helping me, but I don't need your help anymore. Please, go help the rest of my family.";
-
-				final String grandmaMessage;
-				final boolean grandmaCompleted;
-				if (userInfo.getCharactersCollected().contains("Grandma")) {
-					grandmaMessage = grandmaCompleteDescription;
-					grandmaCompleted = true;
-				} else {
-					grandmaMessage = grandmaDescription;
-					grandmaCompleted = false;
-				}
-
-				resId = R.layout.grandma;
-				v = inflater.inflate(resId, null, false);
-				characterPic = (ImageButton) v
-						.findViewById(R.id.grandma_picture);
-				characterPic.setOnClickListener(new OnClickListener() {
-					public void onClick(View m) {
-						showCharacterDescriptionDialog("Grandma",
-								grandmaMessage, grandmaCompleted);
-					}
-				});
-				break;
 			}
+
 			((ViewPager) collection).addView(v, 0);
 			return v;
 		}
@@ -216,13 +195,27 @@ public class PickCharacterActivity extends BaseActivity {
 				String characterSelected = params[0];
 				userInfo.setCurrentCharacter(characterSelected);
 				userInfo.getNewItem();
+				List<String> charactersCollected = userInfo.getCharactersCollected();
+				if (charactersCollected.isEmpty()) {
+					firstTime = true;
+				}
+				else {
+					firstTime = false;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				Intent i = new Intent(PickCharacterActivity.this,
-						MapActivity.class);
+				Intent i;
+				if (firstTime){
+					i = new Intent(PickCharacterActivity.this,
+							HelpActivity.class);
+				}
+				else {
+					i = new Intent(PickCharacterActivity.this,
+							MapActivity.class);
+				}
 				PickCharacterActivity.this.finish();
 				startActivity(i);
 			}

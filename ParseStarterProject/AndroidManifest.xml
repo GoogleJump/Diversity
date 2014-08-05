@@ -98,6 +98,10 @@
             android:name="com.parse.starter.PickCharacterActivity"
             android:theme="@style/Theme.Background" >
         </activity>
+        <activity
+            android:name="com.parse.starter.HelpActivity"
+            android:theme="@style/Theme.Background" >
+        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

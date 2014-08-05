@@ -329,7 +329,7 @@ public class PageCurlView extends View {
 				String character = charactersCollected.get(i).toLowerCase()+"_final";
 				int id = this.getResources().getIdentifier(
 						character, "drawable",
-						"com.parse.starter");
+						"com.team.diversity.android");
 				mPages.add(BitmapFactory.decodeResource(getResources(), id));
 				Log.e("in page curl view", "here is a character");
 			}
@@ -346,7 +346,7 @@ public class PageCurlView extends View {
 			mBackground = null;
 		}
 		else {
-			int id = this.getResources().getIdentifier("photo_album_default", "drawable",  "com.parse.starter");
+			int id = this.getResources().getIdentifier("photo_album_default", "drawable",  "com.team.diversity.android");
 			mForeground = BitmapFactory.decodeResource(getResources(), id);
 			mBackground = null;
 		}
