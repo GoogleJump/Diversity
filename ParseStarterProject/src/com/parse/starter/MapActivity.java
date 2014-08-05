@@ -165,8 +165,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					@Override
 					public void onClick(View v) {
 						//MapActivity.this.finish();
-						startActivity(new Intent(MapActivity.this,
-								MainMenuActivity.class));
+						Intent i = new Intent(MapActivity.this, MainMenuActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+								| Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(i);
 					}
 				});
 
@@ -388,7 +390,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					myDialog.dismiss();
 					Intent i = new Intent(MapActivity.this,
 							MainMenuActivity.class);
-					MapActivity.this.finish();
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(i);
 				}
 				else {

@@ -54,6 +54,8 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
 			}
 		});
@@ -146,7 +148,6 @@ public class SettingsActivity extends BaseActivity {
 						MainMenuActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 						| Intent.FLAG_ACTIVITY_NEW_TASK);
-				//SettingsActivity.this.finish();
 				startActivity(intent);
 		
             }
