@@ -322,6 +322,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				userInfo.setCurrentCharacter("");
 				showFoundDialog("You just found all items for ", completedChar,
 						true);
+				Log.e("in Map Activity", "user info is updated with completed character");
 			}
 			userInfo.setMaterialsCollected(Collections.<String> emptyList());
 		}
