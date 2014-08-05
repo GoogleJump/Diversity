@@ -319,7 +319,7 @@ public class PuzzleActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// indicates the answer is correct
-				if (anagramView.getText().toString().equals(correctAnswer)) {
+				if (anagramView.getText().toString().toLowerCase().equals(correctAnswer)) {
 					showCorrectDialog("Congrats!",
 							"You correctly solved the puzzle for " + material
 									+ "!\n");
