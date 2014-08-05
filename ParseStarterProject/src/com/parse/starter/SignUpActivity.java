@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
+import com.team.diversity.android.R;
 
 /**
  * Activity which displays a login screen to the user.

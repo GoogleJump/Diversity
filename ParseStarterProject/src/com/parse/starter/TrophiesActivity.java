@@ -1,7 +1,6 @@
 package com.parse.starter;
 
 import java.util.List;
-
 import android.content.Intent;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import com.team.diversity.android.R;
 
 /**
  * TrophiesActivity.java displays the trophies page view: currently, the

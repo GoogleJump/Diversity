@@ -3,6 +3,7 @@ package com.parse.starter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import com.team.diversity.android.R;
 
 /**
  * Splash Screen that is opened when the app is first turned on
