@@ -33,6 +33,7 @@ public class PickCharacterActivity extends BaseActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.viewpager);
 		context = this;
 
