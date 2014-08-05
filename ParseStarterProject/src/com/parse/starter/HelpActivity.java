@@ -1,15 +1,11 @@
 package com.parse.starter;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
-import android.content.Context;
-
-import com.parse.ParseUser;
+import android.widget.ImageButton;
 
 /**
  * SettingsActivity displays the Settings page of the app. Contains a MainMenu
@@ -21,6 +17,7 @@ import com.parse.ParseUser;
 public class HelpActivity extends BaseActivity {
 	
 	private Button mainMenu;
+	private ImageButton play;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +27,7 @@ public class HelpActivity extends BaseActivity {
 		setTitle(R.string.help);
 
 		addListenerOnMainMenuButton();
+		addListenerOnPlayButton();
 	}
 
 	/**
@@ -43,6 +41,21 @@ public class HelpActivity extends BaseActivity {
 						MainMenuActivity.class);
 				HelpActivity.this.finish();
 				startActivity(intent);
+			}
+		});
+	}
+	
+	/**
+	 * When the mainMenu Button is pressed, view changes to MainMenuView
+	 */
+	private void addListenerOnPlayButton() {
+		play = (ImageButton) findViewById(R.id.map_help);
+		play.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(HelpActivity.this, MapActivity.class);
+				HelpActivity.this.finish();
+				startActivity(i);
 			}
 		});
 	}
