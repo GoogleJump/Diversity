@@ -2,6 +2,8 @@
 Team Diversity
 ============
 
+![alt tag](http://images5.alphacoders.com/380/380354.jpg)
+
 Mentor: Ksenia Bukina kseniab@google.com
 
 Team members:

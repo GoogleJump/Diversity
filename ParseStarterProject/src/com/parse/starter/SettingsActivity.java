@@ -24,6 +24,7 @@ public class SettingsActivity extends BaseActivity {
 	private Button restart;
 	private Button logout;
 	private Button about;
+	private Button help;
 	private Context context = this;
 
 	@Override
@@ -41,6 +42,7 @@ public class SettingsActivity extends BaseActivity {
 		addListenerOnLogOutButton();
 		addListenerOnMainMenuButton();
 		addListenerOnAboutButton();
+		addListenerOnHelpButton();
 	}
 
 	/**
@@ -52,7 +54,6 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
-				SettingsActivity.this.finish();
 				startActivity(intent);
 			}
 		});
@@ -91,6 +92,20 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						AboutActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+	
+	/**
+	 * When the Help Button is pressed, changes to Help View
+	 */
+	private void addListenerOnHelpButton() {
+		help = (Button) findViewById(R.id.help_button);
+		help.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(SettingsActivity.this,
+						HelpActivity.class);
 				SettingsActivity.this.finish();
 				startActivity(intent);
 			}
@@ -129,7 +144,9 @@ public class SettingsActivity extends BaseActivity {
 				// Start and intent for the dispatch activity
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
-				SettingsActivity.this.finish();
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				//SettingsActivity.this.finish();
 				startActivity(intent);
 		
             }
@@ -180,7 +197,6 @@ public class SettingsActivity extends BaseActivity {
 						SignUpOrLogInActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 						| Intent.FLAG_ACTIVITY_NEW_TASK);
-				SettingsActivity.this.finish();
 				startActivity(intent);
             }
         });

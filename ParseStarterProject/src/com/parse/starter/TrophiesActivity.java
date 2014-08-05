@@ -6,6 +6,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -51,6 +52,8 @@ public class TrophiesActivity extends BaseActivity {
 		// get current user's list of collected characters to display
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		List<String> itemsCollected = userInfo.getItemsCollected();
+		Log.d("trophy activity: ", itemsCollected.toString());
+
 
 		// display collected items 
 		if (itemsCollected != null) {
@@ -66,7 +69,7 @@ public class TrophiesActivity extends BaseActivity {
 						currentItem = new ImageView(this);
 						int id = this.getResources().getIdentifier(
 								itemsCollected.get(itemsPlaced).replace(" ","_"), "drawable",
-								"com.parse.starter");
+								getPackageName());
 						currentItem.setImageResource(id);
 						currentRow.addView(currentItem);
 						itemsPlaced++;
@@ -87,7 +90,6 @@ public class TrophiesActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				TrophiesActivity.this.finish();
 				startActivity(i);
 
 			}
