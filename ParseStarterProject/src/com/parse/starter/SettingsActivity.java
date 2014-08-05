@@ -24,6 +24,7 @@ public class SettingsActivity extends BaseActivity {
 	private Button restart;
 	private Button logout;
 	private Button about;
+	private Button help;
 	private Context context = this;
 
 	@Override
@@ -41,6 +42,7 @@ public class SettingsActivity extends BaseActivity {
 		addListenerOnLogOutButton();
 		addListenerOnMainMenuButton();
 		addListenerOnAboutButton();
+		addListenerOnHelpButton();
 	}
 
 	/**
@@ -91,6 +93,21 @@ public class SettingsActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingsActivity.this,
 						AboutActivity.class);
+				SettingsActivity.this.finish();
+				startActivity(intent);
+			}
+		});
+	}
+	
+	/**
+	 * When the Help Button is pressed, changes to Help View
+	 */
+	private void addListenerOnHelpButton() {
+		help = (Button) findViewById(R.id.help_button);
+		help.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(SettingsActivity.this,
+						HelpActivity.class);
 				SettingsActivity.this.finish();
 				startActivity(intent);
 			}

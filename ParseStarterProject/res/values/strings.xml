@@ -33,6 +33,7 @@
     <string name="trophies">Trophy Shelf</string>
     <string name="trophies_view_name">Trophy Room</string>
     <string name="photos">Photo Album</string>
+    <string name="help">Help</string>
 
     <string name="photos_view_name">Your Collected Characters</string>
     
@@ -58,10 +59,13 @@
 	<string name="dialog_yes">Yes</string>
 	<string name="dialog_no">No</string>
 	<string name="character_dialog_surfer">Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers\' belongings all over the place. Help the dudes and dudets out.</string>
-
+	<string name="character_dialog_grandma">Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hid all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?</string>
+	
 	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n Ksenia Bukina\n</string>
 	<string name="artwork"><b>Artwork</b>\nCarolyn Chen\nJamie Forbes\n</string>
 	<string name="team_lead"><b>Team Lead</b>\nKsenia Bukina\n</string>
+	
+	<string name="help_steps">How to play:\nFirst solve some puzzles.\nNext, you will be given a material that you need to collect.\nLocate the materials, and then go to their locations and then claim them.\nFive materials make an item, and if you collect enough items, you will complete a character. Get solving!</string>
 	
 	<color name="red">#590000</color>
 
