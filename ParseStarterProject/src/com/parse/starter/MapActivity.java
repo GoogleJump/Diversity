@@ -40,9 +40,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.wallet.EnableWalletOptimizationReceiver;
 import com.google.gson.Gson;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -116,6 +116,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			Location currentLocation = locationClient.getLastLocation();
 			myLocation = new LatLng(currentLocation.getLatitude(),
 					currentLocation.getLongitude());
+			locateMaterials();
+			
 		}
 
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
@@ -126,6 +128,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		gson = new Gson();
 
 		addMapActionListeners();
+	}
+
+	@Override
+	public void onBackPressed() {
+		//MapActivity.this.finish();
+		startActivity(new Intent(MapActivity.this,
+				MainMenuActivity.class));
 	}
 
 	@SuppressLint("NewApi")
@@ -155,7 +164,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						MapActivity.this.finish();
+						//MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								MainMenuActivity.class));
 					}
@@ -165,7 +174,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						MapActivity.this.finish();
+						//MapActivity.this.finish();
 						startActivity(new Intent(MapActivity.this,
 								PuzzleActivity.class));
 					}
@@ -521,16 +530,17 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		@Override
 		protected void onPostExecute(Void result) {
 			synchronized (materialsOnTheMap) {
+				LatLngBounds.Builder bc = new LatLngBounds.Builder();
 				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
 						.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();
 					Marker currentMarker = material.getValue().getMarker();
 					String placeName = currentPlace.getName();
+					LatLng location = new LatLng(currentPlace.getLat(),
+							currentPlace.getLng());
 					if (currentMarker == null) {
 						currentMarker = map.addMarker(new MarkerOptions()
-								.position(
-										new LatLng(currentPlace.getLat(),
-												currentPlace.getLng()))
+								.position(location)
 								.title(placeName)
 								.snippet(
 										"You can get "
@@ -539,9 +549,12 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 						material.getValue().setMarker(currentMarker);
 					}
+					bc.include(location);
 				}
+					map.animateCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 
+							100));
 			}
-			changeAllButtonStates(true);
+						changeAllButtonStates(true);
 		}
 	}
 
@@ -587,6 +600,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				currentLocation.getLongitude());
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
 				ZOOM_LEVEL));
+		locateMaterials();
 	}
 
 	@Override

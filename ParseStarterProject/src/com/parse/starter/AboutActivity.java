@@ -44,7 +44,6 @@ public class AboutActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
-				AboutActivity.this.finish();
 				startActivity(i);
 			}
 		});
