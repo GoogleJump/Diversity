@@ -36,7 +36,7 @@
         <activity
             android:name="com.parse.starter.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@style/Theme.Background" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
