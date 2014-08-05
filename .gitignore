@@ -6,4 +6,5 @@ ParseStarterProject/.settings/
 ParseStarterProject/.classpath
 DiversityTestApp/bin/
 DiversityTestApp/gen/
+ParseStarterProject/proguard/
 google-play-services_lib/
