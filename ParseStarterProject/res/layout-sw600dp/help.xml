@@ -32,8 +32,9 @@
         android:layout_gravity="center"
         android:layout_weight="0.2"
         android:gravity="center"
+        android:padding="10sp"
         android:text="@string/help_steps"
-        android:textSize="12sp" />
+        android:textSize="22sp" />
 
     <ImageButton
         android:id="@+id/map_help"

@@ -258,7 +258,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				checkForCompletedItem();
 				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
-					showFoundDialog("You found a ", material.getName(), false);
+					showFoundDialog("You found ", material.getArticle(), material.getName(), false);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
 					showWarningDialog(R.string.no_nearby_materials);
@@ -278,13 +278,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			List<Item> resultsList = query.find();
 			List<String> queriedItemMaterials = resultsList.get(0)
 					.getMaterials();
+			String article = resultsList.get(0).getArticle();
 			for (String material : queriedItemMaterials) {
 				if (!materialsCollected.contains(material)) {
 					return;
 				}
 			}
 			System.out.println("item completed");
-			updateUserOther(item);
+			updateUserOther(item, article);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -295,7 +296,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 * Displays a popup to congratulate user. Gets a new Item when the user
 	 * solved the existing item and when the user has more items to solve
 	 */
-	private void updateUserOther(String name) {
+	private void updateUserOther(String name, String article) {
 		userInfo.addItemCollected(name);
 		userInfo.getNewItem();
 
@@ -306,10 +307,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			// updating userInfo
 			userInfo.addCharacterCollected(completedChar);
 			userInfo.setCurrentCharacter("");
-			showFoundDialog("You just found all items for ", completedChar,
+			showFoundDialog("You just found all items for ", "the ", completedChar,
 					true);
 		}
-		showFoundDialog("You just made a ", name, false);
+		showFoundDialog("You just made ", article, name, false);
 		userInfo.setMaterialsCollected(Collections.<String> emptyList());
 		// need background update
 	}
@@ -346,7 +347,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 *            boolean that is true if dialog indicates completed character
 	 *            false otherwise
 	 */
-	private void showFoundDialog(String message, String materialOrItem,
+	private void showFoundDialog(String message, String article, String materialOrItem,
 			final boolean isChar) {
 
 		final Dialog myDialog = new Dialog(context);
@@ -359,7 +360,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		TextView dialog_message = (TextView) myDialog
 				.findViewById(R.id.message);
-		dialog_message.setText(message + materialOrItem);
+		dialog_message.setText(message + article + materialOrItem + "!");
 
 		ImageView image = (ImageView) myDialog.findViewById(R.id.collected);
 		System.out.println("before setting the picture in the image view");

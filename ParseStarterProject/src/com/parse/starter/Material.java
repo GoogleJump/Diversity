@@ -14,6 +14,10 @@ public class Material extends ParseObject {
 	public String getName() {
 		return getString("name");
 	}
+	
+	public String getArticle() {
+		return getString("article");
+	}
 
 	public List<String> getSearchTerms() {
 		return getList("searchTerms");
