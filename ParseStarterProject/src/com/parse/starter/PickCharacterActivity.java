@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.team.diversity.android.R;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their

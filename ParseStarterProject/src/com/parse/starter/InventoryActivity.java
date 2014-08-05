@@ -1,7 +1,6 @@
 package com.parse.starter;
 
 import java.util.List;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import com.team.diversity.android.R;
 
 /**
  * InventoryActivity.java displays the inventory page view: currently, the
