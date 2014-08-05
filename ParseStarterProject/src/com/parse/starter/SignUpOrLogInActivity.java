@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.team.diversity.android.R;
 
 /**
  * Activity which displays a registration screen to the user.
@@ -14,8 +15,8 @@ public class SignUpOrLogInActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_up_or_log_in);
     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    setContentView(R.layout.activity_sign_up_or_log_in);
     // Log in button click handler
     ((Button) findViewById(R.id.logInButton)).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {

@@ -1,0 +1,23 @@
+# To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):
+# proguard.config=${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt:proguard-google-api-client.txt
+
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-keep class com.parse.** { *; }
+
+-dontwarn com.facebook.**
