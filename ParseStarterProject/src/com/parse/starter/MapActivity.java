@@ -305,7 +305,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			userInfo.addCharacterCollected(completedChar);
 			userInfo.setCurrentCharacter("");
 			showFoundDialog("You just found all items for ", completedChar,
-					true);
+					true /*isChar*/);
 		}
 		showFoundDialog("You just made a ", name, false);
 		userInfo.setMaterialsCollected(Collections.<String> emptyList());
@@ -362,12 +362,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		ImageView image = (ImageView) myDialog.findViewById(R.id.collected);
 		System.out.println("before setting the picture in the image view");
 
-		// name of the image to add
-		String imageName = materialOrItem.toLowerCase().replace(' ', '_');
-		// set image here
-		image.setImageResource(getResources().getIdentifier(imageName,
-				"drawable", getPackageName()));
-
+		if (!isChar) {
+			// name of the image to add
+			String imageName = materialOrItem.toLowerCase().replace(' ', '_');
+			// set image here
+			image.setImageResource(getResources().getIdentifier(imageName,
+					"drawable", getPackageName()));
+		}
 		Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
 		yes.setText("Yay!");
 
@@ -376,7 +377,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				if (isChar) {
 					myDialog.dismiss();
 					Intent i = new Intent(MapActivity.this,
-							MainMenuActivity.class);
+							PhotosActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 							| Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(i);
