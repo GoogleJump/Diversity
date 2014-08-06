@@ -19,8 +19,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.team.diversity.android.R;
 
+import com.team.diversity.android.R;
+import com.viewpagerindicator.*;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -81,6 +82,10 @@ public class PickCharacterActivity extends BaseActivity {
 		pagerAdapter = new CharacterPagerAdapter();
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(pagerAdapter);
+		
+		CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
+		titleIndicator.setRadius(15);
+		titleIndicator.setViewPager(pager);
 
 		addListenerOnMainMenuButton();
 	}
