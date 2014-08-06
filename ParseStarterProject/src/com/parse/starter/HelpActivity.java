@@ -55,9 +55,19 @@ public class HelpActivity extends BaseActivity {
 		play.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(HelpActivity.this, MapActivity.class);
+				Intent i;
+				String character = ((User) User.getCurrentUser())
+						.getUserInfo().getCurrentCharacter();
+				if (character.length() > 0) {
+					i = new Intent(HelpActivity.this, MapActivity.class);
+				} else {
+					i = new Intent(HelpActivity.this,
+							PickCharacterActivity.class);
+				}
 				HelpActivity.this.finish();
 				startActivity(i);
+				
+				
 			}
 		});
 	}
