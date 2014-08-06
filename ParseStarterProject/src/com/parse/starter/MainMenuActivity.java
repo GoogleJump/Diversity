@@ -47,6 +47,10 @@ public class MainMenuActivity extends BaseActivity {
 		addListenerOnPhotosButton();
 		addListenerOnInventoryButton();
 	}
+	
+	@Override
+	public void onBackPressed() {
+	}
 
 	/**
 	 * When the Start/Continue Button is pressed, if the client is on the puzzle
@@ -110,8 +114,11 @@ public class MainMenuActivity extends BaseActivity {
 							i = new Intent(MainMenuActivity.this,
 									PickCharacterActivity.class);
 						}
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+								| Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(i);
 					}
+
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
 				}
