@@ -62,14 +62,6 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/claim_button_custom"
             android:padding="8dp" />
-
-        <Button
-            android:id="@+id/locate_materials_button"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/locate_item_button_custom"
-            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>
