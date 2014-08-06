@@ -6,19 +6,26 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
@@ -30,6 +37,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -65,6 +73,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Gson gson;
 
 	private UserInfo userInfo;
+	private MapFragment mapFragment;
 	private GoogleMap map;
 	private LocationClient locationClient;
 	private Context context = this;
@@ -75,7 +84,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Button puzzleButton;
 	private Button randomizeButton;
 	private Button claimButton;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,12 +101,13 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		puzzleButton = (Button) findViewById(R.id.puzzle_button);
 		randomizeButton = (Button) findViewById(R.id.randomize_button);
 		claimButton = (Button) findViewById(R.id.claim_materials_button);
-		
+
 		addTransitionListeners();
 
-		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(
-				R.id.map)).getMap();
-
+		mapFragment = (MapFragment) getFragmentManager().findFragmentById(
+				R.id.map);
+		GoogleMap map = mapFragment.getMap();
+		
 		map.setMyLocationEnabled(true);
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {
 
@@ -115,7 +125,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			myLocation = new LatLng(currentLocation.getLatitude(),
 					currentLocation.getLongitude());
 			locateMaterials();
-			
+
 		}
 
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
@@ -130,9 +140,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	@Override
 	public void onBackPressed() {
-		//MapActivity.this.finish();
-		startActivity(new Intent(MapActivity.this,
-				MainMenuActivity.class));
+		// MapActivity.this.finish();
+		startActivity(new Intent(MapActivity.this, MainMenuActivity.class));
 	}
 
 	@SuppressLint("NewApi")
@@ -167,6 +176,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 								| Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(i);
+						removeAllMarkers();
 					}
 				});
 
@@ -174,11 +184,19 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						//MapActivity.this.finish();
+						removeAllMarkers();
 						startActivity(new Intent(MapActivity.this,
 								PuzzleActivity.class));
 					}
 				});
+	}
+	
+	private void removeAllMarkers() {
+		Iterator<Entry<Material, MaterialMapInfo>> iterator = materialsOnTheMap.entrySet().iterator();
+	    while (iterator.hasNext()) {
+	    	MaterialMapInfo mapInfo = iterator.next().getValue();
+	    	mapInfo.getMarker().remove();
+	    }
 	}
 
 	private void addMapActionListeners() {
@@ -211,14 +229,14 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					}
 				});
 	}
-	
+
 	private void changeAllButtonStates(boolean enabled) {
 		mainMenuButton.setEnabled(enabled);
 		puzzleButton.setEnabled(enabled);
 		randomizeButton.setEnabled(enabled);
 		claimButton.setEnabled(enabled);
 	}
-	
+
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
 			// display a popup
@@ -247,16 +265,17 @@ public class MapActivity extends BaseActivity implements LocationListener,
 							closestMarker.remove();
 							materialsToRemove.put(material.getKey(),
 									material.getValue());
-							
+
 							// updating userInfo when materials are solved
-							updateUserMaterial(material.getKey().getName());							
+							updateUserMaterial(material.getKey().getName());
 						}
 					}
 				}
 				checkForCompletedItem();
 				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
-					showFoundDialog("You found ", material.getArticle(), material.getName(), false);
+					showFoundDialog("You found ", material.getArticle(),
+							material.getName(), false);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
 					showWarningDialog(R.string.no_nearby_materials);
@@ -290,9 +309,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	}
 
 	/**
-	 * Updates the user information about collected items;
-	 * Displays a popup to congratulate user. Gets a new Item when the user
-	 * solved the existing item and when the user has more items to solve
+	 * Updates the user information about collected items; Displays a popup to
+	 * congratulate user. Gets a new Item when the user solved the existing item
+	 * and when the user has more items to solve
 	 */
 	private void updateUserOther(String name, String article) {
 		userInfo.addItemCollected(name);
@@ -305,8 +324,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			// updating userInfo
 			userInfo.addCharacterCollected(completedChar);
 			userInfo.setCurrentCharacter("");
-			showFoundDialog("You just found all items for ", "the ", completedChar,
-					true /*isChar*/);
+			showFoundDialog("You just found all items for ", "the ",
+					completedChar, true /* isChar */);
 		}
 		showFoundDialog("You just made ", article, name, false);
 		userInfo.setMaterialsCollected(Collections.<String> emptyList());
@@ -314,9 +333,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	}
 
 	/**
-	 * Updates the user information about collected materials;
-	 * Displays a popup to congratulate user. Gets a Material when the user
-	 * solved the existing item and when the user has more items to solve
+	 * Updates the user information about collected materials; Displays a popup
+	 * to congratulate user. Gets a Material when the user solved the existing
+	 * item and when the user has more items to solve
 	 */
 	private void updateUserMaterial(String name) {
 		List<String> materialsSolved = userInfo.getMaterialsSolved();
@@ -324,7 +343,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
 		materialsCollected.add(name);
-		
+
 		userInfo.saveEventually(new SaveCallback() {
 			public void done(ParseException e) {
 				if (e != null) {
@@ -334,6 +353,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		});
 
 	}
+
 	/**
 	 * Found dialog that pops up when a material/item/character is found
 	 * 
@@ -345,8 +365,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 *            boolean that is true if dialog indicates completed character
 	 *            false otherwise
 	 */
-	private void showFoundDialog(String message, String article, String materialOrItem,
-			final boolean isChar) {
+	private void showFoundDialog(String message, String article,
+			String materialOrItem, final boolean isChar) {
 
 		final Dialog myDialog = new Dialog(context);
 		myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
@@ -360,7 +380,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				.findViewById(R.id.message);
 		dialog_message.setText(message + article + materialOrItem + "!");
 
-		ImageView image = (ImageView) myDialog.findViewById(R.id.collected);
+		final ImageView image = (ImageView) myDialog
+				.findViewById(R.id.collected);
 		System.out.println("before setting the picture in the image view");
 
 		if (!isChar) {
@@ -382,10 +403,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 							| Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(i);
-				}
-				else {
+				} else {
 					myDialog.dismiss();
 				}
+				Drawable drawable = image.getDrawable();
+				if (drawable instanceof BitmapDrawable) {
+					BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+					Bitmap bitmap = bitmapDrawable.getBitmap();
+					bitmap.recycle();
+				}
+
 			}
 		});
 
@@ -521,7 +548,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		protected void onPostExecute(Void result) {
 			synchronized (materialsOnTheMap) {
 				LatLngBounds.Builder bc = new LatLngBounds.Builder();
-				bc.include(new LatLng(location.getLatitude(), location.getLongitude()));
+				bc.include(new LatLng(location.getLatitude(), location
+						.getLongitude()));
 				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
 						.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();
@@ -542,10 +570,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					}
 					bc.include(location);
 				}
-					map.animateCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 
-							100));
+				map.animateCamera(CameraUpdateFactory.newLatLngBounds(
+						bc.build(), 100));
 			}
-						changeAllButtonStates(true);
+			changeAllButtonStates(true);
 		}
 	}
 
