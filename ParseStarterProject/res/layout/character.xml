@@ -2,20 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/character_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" 
     android:gravity="center">
-
-    <TextView
-        style="@style/GameFont.Big"
-        android:id="@+id/choose_character"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_a_character"/>
 
     <ImageButton
         android:id="@+id/character_picture"
         android:layout_width="wrap_content"
+        android:background="@null"
         android:layout_height="wrap_content" />
 
     <TextView

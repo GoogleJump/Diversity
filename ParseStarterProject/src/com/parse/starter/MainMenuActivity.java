@@ -1,13 +1,20 @@
 package com.parse.starter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.team.diversity.android.R;
+import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.team.diversity.android.R;
 
 /**
  * The MainMenu view shows the main menu with a Start/Continue button that takes
@@ -22,6 +29,10 @@ public class MainMenuActivity extends BaseActivity {
 	private Button photos;
 	private Button inventory;
 	private Context context = this;
+	
+	private UserInfo userInfo;
+	private List<String> charactersNotCollected;
+	private List<String> charactersCollected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +60,58 @@ public class MainMenuActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent i;
 				if (isOnline()) {
-					String character = ((User) User.getCurrentUser())
-							.getUserInfo().getCurrentCharacter();
-					if (character.length() > 0) {
-						i = new Intent(MainMenuActivity.this, MapActivity.class);
-					} else {
-						i = new Intent(MainMenuActivity.this,
-								PickCharacterActivity.class);
+					userInfo = ((User) User.getCurrentUser()).getUserInfo();
+
+					charactersCollected = userInfo.getCharactersCollected();
+					charactersNotCollected = new ArrayList<String>();
+					
+					ParseQuery<Character> query = ParseQuery.getQuery("Character");
+					query.whereNotContainedIn("name", charactersCollected);
+					try {
+						List<Character> resultsList = query.find();
+						for (Character character: resultsList){
+							charactersNotCollected.add(character.getName());
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-					startActivity(i);
+					
+					if (charactersNotCollected.isEmpty()){
+						final Dialog myDialog = new Dialog(context);
+						myDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+						myDialog.setContentView(R.layout.one_button_dialog);
+						myDialog.setCancelable(false);
+
+						TextView dialog_title = (TextView) myDialog
+								.findViewById(R.id.title);
+						dialog_title.setText("You Win");
+
+						TextView dialog_message = (TextView) myDialog
+								.findViewById(R.id.message);
+						dialog_message.setText("You've collected all the characters available! Revel in your accomplishments by checking out the Photo Album or Trophy Shelf.");
+
+						Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
+						yes.setText("Okay");
+
+						yes.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								myDialog.dismiss();
+							}
+						});
+
+						myDialog.show();
+					}
+					else {
+						String character = ((User) User.getCurrentUser())
+								.getUserInfo().getCurrentCharacter();
+						if (character.length() > 0) {
+							i = new Intent(MainMenuActivity.this, MapActivity.class);
+						} else {
+							i = new Intent(MainMenuActivity.this,
+									PickCharacterActivity.class);
+						}
+						startActivity(i);
+					}
 				} else {
 					showWarningDialog(R.string.no_internet_connection);
 				}
