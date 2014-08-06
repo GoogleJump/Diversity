@@ -198,7 +198,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		while (iterator.hasNext()) {
 			MaterialMapInfo mapInfo = iterator.next().getValue();
 			if (mapInfo != null) {
-				mapInfo.getMarker().remove();
+				if (mapInfo.getMarker() != null) {
+					mapInfo.getMarker().remove();
+				}
 			}
 		}
 	}
