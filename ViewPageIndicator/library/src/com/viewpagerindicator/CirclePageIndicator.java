@@ -551,5 +551,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
                 return new SavedState[size];
             }
         };
+        
+        
     }
 }

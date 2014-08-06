@@ -25,6 +25,10 @@ public class Character extends ParseObject {
 		return getList("items");
 	}
 	
+	public List<String> getEasterEgg() {
+		return getList("easterEgg");
+	}
+
 	public static ParseQuery<Character> getQuery() {
 		return ParseQuery.getQuery(Character.class);
 	}

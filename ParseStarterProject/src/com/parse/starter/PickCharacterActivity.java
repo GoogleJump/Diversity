@@ -37,6 +37,7 @@ import com.parse.starter.MapActivity.MATERIAL_ITEM;
  */
 
 public class PickCharacterActivity extends BaseActivity {
+	private final static String EASTER_EGG = "easterEgg";
 
 	private ProgressBar progressBar;
 	private CharacterPagerAdapter pagerAdapter;
@@ -69,6 +70,7 @@ public class PickCharacterActivity extends BaseActivity {
 		charactersNotCollected = new ArrayList<String>();
 		
 		ParseQuery<Character> query = ParseQuery.getQuery("Character");
+		query.whereEqualTo(EASTER_EGG, false);
 		query.whereNotContainedIn("name", charactersCollected);
 		try {
 			List<Character> resultsList = query.find();
@@ -109,6 +111,11 @@ public class PickCharacterActivity extends BaseActivity {
 
 		private View v;
 		private ImageButton characterPic;
+
+		@Override
+		public void destroyItem(View container, int position, Object object) {
+			((ViewPager) container).removeView((View) object);
+		}
 
 		@Override
 		public int getCount() {

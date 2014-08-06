@@ -60,6 +60,7 @@
 	<string name="dialog_no">No</string>
 	<string name="character_dialog_surfer">Hey dude, I am Sunny de Souza. I am from the big island, surfing the waves since I was a tiny dude. I rode this crazy wave that scatterd all the beachgoers\' belongings all over the place. Help the dudes and dudets out.</string>
 	<string name="character_dialog_grandma">Oh hello, deary. Are you hungry? I would bake you some fresh cookies, but I think my cats hid all the groceries that I just got from the store. Oh dear, where did I put the sweater I knit you? Can you help me out, deary?</string>
+	<string name="character_dialog_mayor">Hi, I am the mayor of Mountain View. I need some help for my city! Can you help me collect some items?</string>
 	
 	<string name="developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n Ksenia Bukina\n</string>
 	<string name="artwork"><b>Artwork</b>\nCarolyn Chen\nJamie Forbes\n</string>
