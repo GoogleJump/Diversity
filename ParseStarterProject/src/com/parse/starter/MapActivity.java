@@ -75,7 +75,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Button puzzleButton;
 	private Button randomizeButton;
 	private Button claimButton;
-	private Button locateButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		puzzleButton = (Button) findViewById(R.id.puzzle_button);
 		randomizeButton = (Button) findViewById(R.id.randomize_button);
 		claimButton = (Button) findViewById(R.id.claim_materials_button);
-		locateButton = (Button) findViewById(R.id.locate_materials_button);
 		
 		addTransitionListeners();
 
@@ -165,8 +163,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					@Override
 					public void onClick(View v) {
 						//MapActivity.this.finish();
-						startActivity(new Intent(MapActivity.this,
-								MainMenuActivity.class));
+						Intent i = new Intent(MapActivity.this, MainMenuActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+								| Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(i);
 					}
 				});
 
@@ -210,16 +210,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 						claimMaterial();
 					}
 				});
-
-		findViewById(R.id.locate_materials_button).setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						changeAllButtonStates(false);
-						findViewById(R.id.locate_materials_button).setEnabled(false);
-						locateMaterials();
-					}
-				});
 	}
 	
 	private void changeAllButtonStates(boolean enabled) {
@@ -227,7 +217,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		puzzleButton.setEnabled(enabled);
 		randomizeButton.setEnabled(enabled);
 		claimButton.setEnabled(enabled);
-		locateButton.setEnabled(enabled);
 	}
 	
 	private void claimMaterial() {
@@ -388,7 +377,8 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					myDialog.dismiss();
 					Intent i = new Intent(MapActivity.this,
 							MainMenuActivity.class);
-					MapActivity.this.finish();
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(i);
 				}
 				else {
@@ -407,7 +397,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		}
 		if (userInfo.getMaterialsSolved().isEmpty()) {
 			// display a popup
-			showWarningDialog(R.string.no_solved_materials);
 			changeAllButtonStates(true);
 			return;
 		}
@@ -530,6 +519,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		protected void onPostExecute(Void result) {
 			synchronized (materialsOnTheMap) {
 				LatLngBounds.Builder bc = new LatLngBounds.Builder();
+				bc.include(new LatLng(location.getLatitude(), location.getLongitude()));
 				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
 						.entrySet()) {
 					GooglePlace currentPlace = material.getValue().getPlace();

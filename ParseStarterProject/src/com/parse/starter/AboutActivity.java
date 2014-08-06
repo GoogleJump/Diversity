@@ -43,6 +43,7 @@ public class AboutActivity extends BaseActivity {
 		mainMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				AboutActivity.this.finish();
 				Intent i = new Intent(v.getContext(), MainMenuActivity.class);
 				startActivity(i);
 			}
