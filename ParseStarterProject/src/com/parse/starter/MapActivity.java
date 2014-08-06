@@ -68,7 +68,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	private Location location;
 	private final int RADIUS = 10000; // in meters
 	private final float ZOOM_LEVEL = 12;
-	private final double CLAIM_DISTANCE = 200000;
+	private final double CLAIM_DISTANCE = 10;
 
 	private Gson gson;
 
