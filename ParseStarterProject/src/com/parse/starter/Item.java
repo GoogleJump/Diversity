@@ -16,6 +16,10 @@ public class Item extends ParseObject {
 	public String getName() {
 		return getString("name");
 	}
+	
+	public String getArticle() {
+		return getString("article");
+	}
 
 	public int geID() {
 		return getInt("ID");
