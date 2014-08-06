@@ -165,16 +165,17 @@ public class UserInfo extends ParseObject {
 	 *         in the shuffled version
 	 */
 	private String makeAnagram(String string) {
-		List<String> splitString = Arrays.asList(string.split(""));
-		List<String> copyString = Arrays.asList(string.split(""));
+		String shuffled = string;
 		
-		while (splitString.equals(copyString)) {
-			Collections.shuffle(splitString);
-		}
+		while (shuffled.equals(string)) {
+			List<String> splitString = Arrays.asList(string.split(""));
 			
-		String shuffled = "";
-		for (String letter : splitString) {
-			shuffled += letter;
+			Collections.shuffle(splitString);
+				
+			shuffled = "";
+			for (String letter : splitString) {
+				shuffled += letter;
+			}
 		}
 		return shuffled;
 	}
