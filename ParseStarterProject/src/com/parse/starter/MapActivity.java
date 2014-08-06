@@ -107,7 +107,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		mapFragment = (MapFragment) getFragmentManager().findFragmentById(
 				R.id.map);
 		GoogleMap map = mapFragment.getMap();
-		
+
 		map.setMyLocationEnabled(true);
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {
 
@@ -171,8 +171,9 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						//MapActivity.this.finish();
-						Intent i = new Intent(MapActivity.this, MainMenuActivity.class);
+						// MapActivity.this.finish();
+						Intent i = new Intent(MapActivity.this,
+								MainMenuActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 								| Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(i);
@@ -190,13 +191,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					}
 				});
 	}
-	
+
 	private void removeAllMarkers() {
-		Iterator<Entry<Material, MaterialMapInfo>> iterator = materialsOnTheMap.entrySet().iterator();
-	    while (iterator.hasNext()) {
-	    	MaterialMapInfo mapInfo = iterator.next().getValue();
-	    	mapInfo.getMarker().remove();
-	    }
+		Iterator<Entry<Material, MaterialMapInfo>> iterator = materialsOnTheMap
+				.entrySet().iterator();
+		while (iterator.hasNext()) {
+			MaterialMapInfo mapInfo = iterator.next().getValue();
+			if (mapInfo != null) {
+				mapInfo.getMarker().remove();
+			}
+		}
 	}
 
 	private void addMapActionListeners() {
