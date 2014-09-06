@@ -1,8 +1,8 @@
 package com.parse.starter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,13 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.team.diversity.android.R;
-import com.viewpagerindicator.*;
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.starter.MapActivity.MATERIAL_ITEM;
+import com.team.diversity.android.R;
+import com.viewpagerindicator.CirclePageIndicator;
 
 /**
  * PickCharacterActivity.java lets you pick a character by showing their
@@ -69,7 +65,7 @@ public class PickCharacterActivity extends BaseActivity {
 		charactersCollected = userInfo.getCharactersCollected();
 		charactersNotCollected = new ArrayList<String>();
 		
-		ParseQuery<Character> query = ParseQuery.getQuery("Character");
+		ParseQuery<Character> query = Character.getQuery();
 		query.whereEqualTo(EASTER_EGG, false);
 		query.whereNotContainedIn("name", charactersCollected);
 		try {
@@ -140,13 +136,13 @@ public class PickCharacterActivity extends BaseActivity {
 
 			TextView dialog_message = (TextView) myDialog
 					.findViewById(R.id.message);
-			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(), "string",getPackageName()));
+			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(new Locale("en", "US")), "string",getPackageName()));
 
 			Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-			yes.setText("Yes");
+			yes.setText(R.string.dialog_yes);
 
 			Button no = (Button) myDialog.findViewById(R.id.dialog_no);
-			no.setText("No");
+			no.setText(R.string.dialog_no);
 
 			yes.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {

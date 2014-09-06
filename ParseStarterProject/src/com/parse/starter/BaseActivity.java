@@ -1,19 +1,18 @@
 package com.parse.starter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.team.diversity.android.R;
 
 public class BaseActivity extends Activity {
@@ -48,13 +47,13 @@ public class BaseActivity extends Activity {
         myDialog.setCancelable(false);
 
         TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-        dialog_title.setText("Ooops!");
+        dialog_title.setText(R.string.dialog_oops);
         
         TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
         dialog_message.setText(message);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-        yes.setText("Got it!");
+        yes.setText(R.string.dialog_got_it);
         
         yes.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

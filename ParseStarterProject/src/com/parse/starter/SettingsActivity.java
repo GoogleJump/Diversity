@@ -126,16 +126,16 @@ public class SettingsActivity extends BaseActivity {
         myDialog.setCancelable(false);
 
         TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-        dialog_title.setText("Restart");
+        dialog_title.setText(R.string.dialog_restart);
 
         TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
-        dialog_message.setText("Are you sure you would like to restart?\nYou would lose all your collected materials and items.");
+        dialog_message.setText(R.string.dialog_restart_detail);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-        yes.setText("Yes");
+        yes.setText(R.string.dialog_yes);
         
         Button no = (Button) myDialog.findViewById(R.id.dialog_no);
-        no.setText("No");
+        no.setText(R.string.dialog_no);
         
         yes.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -143,7 +143,6 @@ public class SettingsActivity extends BaseActivity {
 				UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 				userInfo.restart();
 
-				// Start and intent for the dispatch activity
 				Intent intent = new Intent(SettingsActivity.this,
 						MainMenuActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -176,16 +175,16 @@ public class SettingsActivity extends BaseActivity {
         myDialog.setCancelable(false);
 
         TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-        dialog_title.setText("Logout");
+        dialog_title.setText(R.string.dialog_logout);
 
         TextView dialog_message = (TextView) myDialog.findViewById(R.id.message);
-        dialog_message.setText("Are you sure you would like to logout?");
+        dialog_message.setText(R.string.dialog_logout_detail);
 
         Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-        yes.setText("Yes");
+        yes.setText(R.string.dialog_yes);
         
         Button no = (Button) myDialog.findViewById(R.id.dialog_no);
-        no.setText("No");
+        no.setText(R.string.dialog_no);
         
         yes.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -193,7 +192,6 @@ public class SettingsActivity extends BaseActivity {
 				// Call the Parse log out method
 				ParseUser.logOut();
 
-				// Start and intent for the dispatch activity
 				Intent intent = new Intent(SettingsActivity.this,
 						SignUpOrLogInActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -10,7 +10,6 @@ import com.team.diversity.android.R;
  */
 public class SplashScreen extends BaseActivity {
 
-	// Splash screen timer
 	private static int SPLASH_TIME_OUT = 3000;
 
 	@Override
@@ -30,8 +29,6 @@ public class SplashScreen extends BaseActivity {
 				Intent i = new Intent(SplashScreen.this,
 						ParseStarterProjectActivity.class);
 				startActivity(i);
-
-				// close this activity
 				finish();
 			}
 		}, SPLASH_TIME_OUT);
