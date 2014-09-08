@@ -38,7 +38,7 @@ public class MainMenuActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.mainmenu);
+		setContentView(R.layout.activity_main_menu);
 
 		addListenerOnStartContinueButton();
 		addListenerOnSettingsButton();

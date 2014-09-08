@@ -34,7 +34,7 @@ public class InventoryActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.inventory);
+		setContentView(R.layout.activity_inventory);
 		setTitle(R.string.inventory_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.inventory_list);
 		

@@ -96,7 +96,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			locationClient.connect();
 		}
 
-		setContentView(R.layout.map);
+		setContentView(R.layout.activity_map);
 		mainMenuButton = (Button) findViewById(R.id.main_menu_button);
 		puzzleButton = (Button) findViewById(R.id.puzzle_button);
 		randomizeButton = (Button) findViewById(R.id.randomize_button);

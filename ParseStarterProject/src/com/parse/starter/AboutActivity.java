@@ -21,7 +21,7 @@ public class AboutActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-	    setContentView(R.layout.about);
+	    setContentView(R.layout.activity_about);
 
 	    User user = null;
 		if (User.getCurrentUser() instanceof User) {

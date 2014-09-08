@@ -25,7 +25,7 @@ public class HelpActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.help);
+		setContentView(R.layout.activity_help);
 		setTitle(R.string.help);
 
 		addListenerOnMainMenuButton();

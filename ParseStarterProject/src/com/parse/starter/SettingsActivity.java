@@ -31,7 +31,7 @@ public class SettingsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.settings);
+		setContentView(R.layout.activity_settings);
 		setTitle(R.string.settings);
 
 		logout = (Button) findViewById(R.id.logout_button_set);

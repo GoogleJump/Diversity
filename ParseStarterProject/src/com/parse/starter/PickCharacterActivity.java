@@ -174,7 +174,7 @@ public class PickCharacterActivity extends BaseActivity {
 
 					final String theCharacter = charactersNotCollected.get(i);
 
-					resId = R.layout.character;
+					resId = R.layout.activity_character;
 					
 					v = inflater.inflate(resId, null, false);
 					characterPic = (ImageButton) v

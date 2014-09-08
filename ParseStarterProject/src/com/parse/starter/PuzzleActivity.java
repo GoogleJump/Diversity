@@ -58,7 +58,7 @@ public class PuzzleActivity extends BaseActivity {
 
 		// indicates there is nothing to find
 		if (material.equals("")) {
-			setContentView(R.layout.nothing_to_find);
+			setContentView(R.layout.activity_nothing_to_find);
 		} else {
 			final String puzzleID = userInfo.getPuzzleID();
 			final String shuffledWord = userInfo.getShuffledWord();
@@ -68,7 +68,7 @@ public class PuzzleActivity extends BaseActivity {
 			} else if (!shuffledWord.equals("")) {
 				this.anagramViewSet(shuffledWord, material);
 			} else {
-				setContentView(R.layout.nothing_to_find);
+				setContentView(R.layout.activity_nothing_to_find);
 			}
 			addListenerOnShuffleButton();
 		}
@@ -91,7 +91,7 @@ public class PuzzleActivity extends BaseActivity {
 		try {
 			List<Puzzle> potentialPuzzles = query.find();
 
-			setContentView(R.layout.puzzle);
+			setContentView(R.layout.activity_puzzle);
 			setTitle(R.string.puzzle_view_name);
 
 			Puzzle puzzle = potentialPuzzles.get(0);
@@ -125,7 +125,7 @@ public class PuzzleActivity extends BaseActivity {
 			addListenerOnRiddleSubmitButton();
 
 		} catch (ParseException e) {
-			setContentView(R.layout.nothing_to_find);
+			setContentView(R.layout.activity_nothing_to_find);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class PuzzleActivity extends BaseActivity {
 	 *            the empty string
 	 */
 	private void anagramViewSet(String shuffledWord, String material) {
-		setContentView(R.layout.anagram);
+		setContentView(R.layout.activity_anagram);
 		setTitle(R.string.anagram_view_name);
 
 		String scrambled = shuffledWord;
