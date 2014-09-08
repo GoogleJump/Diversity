@@ -623,7 +623,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null) {
 			locationClient.disconnect();
 		}
-		Toast.makeText(this, R.string.disconnect_toast,
+		Toast.makeText(this, R.string.dialog_no_internet_connection,
 				Toast.LENGTH_SHORT).show();
 	}
 

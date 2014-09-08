@@ -136,7 +136,7 @@ public class PickCharacterActivity extends BaseActivity {
 
 			TextView dialog_message = (TextView) myDialog
 					.findViewById(R.id.message);
-			dialog_message.setText(context.getResources().getIdentifier("character_dialog_" + name.toLowerCase(new Locale("en", "US")), "string",getPackageName()));
+			dialog_message.setText(context.getResources().getIdentifier("character_description_" + name.toLowerCase(new Locale("en", "US")), "string",getPackageName()));
 
 			Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
 			yes.setText(R.string.dialog_yes);

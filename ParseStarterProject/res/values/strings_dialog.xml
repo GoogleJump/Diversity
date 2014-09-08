@@ -27,4 +27,7 @@
     <string name="dialog_restart_detail">Are you sure you would like to restart?\nYou would lose all your collected materials and items.</string>
     <string name="dialog_logout">Logout</string>
     <string name="dialog_logout_detail">Are you sure you would like to logout?</string>
+    
+    <!-- No Internet Connection -->
+    <string name="dialog_no_internet_connection">No internet connection.</string>
 </resources>

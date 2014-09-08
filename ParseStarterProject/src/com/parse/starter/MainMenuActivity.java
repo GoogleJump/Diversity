@@ -39,7 +39,6 @@ public class MainMenuActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.mainmenu);
-		setTitle(R.string.main_menu);
 
 		addListenerOnStartContinueButton();
 		addListenerOnSettingsButton();
@@ -120,7 +119,7 @@ public class MainMenuActivity extends BaseActivity {
 					}
 
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 
 			}
@@ -139,7 +138,7 @@ public class MainMenuActivity extends BaseActivity {
 							SettingsActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -159,7 +158,7 @@ public class MainMenuActivity extends BaseActivity {
 							TrophiesActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -179,7 +178,7 @@ public class MainMenuActivity extends BaseActivity {
 							PhotosActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -199,7 +198,7 @@ public class MainMenuActivity extends BaseActivity {
 							InventoryActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});

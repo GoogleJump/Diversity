@@ -39,7 +39,7 @@ public class LoginActivity extends BaseActivity {
 				new View.OnClickListener() {
 					public void onClick(View view) {
 						if (!isOnline()) {
-							showWarningDialog(R.string.no_internet_connection);
+							showWarningDialog(R.string.dialog_no_internet_connection);
 						} else {
 							// Validate the log in data
 							boolean validationError = false;
