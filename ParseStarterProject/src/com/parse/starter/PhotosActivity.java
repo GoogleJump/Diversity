@@ -22,7 +22,7 @@ public class PhotosActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-    	this.setContentView(R.layout.photos);
+    	this.setContentView(R.layout.activity_photos);
     	addListenerOnMainMenuButton();
     }
 

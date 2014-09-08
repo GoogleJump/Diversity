@@ -1,16 +1,16 @@
 package com.parse.starter;
 
 import java.util.List;
+
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
 import com.team.diversity.android.R;
 
 /**
@@ -34,25 +34,13 @@ public class InventoryActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.inventory);
+		setContentView(R.layout.activity_inventory);
 		setTitle(R.string.inventory_view_name);
 		TableLayout tView = (TableLayout) findViewById(R.id.inventory_list);
-
-		// a hack to extend the picture out so it doesn't look warpy
-		Drawable bg = tView.getBackground();
-		/*if (bg != null) {
-			if (bg instanceof BitmapDrawable) {
-				BitmapDrawable bmp = (BitmapDrawable) bg;
-				bmp.mutate();
-				bmp.setTileModeXY(null, TileMode.REPEAT);
-			}
-		} 
-		*/
-
+		
 		// get current user's list of collected characters to display
 		UserInfo userInfo = ((User) User.getCurrentUser()).getUserInfo();
 		List<String> materialsCollected = userInfo.getMaterialsCollected();
-		Log.d("inventory activity: ", materialsCollected.toString());
 
 		if (materialsCollected != null) {
 			int numMaterials = materialsCollected.size();

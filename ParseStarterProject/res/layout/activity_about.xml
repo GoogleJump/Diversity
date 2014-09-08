@@ -25,7 +25,7 @@
             android:layout_marginTop="80dp"
             android:layout_weight="1.40"
             android:gravity="center"
-            android:text="@string/about" />
+            android:text="@string/settings" />
 
         <TextView
             style="@style/GameFont"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/synopsis" />
+            android:text="@string/about_synopsis" />
 
         <TextView
             style="@style/GameFont"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/developers" />
+            android:text="@string/about_developers" />
 
         <TextView
             style="@style/GameFont"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/artwork" />
+            android:text="@string/about_artwork" />
 
         <TextView
             style="@style/GameFont"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/team_lead" />
+            android:text="@string/about_team_lead" />
     </LinearLayout>
 
 </ScrollView>

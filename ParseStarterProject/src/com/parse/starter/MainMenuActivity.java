@@ -38,8 +38,7 @@ public class MainMenuActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.mainmenu);
-		setTitle(R.string.main_menu);
+		setContentView(R.layout.activity_main_menu);
 
 		addListenerOnStartContinueButton();
 		addListenerOnSettingsButton();
@@ -69,7 +68,7 @@ public class MainMenuActivity extends BaseActivity {
 					charactersCollected = userInfo.getCharactersCollected();
 					charactersNotCollected = new ArrayList<String>();
 					
-					ParseQuery<Character> query = ParseQuery.getQuery("Character");
+					ParseQuery<Character> query = Character.getQuery();
 					query.whereNotContainedIn("name", charactersCollected);
 					try {
 						List<Character> resultsList = query.find();
@@ -88,14 +87,14 @@ public class MainMenuActivity extends BaseActivity {
 
 						TextView dialog_title = (TextView) myDialog
 								.findViewById(R.id.title);
-						dialog_title.setText("You Win");
+						dialog_title.setText(R.string.dialog_you_win);
 
 						TextView dialog_message = (TextView) myDialog
 								.findViewById(R.id.message);
-						dialog_message.setText("You've collected all the characters available! Revel in your accomplishments by checking out the Photo Album or Trophy Shelf.");
+						dialog_message.setText(R.string.dialog_all_chars_completed);
 
 						Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-						yes.setText("Okay");
+						yes.setText(R.string.dialog_okay);
 
 						yes.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
@@ -120,7 +119,7 @@ public class MainMenuActivity extends BaseActivity {
 					}
 
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 
 			}
@@ -137,10 +136,9 @@ public class MainMenuActivity extends BaseActivity {
 				if (isOnline()) {
 					Intent intent = new Intent(MainMenuActivity.this,
 							SettingsActivity.class);
-					//MainMenuActivity.this.finish();
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -160,7 +158,7 @@ public class MainMenuActivity extends BaseActivity {
 							TrophiesActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -180,7 +178,7 @@ public class MainMenuActivity extends BaseActivity {
 							PhotosActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});
@@ -200,7 +198,7 @@ public class MainMenuActivity extends BaseActivity {
 							InventoryActivity.class);
 					startActivity(intent);
 				} else {
-					showWarningDialog(R.string.no_internet_connection);
+					showWarningDialog(R.string.dialog_no_internet_connection);
 				}
 			}
 		});

@@ -1,0 +1,6 @@
+<resources>
+    <string name="about_synopsis">Welcome to <i>Solve N Go</i>! Be prepared to collect awesome items, explore your city, and build a family!\n</string>
+    <string name="about_developers"><b>Developers</b>\nCarolyn Chen\nStephanie New\nAshley Thomas\nJennifer Wu\n Ksenia Bukina\n</string>
+    <string name="about_artwork"><b>Artwork</b>\nCarolyn Chen\nJamie Forbes\n</string>
+    <string name="about_team_lead"><b>Team Lead</b>\nKsenia Bukina\n</string>
+</resources>

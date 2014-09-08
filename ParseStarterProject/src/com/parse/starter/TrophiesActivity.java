@@ -35,8 +35,8 @@ public class TrophiesActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-		setContentView(R.layout.trophies);
-		setTitle(R.string.trophies_view_name);
+		setContentView(R.layout.activity_trophies);
+		setTitle(R.string.trophies);
 		TableLayout tView = (TableLayout) findViewById(R.id.trophies_list);
 
 		// a hack to avoid distortions in the background image

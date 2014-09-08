@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -96,7 +96,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			locationClient.connect();
 		}
 
-		setContentView(R.layout.map);
+		setContentView(R.layout.activity_map);
 		mainMenuButton = (Button) findViewById(R.id.main_menu_button);
 		puzzleButton = (Button) findViewById(R.id.puzzle_button);
 		randomizeButton = (Button) findViewById(R.id.randomize_button);
@@ -140,19 +140,15 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	@Override
 	public void onBackPressed() {
-		// MapActivity.this.finish();
 		startActivity(new Intent(MapActivity.this, MainMenuActivity.class));
 	}
 
 	@SuppressLint("NewApi")
 	private void setUpMapIfNeeded() {
-		// Do a null check to confirm that we have not already instantiated the
-		// map
 		if (map == null) {
 			// Try to obtain the map from the SupportMapFragment.
 			map = ((MapFragment) getFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
-			// Check if we were successful in obtaining the map.
 			if (map != null) {
 				map.setMyLocationEnabled(true);
 			}
@@ -171,7 +167,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// MapActivity.this.finish();
 						Intent i = new Intent(MapActivity.this,
 								MainMenuActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -245,8 +240,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 	private void claimMaterial() {
 		if (materialsOnTheMap.isEmpty()) {
-			// display a popup
-			showWarningDialog(R.string.no_located_materials);
+			showWarningDialog(R.string.dialog_no_located_materials);
 			changeAllButtonStates(true);
 			return;
 		}
@@ -258,7 +252,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				for (Entry<Material, MaterialMapInfo> material : materialsOnTheMap
 						.entrySet()) {
 					GooglePlace place = material.getValue().getPlace();
-					System.out.println(place);
 					Location materialLocation = new Location("");
 					materialLocation.setLatitude(place.getLat());
 					materialLocation.setLongitude(place.getLng());
@@ -272,7 +265,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 							materialsToRemove.put(material.getKey(),
 									material.getValue());
 
-							// updating userInfo when materials are solved
 							updateUserMaterial(material.getKey().getName());
 						}
 					}
@@ -280,11 +272,11 @@ public class MapActivity extends BaseActivity implements LocationListener,
 				checkForCompletedItem();
 				for (Material material : materialsToRemove.keySet()) {
 					materialsOnTheMap.remove(material);
-					showFoundDialog("You found ", material.getArticle(),
+					showFoundDialog(R.string.dialog_you_found, material.getArticle(),
 							material.getName(), false);
 				}
 				if (materialsToRemove.keySet().size() == 0) {
-					showWarningDialog(R.string.no_nearby_materials);
+					showWarningDialog(R.string.dialog_no_nearby_materials);
 					changeAllButtonStates(true);
 				}
 			}
@@ -307,7 +299,6 @@ public class MapActivity extends BaseActivity implements LocationListener,
 					return;
 				}
 			}
-			System.out.println("item completed");
 			updateUserOther(item, article);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -330,10 +321,10 @@ public class MapActivity extends BaseActivity implements LocationListener,
 			// updating userInfo
 			userInfo.addCharacterCollected(completedChar);
 			userInfo.setCurrentCharacter("");
-			showFoundDialog("You just found all items for ", "the ",
+			showFoundDialog(R.string.dialog_you_found_all, "the ",
 					completedChar, true /* isChar */);
 		}
-		showFoundDialog("You just made ", article, name, false);
+		showFoundDialog(R.string.dialog_you_made, article, name, false);
 		userInfo.setMaterialsCollected(Collections.<String> emptyList());
 		// need background update
 	}
@@ -371,7 +362,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 	 *            boolean that is true if dialog indicates completed character
 	 *            false otherwise
 	 */
-	private void showFoundDialog(String message, String article,
+	private void showFoundDialog(int message, String article,
 			String materialOrItem, final boolean isChar) {
 
 		final Dialog myDialog = new Dialog(context);
@@ -380,7 +371,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		myDialog.setCancelable(false);
 
 		TextView dialog_title = (TextView) myDialog.findViewById(R.id.title);
-		dialog_title.setText("Congrats!");
+		dialog_title.setText(R.string.dialog_congrats);
 
 		TextView dialog_message = (TextView) myDialog
 				.findViewById(R.id.message);
@@ -388,17 +379,16 @@ public class MapActivity extends BaseActivity implements LocationListener,
 
 		final ImageView image = (ImageView) myDialog
 				.findViewById(R.id.collected);
-		System.out.println("before setting the picture in the image view");
 
 		if (!isChar) {
 			// name of the image to add
-			String imageName = materialOrItem.toLowerCase().replace(' ', '_');
+			String imageName = materialOrItem.toLowerCase(new Locale("en", "US")).replace(' ', '_');
 			// set image here
 			image.setImageResource(getResources().getIdentifier(imageName,
 					"drawable", getPackageName()));
 		}
 		Button yes = (Button) myDialog.findViewById(R.id.dialog_yes);
-		yes.setText("Yay!");
+		yes.setText(R.string.dialog_yay);
 
 		yes.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -633,7 +623,7 @@ public class MapActivity extends BaseActivity implements LocationListener,
 		if (locationClient != null) {
 			locationClient.disconnect();
 		}
-		Toast.makeText(this, "Disconnected. Please re-connect.",
+		Toast.makeText(this, R.string.dialog_no_internet_connection,
 				Toast.LENGTH_SHORT).show();
 	}
 
